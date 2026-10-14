@@ -27,11 +27,11 @@ enableRobotsTXT = true
     weight = 1
     [languages.en.params]
       affiliation = "Kavli Institute for the Physics and Mathematics of the Universe"
-      description = "Ippo Orii (折井 一歩), a doctoral student at Kavli IPMU working on topological quantum field theory."
+      description = "Ippo Orii (折井 一歩), a doctoral student at Kavli IPMU working on generalized symmetries, TQFT/CFT, time-reversal symmetric systems and low-dimensional topology."
   [languages.ja]
     label = "日本語"
     locale = "ja"
     weight = 2
     [languages.ja.params]
       affiliation = "カブリ数物連携宇宙研究機構"
-      description = "折井 一歩（カブリ数物連携宇宙研究機構 博士課程）の研究ページ。位相的場の理論を研究しています。"
+      description = "折井 一歩（カブリ数物連携宇宙研究機構 博士課程）の研究ページ。一般化対称性，TQFT/CFT，時間反転対称な系，低次元トポロジーを研究しています。"
