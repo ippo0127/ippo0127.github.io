@@ -59,13 +59,21 @@
   --font: "Latin Modern Roman", "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", serif;
   --display: "Latin Modern Roman Display", "Latin Modern Roman", "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", serif;
   --max: 960px;
+  --gutter: 1.25rem;      /* 画面の左右の余白 */
+  --pad: 1rem;            /* ブロックの内側の左右の余白 */
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 
 html { -webkit-text-size-adjust: 100%; }
 
-/* PC（幅 900px 以上）では文字の基準を 25% 大きくし、内容を横に広く使う。サイズは rem / em で書いてあるので全体が一緒に大きくなる */
+/* 文字の大きさは画面の幅ごとに html の font-size で決める。サイズは rem / em で書いてあるので全体が一緒に変わる */
+/* スマホ（幅 700px 以下）: 文字を少し小さくし、余白も詰めて1行に入る文字数を増やす */
+@media (max-width: 700px) {
+  html { font-size: 87.5%; }
+  :root { --gutter: 1rem; --pad: .75rem; }
+}
+/* PC（幅 900px 以上）: 文字を 25% 大きくし、内容を横に広く使う */
 @media (min-width: 900px) {
   html { font-size: 125%; }
   :root { --max: min(1400px, 94vw); }   /* 内容の横幅: 画面の約 94%（最大 1400px） */
@@ -76,7 +84,7 @@ body {
   background: #fff;
   color: var(--text);
   font-family: var(--font);
-  font-size: 1.125rem;   /* スマホ 18px / PC 約 22px */
+  font-size: 1.125rem;   /* スマホ 約 16px / タブレット 18px / PC 約 22px */
   line-height: 1.65;
   overflow-wrap: break-word;
 }
@@ -106,7 +114,7 @@ a:hover { color: var(--emph); }
   gap: .4rem 1.5rem;
   max-width: var(--max);
   margin: 0 auto;
-  padding: .75rem 1.25rem;
+  padding: .75rem var(--gutter);
 }
 
 .site-title {
@@ -146,7 +154,7 @@ a:hover { color: var(--emph); }
 .container {
   max-width: var(--max);
   margin: 0 auto;
-  padding: 1.8rem 1.25rem 3rem;
+  padding: 1.8rem var(--gutter) 3rem;
 }
 
 /* ページの見出し: スライドのフレームタイトル */
@@ -175,14 +183,14 @@ a:hover { color: var(--emph); }
   font-weight: 700;
   line-height: 1.35;
 }
-.block-body { padding: .6rem 1rem .8rem; }
+.block-body { padding: .6rem var(--pad) .8rem; }
 .block-body > :first-child { margin-top: .2rem; }
 .block-body > :last-child { margin-bottom: .1rem; }
 
 /* ブロックの中の小見出し: スライドのブロックタイトル風のグレーの帯（ブロックの幅いっぱい） */
 .block h3 {
-  margin: 1.2rem -1rem .5rem;
-  padding: .2rem 1rem;
+  margin: 1.2rem calc(-1 * var(--pad)) .5rem;
+  padding: .2rem var(--pad);
   background: var(--shade);
   color: var(--ink);
   font-size: 1.15rem;
@@ -218,6 +226,9 @@ a:hover { color: var(--emph); }
 }
 
 .coauthors { font-size: .8em; }
+
+/* 年月や「(スライド)」などを途中で改行しない */
+.nowrap { white-space: nowrap; }
 
 /* 数式（KaTeX）。Computer Modern 系なので本文と同じ大きさにする */
 .katex { font-size: 1em; }
@@ -262,7 +273,7 @@ a:hover { color: var(--emph); }
 .titlepage {
   max-width: var(--max);
   margin: 0 auto;
-  padding: .4rem 1.25rem 1.5rem;
+  padding: .4rem var(--gutter) 1.5rem;
   text-align: center;
 }
 .titlebox {
@@ -332,7 +343,7 @@ a:hover { color: var(--emph); }
   gap: .3rem 1rem;
   max-width: var(--max);
   margin: 0 auto;
-  padding: .7rem 1.25rem 2rem;
+  padding: .7rem var(--gutter) 2rem;
   color: var(--muted);
   font-size: .85rem;
 }

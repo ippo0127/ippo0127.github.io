@@ -11,6 +11,7 @@
 | 講演 | `data/talks.yaml`（`selected:` = Selected talks / 主な講演、`other:` = Other talks / その他の口頭発表） |
 | ポスター発表 | `data/posters.yaml` |
 | 受賞 | `data/awards.yaml` |
+| 開催地の日本語表記（Kyoto → 京都 など） | `data/places.yaml` |
 | 自己紹介（About） | `content/_index.en.md`, `content/_index.ja.md` |
 | 学位論文・Research ページの見出し | `content/research.en.md`, `content/research.ja.md` |
 | 経歴（CV） | `content/cv.en.md`, `content/cv.ja.md` |
@@ -26,15 +27,15 @@
 
 - ファイルに書いた順に表示される。新しい項目は先頭に足す。
 - 日本語ページで表記を変えたい項目には `<キー>_ja` を足す（例: `event_ja: 信州大学物質基礎セミナー`）。なければ英語の表記が両方に出る。
-- 日付は `YYYY-MM`（例: `2026-07`）。表示は両言語とも "July 2026"。
+- 日付は `YYYY-MM`（例: `2026-07`）。表示は英語版が "July 2026"、日本語版が「2026年7月」。
 - arXiv 番号は必ず引用符で囲む（`arxiv: "2601.09067"`）。囲まないと数値として読まれ、ビルドがエラーで止まる。
 - 資料のリンクは `slides` / `draft` / `poster` / `video`。日本語でした講演は `in_japanese: true`（英語ページにだけ "(Japanese)" と出る）。
 - 使えるキーの一覧は各ファイルの先頭のコメントにある。
 
 ## 書式のルール（サイト全体で揃える）
 
-- 講演・ポスター・受賞の1行は「会の名前, 場所, 年月, “タイトル” (資料)」の形にテンプレートが組み立てる。data には各項目の中身だけを書く。
-- 場所は都市名だけ（`Kyoto`, `Oxford`）。オンラインは `Online`。
+- 講演・ポスター・受賞の1行は、英語版は「会の名前, 場所, 年月, “タイトル” (資料)」、日本語版は「会の名前，場所，年月，“タイトル” (資料)」の形にテンプレートが組み立てる。data には各項目の中身だけを書く。
+- 場所は都市名だけ（`Kyoto`, `Oxford`）。オンラインは `Online`。日本語版では `data/places.yaml` の日本語名（京都，オンラインなど）で表示するので、新しい都市を使ったらそこにも足す（足し忘れるとビルド時に警告が出て、日本語版にも英語のまま表示される）。
 - タイトルは sentence case（文頭と固有名詞だけ大文字）。論文タイトルは arXiv の表記どおりにする。
 - 次元は `(2+1)D`。2人の名前が並ぶ用語は en dash でつなぐ（`Chern–Simons`, `Reshetikhin–Turaev`）。日本語の題の副題は `〜` で囲む。
 - 共著者はテンプレートが「with A and B」（3人以上なら「with A, B, and C」）の形にする。`arXiv:` の表記もテンプレートが付ける。
@@ -68,6 +69,7 @@
 - Research ページのリストは shortcode（`{{< papers >}}`, `{{< talks selected >}}`, `{{< posters >}}`, `{{< awards >}}`）が `data/` から作る。1行の表示形式は `layouts/_partials/event-item.html` と `layouts/_shortcodes/papers.html` で決まる。
 - ラベルの訳（Slides / スライド など）は `i18n/en.yaml`, `i18n/ja.yaml`。
 - デザインは本人の Beamer スライドと LaTeX ポスターに合わせたモノクロ基調（`assets/css/style.css` の先頭に説明あり）。ページの見出しはスライドのフレームタイトル風のグレーの帯。本文の `##` 見出しごとに、`layouts/page.html` がポスターのブロック（黒い見出し帯＋黒枠）で囲む。トップページは、ポスターの見出し部分のように名前と所属をヘッダーの太い罫線の間に置く（`layouts/_partials/header.html`）。
+- 文字の大きさは画面の幅で3段階（スマホ 約16px／タブレット 18px／PC 約22px）。`assets/css/style.css` の先頭近くの `@media` で `html` の `font-size` を変えると全体が一緒に変わる。スマホでは余白（`--gutter`, `--pad`）も詰めている。
 - フォントは論文と同じ Latin Modern Roman（LaTeX の `lmodern`。大きい見出しは 17pt 用の `lmroman17`）。MacTeX から `static/fonts/` に同梱していて、外部のフォントサービスは使っていない。日本語の文字は OS の明朝体で表示される。数式は KaTeX（Computer Modern）。
 - 論文コメントは `layouts/_shortcodes/papers.html` が Markdown として描画する（`.RenderString`）。開閉は `assets/js/comments.js` で、Research ページにだけ読み込む。JavaScript が使えない環境では、コメントは開いたまま表示される。特定の論文のコメントを開いた状態で見せるリンクは `/research/#arxiv-<arXiv番号>`（日本語版は `/ja/research/#arxiv-<arXiv番号>`）。
 - 数式の変換は、Markdown（論文コメントを含む）が `layouts/_markup/render-passthrough.html`、`data/` のタイトルが `layouts/_partials/math-text.html`（どちらも Hugo の `transform.ToMath`）。

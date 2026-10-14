@@ -1,0 +1,10 @@
+# 開催地の日本語表記（data/talks.yaml などの place → 日本語ページでの表示）。
+# 新しい都市を place に書いたら、ここにも足す。足していないと日本語ページにも英語のまま表示され、ビルド時に警告が出る。
+Online: オンライン
+Tokyo: 東京
+Chiba: 千葉
+Kyoto: 京都
+Osaka: 大阪
+Fukuoka: 福岡
+London: ロンドン
+Oxford: オックスフォード

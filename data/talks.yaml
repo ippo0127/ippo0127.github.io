@@ -6,8 +6,8 @@
 #   event:       セミナー・研究会の名前（英語ページ用）
 #   event_ja:    日本語ページ用の名前（英語と同じなら省略）
 #   event_url:   セミナー・研究会のページ
-#   place:       開催地。都市名だけ（Kyoto など）、オンラインは Online
-#   date:        年月 YYYY-MM（表示は "July 2026"）
+#   place:       開催地。都市名だけ（Kyoto など）、オンラインは Online。日本語ページでは data/places.yaml の日本語名で表示する
+#   date:        年月 YYYY-MM（表示は英語ページ "July 2026"、日本語ページ「2026年7月」）
 #   title:       講演タイトル。数式は $...$ で書ける（そのときはタイトル全体を '...' で囲む）
 #   slides / draft / video: 資料・録画のリンク。PDF は static/files/ に置いて /files/<ファイル名> と書く
 #   in_japanese: true にすると英語ページに "(Japanese)" と表示する

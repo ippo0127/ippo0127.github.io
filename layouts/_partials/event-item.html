@@ -1,21 +1,35 @@
 {{- /*
   One talk / poster / award line:
-  [Event](event_url), Place, Month YYYY, “Title” (Slides) (Draft) (Poster) (Video) (Japanese)
+  English:  [Event](event_url), Place, Month YYYY, “Title” (Slides) (Draft) (Poster) (Video) (Japanese)
+  Japanese: [会の名前](event_url)，開催地，YYYY年M月，“タイトル” (スライド) (Draft) (ポスター) (録画)
+  The Japanese place name comes from data/places.yaml (or place_ja on the item).
   Usage: partial "event-item.html" (dict "item" . "lang" $lang "page" $.Page)
 */ -}}
 {{- $item := .item -}}
 {{- $lang := .lang -}}
 {{- $page := .page -}}
+{{- $sep := ", " -}}
+{{- if eq $lang "ja" }}{{ $sep = "，" }}{{ end -}}
 {{- $event := partial "field.html" (dict "item" $item "key" "event" "lang" $lang) -}}
 {{- with $item.event_url -}}
   <a href="{{ . }}">{{ $event }}</a>
 {{- else -}}
   {{ $event }}
 {{- end -}}
-{{- with $item.place }}, {{ . }}{{ end -}}
-{{- with $item.date }}, {{ partial "month.html" . }}{{ end -}}
-{{- with $item.title }}, “{{ partial "math-text.html" (dict "text" . "page" $page) }}”{{ end -}}
+{{- with $item.place -}}
+  {{- $place := . -}}
+  {{- if eq $lang "ja" -}}
+    {{- with or $item.place_ja (index hugo.Data.places .) -}}
+      {{- $place = . -}}
+    {{- else -}}
+      {{- warnf "data/places.yaml has no Japanese name for %q (shown in English on Japanese pages)" . -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $sep }}{{ $place -}}
+{{- end -}}
+{{- with $item.date }}{{ $sep }}<span class="nowrap">{{ partial "month.html" (dict "date" . "lang" $lang) }}</span>{{ end -}}
+{{- with $item.title }}{{ $sep }}“{{ partial "math-text.html" (dict "text" . "page" $page) }}”{{ end -}}
 {{- range $key := slice "slides" "draft" "poster" "video" -}}
-  {{- with index $item $key }} (<a href="{{ . }}">{{ T $key }}</a>){{ end -}}
+  {{- with index $item $key }} <span class="nowrap">(<a href="{{ . }}">{{ T $key }}</a>)</span>{{ end -}}
 {{- end -}}
 {{- if and $item.in_japanese (ne $lang "ja") }} {{ T "in_japanese" }}{{ end -}}

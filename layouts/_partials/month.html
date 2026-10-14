@@ -1,7 +1,13 @@
 {{- /*
-  "2026-07" -> "July 2026". English month names on both languages, as on the old site.
+  "2026-07" -> "July 2026" (English pages) / "2026年7月" (Japanese pages).
+  Usage: partial "month.html" (dict "date" "2026-07" "lang" $lang)
 */ -}}
 {{- $months := slice "January" "February" "March" "April" "May" "June" "July" "August" "September" "October" "November" "December" -}}
-{{- $parts := split (string .) "-" -}}
+{{- $parts := split (string .date) "-" -}}
+{{- $year := index $parts 0 -}}
 {{- $month := int (strings.TrimLeft "0" (index $parts 1)) -}}
-{{- return (printf "%s %s" (index $months (sub $month 1)) (index $parts 0)) -}}
+{{- $text := printf "%s %s" (index $months (sub $month 1)) $year -}}
+{{- if eq .lang "ja" -}}
+  {{- $text = printf "%s年%d月" $year $month -}}
+{{- end -}}
+{{- return $text -}}
