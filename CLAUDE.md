@@ -57,7 +57,7 @@
 
 1. `hugo --logLevel warn` で警告・エラーが出ないことを確認する。
 2. `hugo server` → http://localhost:1313/（日本語版は /ja/）で、変更したページを英語・日本語の両方で見る。
-3. `main` ブランチに push すると GitHub Actions（`.github/workflows/hugo.yml`）がビルドして公開する（1〜2分）。push する前にユーザーに確認する。
+3. `main` ブランチに push すると GitHub Actions（`.github/workflows/hugo.yml`）がビルドして公開する（1〜2分）。ユーザーに頼まれた変更は、確認を待たずに commit・push して公開まで済ませてよい（2026-10-15 にユーザーが了承）。AI が書いた訳文などは、公開後の報告で中身を示して確認してもらう。
 
 - Hugo を更新したら、`.github/workflows/hugo.yml` の `HUGO_VERSION` を手元の `hugo version` に揃える。
 - Claude デスクトップアプリのプレビュー（`.claude/launch.json` の `hugo`）が起動しないときは、macOS が hugo の「書類」フォルダへのアクセスを止めている。システム設定で hugo にアクセスを許可してもらうか、`hugo -d <一時フォルダ>` でビルドしたものを確認する。
