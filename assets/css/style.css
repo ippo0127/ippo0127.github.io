@@ -65,9 +65,10 @@
 
 html { -webkit-text-size-adjust: 100%; }
 
-/* PC（幅 900px 以上）では文字の基準を 25% 大きくする。サイズは rem / em で書いてあるので全体が一緒に大きくなる */
+/* PC（幅 900px 以上）では文字の基準を 25% 大きくし、内容を横に広く使う。サイズは rem / em で書いてあるので全体が一緒に大きくなる */
 @media (min-width: 900px) {
   html { font-size: 125%; }
+  :root { --max: min(1400px, 94vw); }   /* 内容の横幅: 画面の約 94%（最大 1400px） */
 }
 
 body {
