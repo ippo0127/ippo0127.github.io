@@ -1,0 +1,10 @@
+{{- /* Markdown の $...$ / $$...$$ を KaTeX でビルド時に描画する */ -}}
+{{- $opts := dict "output" "htmlAndMathml" "displayMode" (eq .Type "block") }}
+{{- with try (transform.ToMath .Inner $opts) }}
+  {{- with .Err }}
+    {{- errorf "KaTeX could not render the math at %s: %s" $.Position . }}
+  {{- else }}
+    {{- .Value }}
+    {{- $.Page.Store.Set "hasMath" true }}
+  {{- end }}
+{{- end -}}

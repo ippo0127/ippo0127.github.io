@@ -1,0 +1,7 @@
+{{- /*
+  "2026-07" -> "July 2026". English month names on both languages, as on the old site.
+*/ -}}
+{{- $months := slice "January" "February" "March" "April" "May" "June" "July" "August" "September" "October" "November" "December" -}}
+{{- $parts := split (string .) "-" -}}
+{{- $month := int (strings.TrimLeft "0" (index $parts 1)) -}}
+{{- return (printf "%s %s" (index $months (sub $month 1)) (index $parts 0)) -}}

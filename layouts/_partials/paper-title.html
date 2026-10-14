@@ -1,0 +1,8 @@
+{{- /*
+  論文タイトル（$...$ の数式に対応）と、小さい文字の共著者表記 "with A and B"。
+  Research ページの論文一覧と論文コメントの見出しで共通に使う。
+  Usage: partial "paper-title.html" (dict "paper" $paper "page" $page)
+*/ -}}
+{{- $p := .paper -}}
+{{- partial "math-text.html" (dict "text" $p.title "page" .page) -}}
+{{- with $p.coauthors }} <span class="coauthors">with {{ if not (reflect.IsSlice .) }}{{ . }}{{ else if eq (len .) 2 }}{{ delimit . " and " }}{{ else }}{{ delimit . ", " ", and " }}{{ end }}</span>{{ end -}}

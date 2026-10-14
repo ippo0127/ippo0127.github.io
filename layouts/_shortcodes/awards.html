@@ -1,0 +1,10 @@
+{{- /* Award list from data/awards.yaml */ -}}
+{{- $lang := .Page.Language.Lang -}}
+<ul class="awards">
+{{- range hugo.Data.awards }}
+  {{- $award := partial "field.html" (dict "item" . "key" "award" "lang" $lang) }}
+  <li>
+    {{- with .award_url }}<a href="{{ . }}">{{ $award }}</a>{{ else }}{{ $award }}{{ end }}{{ if eq $lang "ja" }}：{{ else }}: {{ end }}{{ partial "event-item.html" (dict "item" . "lang" $lang "page" $.Page) -}}
+  </li>
+{{- end }}
+</ul>

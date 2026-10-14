@@ -1,0 +1,11 @@
+{{ define "main" }}
+<h1 class="frametitle">{{ .Title }}</h1>
+<article class="content{{ with .File }} page-{{ .TranslationBaseName }}{{ end }}">
+  {{- /* 本文の ## 見出しごとに、ポスターのブロック（.block）で囲む */}}
+  {{- $parts := split (string .Content) "<h2" }}
+  {{- index $parts 0 | safeHTML }}
+  {{- range after 1 $parts }}
+    {{- printf "\n<section class=\"block\"><h2%s</div></section>" (replace . "</h2>" "</h2>\n<div class=\"block-body\">" 1) | safeHTML }}
+  {{- end }}
+</article>
+{{ end }}

@@ -1,0 +1,54 @@
+# 論文リスト。上から順に表示されるので、新しい論文は先頭に追加する。
+#   title:       論文タイトル。数式は $...$ で書ける（そのときはタイトル全体を '...' で囲む）
+#   coauthors:   共著者のリスト（単著なら省略）。表示は "with A and B"
+#   arxiv:       arXiv 番号。必ず引用符で囲む（囲まないと数値扱いで末尾の 0 が消えるため、ビルドがエラーで止まる）
+#   journal:     掲載誌の略称（未掲載なら省略）
+#   journal_url: 掲載誌の論文ページ
+#   comment:     論文コメント（Markdown、数式 $...$ も可）。Research の論文一覧で (Comment) を押すと開く。
+#                書くときは comment: | の次の行から4字下げで書く。段落は空行で区切る
+#   comment_ja:  日本語ページ用の論文コメント（無ければ英語のコメントが出る）
+
+- title: Parafermionizing the Monster
+  coauthors: [Yamato Honda, Justin Kaidi]
+  arxiv: "2605.10902"
+  comment: |
+    At a conference in Kyoto, I was chatting with Justin and mentioned that I had recently written a paper on dualities in two-dimensional theories. He then recalled a problem related to the Monster CFT that he had wanted to work on a few years ago, and invited me to collaborate on it. The Monster group is the largest sporadic finite simple group, with order roughly $8\times 10^{53}$. The Monster CFT is a CFT on which this group acts as automorphisms. It was known that one of the $\mathbb{Z}_2$ subgroups of the Monster group is self-dual under gauging, which implies the existence of Ising-type non-invertible symmetries. More generally, it was known that for primes $p$, there are also $\mathbb{Z}_p$ subgroups that are self-dual under gauging. This suggested that many more non-invertible symmetries should exist. In this paper, we investigated this expectation. This was also my first time using Mathematica. As someone who is not exactly good with computers, I think it will still take me a little while to get used to it.
+  comment_ja: |
+    京都の学会にてKaidiさんと雑談中，最近2次元理論の双対性に関する論文を書いたという話をしたところ，数年前にMonster CFTに関連して取り組もうとした話があったのを思い出したから一緒にやろうと声をかけてくれた．散在型の有限単純群の中で位数が最大の群をMonster群といい，その群が自己同型として作用するCFTをMonster CFTという．(その位数は約$8\times 10^{53}$である！) Monster群の部分群の$\mathbb{Z}_2$の中にgaugingでself-dualになるものがあり，そこから[Ising型の非可逆対称性](https://arxiv.org/abs/1911.00042)が作用していることも調べられていた．ところが一般に素数$p$に対して$\mathbb{Z}_p$についてもself-dualなものがある事も知られていたためそこからより多くの非可逆対称性の存在が帰結できると期待でき，それを調べたのがこの論文．初めてMathematicaを使ってみたが機械音痴な自分が慣れるにはもう少し時間がかかりそうである．
+
+- title: Web of dualities on non-orientable surfaces
+  coauthors: [Keita Tsuji]
+  arxiv: "2601.09067"
+  journal: JHEP
+  journal_url: https://link.springer.com/article/10.1007/JHEP05%282026%29256
+  comment: |
+    It has long been known that when a 2D bosonic theory possesses a $\mathbb{Z}_2$ symmetry, one can define operations such as gauging and fermionization, and that these operations generate a [web of dualities](https://arxiv.org/abs/1902.05550). A key ingredient in fermionization is the one-to-one correspondence between spin structures and quadratic refinements, together with the associated Arf invariant. It is also known that an analogous correspondence exists for pin$^-$ structures, suggesting that these constructions should admit a natural extension to non-orientable cases. About half a year ago, I discussed this idea with Y. Tachikawa, and at the time it felt somewhat premature. Revisiting the problem recently, I found that during those six months a [paper](https://arxiv.org/abs/2504.20021) had already appeared that investigated the corresponding dualities. Nevertheless, it also became clear that there remained many aspects still to be explored. Motivated by this, I started working on the problem together with K. Tsuji, a junior member of our group who has stronger expertise in conformal field theory than I do. Concretely, we identified the group structure formed by these operations, constructed the associated SymTFT, and analyzed the correspondence between sectors of the Hilbert space on $S^1$. We also included explicit examples to illustrate the general framework. Much of the work that I am less comfortable with, such as producing figures and carrying out detailed computations in concrete examples, was handled almost entirely by K. Tsuji, for which I am deeply grateful. To celebrate the submission of my first co-authored paper, we went together to enjoy a bowl of [Kashiwa Jiro](https://jirolog.pages.dev/en/stores/kashiwa) (ultra-traditional Japanese ramen, at least in my opinion), which tasted truly exceptional. (See also [his comment](https://key271.github.io/ja/comments/).)
+  comment_ja: |
+    2次元bosonicな理論が$\mathbb{Z}_2$対称性を持つ時に，gauging/fermionization等の操作が定義できて，それらの操作が[理論の双対性](https://arxiv.org/abs/1902.05550)をなすという話がよく知られていた．fermionizationにおいて重要なのはspin構造と一対一に対応するquadratic refinementとそこから定まるArf不変量というのがある点である．ところがpin$^-$構造にも同様の対応物が知られてたので，向き付け不可能な場合に自然に拡張できるはずである．この話を立川さんに聞いて半年ほど経って今ならできるかもと思い調べてみると，その半年のうちに[双対性を調べた論文](https://arxiv.org/abs/2504.20021)が出ていたが，まだやれることは色々ありそうだということで，CFTに詳しい研究室の後輩の辻くんと取り組んでみたもの．具体的にはその操作たちのなす群構造の特定，SymTFTの構成，$S^1$上のヒルベルト空間のセクターの対応を計算した上で，具体例を添えた．図表の作成とか具体例の計算みたいな私の苦手とする部分を辻くんがほとんどやってくれて，頭が上がらない．初めての共著を投稿した記念に一緒に食べた[柏二郎](https://jirolog.pages.dev/stores/kashiwa)は格別だった．([辻くんのコメント](https://key271.github.io/ja/comments/))
+
+- title: 'Vanishing of the $H^3$ obstruction for time-reversal symmetry in (2+1)D abelian bosonic TQFTs'
+  arxiv: "2509.07368"
+  journal: JHEP
+  journal_url: https://link.springer.com/article/10.1007/JHEP03%282026%29018
+  comment: |
+    We consider a time-reversal action on anyon data. In this setting, an obstruction to defining symmetry fractionalization arises, which is known as the $H^3$ obstruction. In the abelian case, no examples in which this obstruction is nontrivial had been known; however, its triviality had not yet been proven (see [comment](https://member.ipmu.jp/yuji.tachikawa/comments.html) on \[[1805.02738](https://arxiv.org/abs/1805.02738)\] by Y. Tachikawa). Half a year later, I revisited this problem with the thought that it might now be possible to prove such a result. After spending nearly ten hours struggling at my desk and eventually giving up, I suddenly realized—while riding my bicycle home—that there was a condition I had not yet used. With this insight, I managed to complete the proof around sunrise. Looking back, the argument involves only a simple computation. Nevertheless, I believe the result is physically important, and I have therefore written it up here.
+  comment_ja: |
+    エニオンのデータに対して時間反転作用を考える．その際，symmetry fractionalizationを定義するのに対する障害類が定まり$H^3$障害と呼ばれている．可換な場合，これが非自明になる例は知られていなかったが，まだその自明性は示されていなかった(\[[1805.02738](https://arxiv.org/abs/1805.02738)\]についての[立川さんのコメント](https://member.ipmu.jp/yuji.tachikawa/comments.html) 参照)．今なら示せるかもしれないと半年越しに思い立ち取り組んでみたもの．10時間ほど机の上で唸り，とうとう諦めて帰宅している最中の自転車の上で一つ条件を使っていない事に気づき，なんとか日が昇る頃に示すことができた．後で見ると簡単な計算しかしていないが，物理的に大事ではあると思うのでまとめたもの．
+
+- title: Generalization of anomaly formula for time reversal symmetry in (2+1)D abelian bosonic TQFTs
+  arxiv: "2508.04990"
+  journal: PTEP
+  journal_url: https://academic.oup.com/ptep/article/2025/12/123B02/8307487
+  comment: |
+    I discussed higher central charges via email with Ando, with whom I became close during my stay at YITP under the Atom-Type Researcher Program, and learned about their properties. The [higher central charge](https://arxiv.org/abs/2107.13091) is a generalization of the chiral central charge and, in the abelian case, provides an invariant that can be used to diagnose the existence of a gapped boundary. On the other hand, for (2+1)D systems with time-reversal symmetry, an [anomaly formula](https://arxiv.org/abs/1610.04624) is known that constrains the possible anomaly classification, and this formula involves the chiral central charge. Motivated by this, I explored whether, in the abelian and bosonic case, the entire formula could be extended so as to incorporate the higher central charge. Somewhat unexpectedly, this turned out to work rather well: the extension is such that setting $n=1$ reproduces the original anomaly formula. Various accompanying structures also admit natural extensions. As a result, this work can be viewed as a generalization of an important formula that incorporates an important quantity. Although the physical meaning of this extension is not yet entirely clear, I decided to write it up. Given the ambiguity of its physical interpretation, I had expected the work to face substantial scrutiny during peer review. Contrary to this expectation, it was not criticized at all; rather, it received unexpectedly strong and nontrivial praise, which was very gratifying.
+  comment_ja: |
+    アトム型研究員制度でYITPに滞在した際に仲良くなった安藤さんとメールで議論している中で[高次中心電荷](https://arxiv.org/abs/2107.13091)について教えてもらう．高次中心電荷はカイラル中心電荷の一般化であり，可換な場合はgapped boundary を持つかの判定に使える不変量である．一方，時間反転対称性のある(2+1)次元系のアノマリーに関して，その分類に制限をかける[アノマリー公式](https://arxiv.org/abs/1610.04624)が知られていたが，この公式はカイラル中心電荷を含んでいる．そこで可換でbosonicな場合にこの式全体を高次中心電荷を含むように拡張できないか考えてみたら思いの外うまくいき，$n=1$としたら元のアノマリー公式が復元されるような拡張ができた．付随して現れるさまざまな構造も上手く拡張されており，重要な公式の，重要な量を含んだ一般化ということで，物理的意味は曖昧だがとりあえずまとめたもの．いかんせん物理的意味が良くわからないため査読でかなり詰められるかと思ったが，全くそんなことはなく，むしろ褒めすぎなくらい褒めてもらえて嬉しかった．
+
+- title: On dimensions of (2+1)D abelian bosonic topological systems on non-orientable manifolds
+  arxiv: "2502.13532"
+  journal: PTEP
+  journal_url: https://academic.oup.com/ptep/advance-article/doi/10.1093/ptep/ptaf056/8109622
+  comment: |
+    When considering a time-reversal invariant (2+1)D TQFT, it is known that a certain quantity determined by the associated modular tensor category is always a nonnegative integer, and this quantity has been interpreted as the dimension of the Hilbert space on $\mathbb{RP}^2$. However, since a mathematically rigorous construction of Reshetikhin--Turaev TQFTs in the presence of time-reversal symmetry—that is, on non-orientable manifolds—is not yet known, it had remained unclear whether this quantity is indeed always an integer. The main result of this work is an algebraic proof of this integrality in the abelian and bosonic case. Originally, Tachikawa and I had intended to extend the analysis to the fermionic case as well, but this turned out to be substantially more difficult. At that point, we decided that it would be reasonable to publish the results obtained so far. I was told that he felt that his own contribution beyond this point was not sufficient for joint authorship, and that I should therefore submit the work as a single-author paper, which is what ultimately happened. From my own perspective, given that my collaborator had been actively involved in many discussions, this outcome felt somewhat unexpected.
+  comment_ja: |
+    時間反転対称な(2+1)次元のTQFTを考えた時，モジュラーテンソル圏から定まるある量が常に非負整数となることが知られており，その量は$\mathbb{RP}^2$上のヒルベルト空間の次元と解釈されていた．ところがReshetikhin–Turaev TQFTは時間反転対称性がある場合(すなわち向き付け不可能多様体上で)厳密な構成がまだ知られていないため，本当にいつでも整数になるかはわからないという状況であった．そこでその整数性を可換かつbosonicな場合に代数的に示したのが主な結果である．本当はfermionicな場合までを立川さんと考えようとしていたがそこから先がなかなか難しかった．そこで，区切りがいいということで出してしまえという事になるが，「ここまでに私の寄与はないから一人で出しなさい」と言われその通りになった．自分としてはいろいろ議論に付き合ってもらったので狐につままれた気分であった．

@@ -1,0 +1,333 @@
+/* ==========================================================================
+   デザイン: 自分の Beamer スライドと LaTeX ポスターに合わせたモノクロ基調
+   - 書体: 論文と同じ Latin Modern Roman（LaTeX の lmodern）。数式は KaTeX（Computer Modern）
+   - トップページの名前: ポスターの見出し部分のように、太い黒罫線の間に中央揃え
+   - ページの見出し: スライドのフレームタイトル風のグレーの帯
+   - セクション: ポスターのブロック風（黒い見出し帯＋黒枠）
+   - 強調・コメント: スライドのブロック風の薄いグレーの箱
+   - 箇条書き: Beamer の丸い点
+   ========================================================================== */
+
+/* フォントは static/fonts/ に MacTeX から同梱（ライセンスは static/fonts/GUST-FONT-LICENSE.TXT）。
+   日本語の文字はこのフォントに無いので、--font の明朝体で表示される。 */
+@font-face {
+  font-family: "Latin Modern Roman";
+  src: url("../fonts/lmroman10-regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Latin Modern Roman";
+  src: url("../fonts/lmroman10-bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Latin Modern Roman";
+  src: url("../fonts/lmroman10-italic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Latin Modern Roman";
+  src: url("../fonts/lmroman10-bolditalic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+/* 大きな見出し用（LaTeX の大きな文字と同じ 17pt 用のデザイン） */
+@font-face {
+  font-family: "Latin Modern Roman Display";
+  src: url("../fonts/lmroman17-regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 色・フォントはここでまとめて変更できる */
+:root {
+  --ink: #000;            /* 罫線・ブロックの見出し帯 */
+  --text: #111;
+  --muted: #555;
+  --frame: #cccccc;       /* スライドのフレームタイトルの帯 */
+  --shade: #e3e3e3;       /* スライド・ポスターの強調ボックス */
+  --link: #1f3fbf;        /* リンク（LaTeX の blue に近い色） */
+  --emph: #d42222;        /* 強調（ポスターの赤） */
+  --font: "Latin Modern Roman", "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", serif;
+  --display: "Latin Modern Roman Display", "Latin Modern Roman", "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", serif;
+  --max: 920px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: #fff;
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 18px;
+  line-height: 1.65;
+  overflow-wrap: break-word;
+}
+
+html:lang(ja) body { line-height: 1.85; }
+
+a {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+a:hover { color: var(--emph); }
+
+/* ---------- Header（ポスターの上端と同じ太い罫線） ---------- */
+
+.site-header {
+  border-top: 7px solid var(--ink);
+  border-bottom: 3px solid var(--ink);
+}
+
+.header-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .4rem 1.5rem;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: .75rem 1.25rem;
+}
+
+.site-title {
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: 1.5rem;
+  line-height: 1.2;
+  text-decoration: none;
+}
+.site-title:hover { color: var(--ink); }
+
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem;
+  margin-left: auto;   /* 左上の名前が無いトップページでも右寄せにする */
+}
+.site-nav a {
+  padding: .15rem .65rem;
+  border: 1.5px solid transparent;
+  color: var(--ink);
+  text-decoration: none;
+}
+.site-nav a:hover { border-color: var(--ink); }
+.site-nav a[aria-current="page"] {   /* いまのページは、ポスターのブロック見出しと同じ白抜き */
+  background: var(--ink);
+  color: #fff;
+  font-weight: 700;
+}
+.site-nav a.lang {                    /* 言語の切り替えは枠付き */
+  margin-left: .5rem;
+  border-color: var(--ink);
+}
+
+/* ---------- Main ---------- */
+
+.container {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 1.8rem 1.25rem 3rem;
+}
+
+/* ページの見出し: スライドのフレームタイトル */
+.frametitle {
+  margin: 0 0 1.6rem;
+  padding: .5rem 1rem;
+  background: var(--frame);
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: clamp(1.5rem, 4.5vw, 2rem);
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+/* セクション: ポスターのブロック（page.html が h2 ごとに .block で囲む） */
+.block {
+  margin: 0 0 1.6rem;
+  border: 1.5px solid var(--ink);
+}
+.block > h2 {
+  margin: 0;
+  padding: .3rem .85rem;
+  background: var(--ink);
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.block-body { padding: .6rem 1rem .8rem; }
+.block-body > :first-child { margin-top: .2rem; }
+.block-body > :last-child { margin-bottom: .1rem; }
+
+/* ブロックの中の小見出し: スライドのブロックタイトル風のグレーの帯（ブロックの幅いっぱい） */
+.block h3 {
+  margin: 1.2rem -1rem .5rem;
+  padding: .2rem 1rem;
+  background: var(--shade);
+  color: var(--ink);
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+.block-body > h3:first-child { margin-top: -.6rem; }
+
+/* 箇条書き: Beamer の丸い点 */
+.content ul,
+.block-body ul {
+  margin: .4rem 0 .8rem;
+  padding-left: 1.4rem;
+  list-style: none;
+}
+.content li,
+.block-body li {
+  position: relative;
+  margin: .4rem 0;
+}
+.content li::before,
+.block-body li::before {
+  content: "";
+  position: absolute;
+  top: .55em;
+  top: calc(.5lh - .25em);
+  left: -1.1rem;
+  width: .5em;
+  height: .5em;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff 0, #c9c9c9 35%, #707070 100%);
+  box-shadow: .5px .5px 1px rgba(0, 0, 0, .35);
+}
+
+.coauthors { font-size: .8em; }
+
+/* 数式（KaTeX）。Computer Modern 系なので本文と同じ大きさにする */
+.katex { font-size: 1em; }
+
+/* 論文コメント: Research の論文一覧で (Comment) を押すと開く。
+   JavaScript が使えない環境では、ボタンを出さずにコメントを開いたまま表示する */
+.comment-toggle-wrap { display: none; }
+.js .comment-toggle-wrap {
+  display: inline;
+  white-space: nowrap;  /* "(Comment ▸)" を途中で改行しない */
+}
+.comment-toggle {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--link);
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+.comment-toggle:hover { color: var(--emph); }
+.comment-toggle::after {
+  content: "▸";
+  display: inline-block;
+  margin-left: .25em;
+}
+.comment-toggle[aria-expanded="true"]::after { content: "▾"; }
+
+.paper-comment {   /* スライドの「Fact」の箱と同じ薄いグレー */
+  margin: .5rem 0 1rem;
+  padding: .5rem .9rem;
+  background: var(--shade);
+}
+.paper-comment p { margin: .35rem 0; }
+.js .paper-comment:not(.is-open) { display: none; }
+
+/* ---------- About（home） ---------- */
+
+/* 名前と所属: ポスターの見出し部分のように、ヘッダーの上下の太い罫線の間に中央揃え */
+.titlepage {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: .4rem 1.25rem 1.5rem;
+  text-align: center;
+}
+.titlebox {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--display);
+  font-size: clamp(2.1rem, 7vw, 3.1rem);
+  font-weight: 400;
+  line-height: 1.2;
+}
+.institute {
+  margin: .5rem 0 0;
+  font-size: 1.1rem;
+}
+
+.profile {
+  display: grid;
+  gap: 1.6rem;
+  align-items: start;
+}
+/* Profile と写真は上下の幅を揃える（写真の枠が Profile の高さに合わせて伸び、写真は枠いっぱいに表示） */
+.profile.has-photo {
+  grid-template-columns: minmax(0, 1fr) 240px;
+  align-items: stretch;
+}
+.profile .block { margin: 0; }
+.profile .block-body p { margin: .4rem 0; }
+.profile-photo {
+  position: relative;
+  min-height: 260px;
+  margin: 0;
+  padding: 6px;
+  border: 1.5px solid var(--ink);
+}
+.profile-photo img {   /* 枠の高さを決めないよう、写真は枠の内側に重ねて置く */
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  display: block;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+  object-fit: cover;
+}
+
+@media (max-width: 700px) {
+  .profile.has-photo { grid-template-columns: 1fr; }
+  .profile-photo {   /* 縦に並ぶときは写真全体を表示する */
+    width: 100%;
+    max-width: 240px;
+    min-height: 0;
+    margin: 0 auto;
+  }
+  .profile-photo img {
+    position: static;
+    width: 100%;
+    height: auto;
+  }
+}
+
+/* ---------- Footer（ポスターの下端と同じ罫線） ---------- */
+
+.site-footer { border-top: 3px solid var(--ink); }
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: .3rem 1rem;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: .7rem 1.25rem 2rem;
+  color: var(--muted);
+  font-size: .85rem;
+}
+.site-footer p { margin: 0; }

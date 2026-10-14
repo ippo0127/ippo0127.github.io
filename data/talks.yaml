@@ -1,0 +1,127 @@
+# 講演リスト。上から順に表示されるので、新しい講演は各グループの先頭に追加する。
+#   selected: Research ページの "Selected talks"（日本語版: 主な講演）
+#   other:    "Other talks"（日本語版: その他の口頭発表）
+#
+# 各項目のキー（不要なものは省略してよい）。書式のルールは CLAUDE.md を参照。
+#   event:       セミナー・研究会の名前（英語ページ用）
+#   event_ja:    日本語ページ用の名前（英語と同じなら省略）
+#   event_url:   セミナー・研究会のページ
+#   place:       開催地。都市名だけ（Kyoto など）、オンラインは Online
+#   date:        年月 YYYY-MM（表示は "July 2026"）
+#   title:       講演タイトル。数式は $...$ で書ける（そのときはタイトル全体を '...' で囲む）
+#   slides / draft / video: 資料・録画のリンク。PDF は static/files/ に置いて /files/<ファイル名> と書く
+#   in_japanese: true にすると英語ページに "(Japanese)" と表示する
+
+selected:
+  - event: Seminar at Shinshu University
+    event_ja: 信州大学物質基礎セミナー
+    event_url: https://azusa.shinshu-u.ac.jp/~yonupa/seminar/seminar1.html
+    place: Online
+    date: 2026-07
+    title: Web of dualities on non-orientable surfaces
+    slides: /files/2026-07-shinshu-slides.pdf
+
+  - event: Seminar at the University of Osaka
+    event_ja: 大阪大学素粒子論研究室セミナー
+    event_url: https://www-het.phys.sci.osaka-u.ac.jp/~seminar/seminar_utf.html
+    place: Osaka
+    date: 2026-05
+    title: Web of dualities on non-orientable surfaces
+    slides: /files/2026-05-osaka-slides.pdf
+
+  - event: Interfaces & Symmetry
+    event_url: https://indico.yukawa.kyoto-u.ac.jp/event/57/
+    place: Kyoto
+    date: 2026-05
+    title: Insights from the crosscap state toward a rigorous formulation of non-orientable TQFTs
+    slides: /files/2026-05-interfaces-symmetry-slides.pdf
+
+  - event: Seminar at the Mathematical Institute, University of Oxford
+    place: Oxford
+    date: 2026-04
+    title: Insights from the crosscap state toward non-orientable TQFTs
+    slides: /files/2026-04-oxford-lims-slides.pdf
+
+  - event: Seminar at the London Institute for Mathematical Sciences
+    event_url: https://lims.ac.uk/event/-insights-from-the-crosscap-state-towards-non-orientable-tqfts/
+    place: London
+    date: 2026-04
+    title: Insights from the crosscap state toward non-orientable TQFTs
+    slides: /files/2026-04-oxford-lims-slides.pdf
+    video: https://www.youtube.com/watch?v=0RvrMSHJn24
+
+  - event: Colloquium of Theoretical Physics at Rikkyo University
+    event_ja: 立教大学理論物理学コロキウム
+    event_url: https://www.rikkyo.ne.jp/grp/itp/jp/jp_events.html
+    place: Tokyo
+    date: 2025-11
+    title: Insights from the crosscap state toward a rigorous formulation of non-orientable TQFTs
+    slides: /files/2025-11-rikkyo-slides.pdf
+
+  - event: CREST seminar
+    event_url: https://www.ms.u-tokyo.ac.jp/~yasuyuki/crest-seminar.htm
+    place: Online
+    date: 2025-07
+    title: On dimensions of (2+1)D abelian topological systems on non-orientable surfaces
+    slides: /files/2025-07-crest-slides.pdf
+
+  - event: Condensed matter seminar at YITP
+    event_ja: 基礎物理学研究所凝縮系セミナー
+    place: Kyoto
+    date: 2025-05
+    title: On dimensions of (2+1)D abelian topological systems on non-orientable surfaces
+
+  - event: Seminar at Kyushu University
+    event_ja: 九州大学素粒子論研究室セミナー
+    event_url: https://sites.google.com/view/kyushu-het/seminar
+    place: Fukuoka
+    date: 2025-04
+    title: On dimensions of (2+1)D abelian bosonic topological systems on unoriented manifolds
+
+other:
+  - event: RFCMP
+    event_url: https://indico.global/event/18207/
+    place: Online
+    date: 2026-06
+    title: 'Introduction to SymTFT and condensation defects via $\mathbb{Z}_2$ gauge theory'
+    draft: /files/2026-06-rfcmp-draft.pdf
+    video: https://youtu.be/jS0QHY_dP68
+    in_japanese: true
+
+  - event: RCS seminar
+    event_url: https://sites.google.com/view/rcs-seminar/%E3%81%93%E3%82%8C%E3%81%BE%E3%81%A7%E3%81%AE%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88
+    place: Online
+    date: 2026-05
+    title: TQFT入門〜Chern–Simons理論から読み取るモジュラーテンソル圏の気持ち〜
+    slides: /files/2026-05-rcs-slides.pdf
+
+  - event: RFCMP
+    event_url: https://indico.global/category/1306/
+    place: Online
+    date: 2025-10
+    title: Reshetikhin–Turaev TQFT with time-reversal symmetry
+    draft: /files/2025-10-rfcmp-draft.pdf
+    video: https://youtu.be/KEdFQPYEugw
+    in_japanese: true
+
+  - event: TFS2025
+    event_ja: トポロジー新人セミナー2025
+    event_url: https://sites.google.com/view/topologyfs2025/%E3%83%9B%E3%83%BC%E3%83%A0
+    place: Chiba
+    date: 2025-08
+    title: Reshetikhin–Turaev不変量の向き付け不可能多様体への拡張
+
+  - event: Summer School 2025
+    event_ja: 原子核三者若手 夏の学校2025
+    event_url: https://www2.yukawa.kyoto-u.ac.jp/~sansha.wakate/school2025/index.html
+    place: Tokyo
+    date: 2025-08
+    title: 時間反転対称な位相的場の理論におけるヒルベルト空間の次元の考察
+    slides: /files/2025-08-summer-school-slides.pdf
+
+  - event: Seminar for students in the fields of theoretical physics
+    event_ja: 理論物理学生セミナー
+    event_url: https://sites.google.com/view/pncstuseminar2025
+    place: Online
+    date: 2025-02
+    title: On dimensions of (2+1)D abelian bosonic topological systems on unoriented manifolds

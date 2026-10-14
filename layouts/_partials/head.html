@@ -1,0 +1,33 @@
+{{- $title := site.Title }}
+{{- if not .IsHome }}{{ $title = printf "%s - %s" site.Title .Title }}{{ end }}
+{{- $description := or .Description site.Params.description }}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add("js")</script>
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $description }}">
+<link rel="canonical" href="{{ .Permalink }}">
+{{- range .AllTranslations }}
+<link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}">
+{{- end }}
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:url" content="{{ .Permalink }}">
+{{- with site.Params.photo }}
+  {{- if fileExists (path.Join "static" .) }}
+<meta property="og:image" content="{{ . | absURL }}">
+  {{- end }}
+{{- end }}
+{{- range slice "lmroman10-regular" "lmroman10-bold" "lmroman17-regular" }}
+<link rel="preload" href="{{ printf "fonts/%s.otf" . | relURL }}" as="font" type="font/otf" crossorigin>
+{{- end }}
+{{- /* 数式のあるページだけ KaTeX の CSS を読み込む（static/katex/ に同梱）。
+       バージョンは Hugo 内蔵の KaTeX に揃える（Hugo v0.168 → KaTeX 0.18.4） */}}
+{{- $noop := .WordCount }}
+{{- if .Store.Get "hasMath" }}
+<link rel="stylesheet" href="{{ "katex/katex.min.css" | relURL }}?v=0.18.4">
+{{- end }}
+{{- with resources.Get "css/style.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+{{- end }}

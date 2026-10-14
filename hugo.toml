@@ -1,0 +1,37 @@
+# サイト全体の設定。ふだんの更新（論文・講演の追加など）で触る必要はない。CLAUDE.md を参照。
+baseURL = "https://ippo0127.github.io/"
+title = "Ippo Orii (折井 一歩)"
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
+disableKinds = ["taxonomy", "term", "rss"]
+enableRobotsTXT = true
+
+[params]
+  email = "ippo.orii[at]ipmu.jp"
+  # About ページの写真（static/ からのパス）。ファイルが無いあいだは写真なしで表示される
+  photo = "images/profile.jpg"
+
+# 数式: Markdown 中の $...$（文中）と $$...$$（別行）をそのまま残し、
+# layouts/_markup/render-passthrough.html で KaTeX に変換する。
+# \[...\] は使わない（論文コメント中の \[1805.02738\] のような角括弧の表示と衝突するため）
+[markup.goldmark.extensions.passthrough]
+  enable = true
+  [markup.goldmark.extensions.passthrough.delimiters]
+    block = [['$$', '$$']]
+    inline = [['$', '$']]
+
+[languages]
+  [languages.en]
+    label = "English"
+    locale = "en"
+    weight = 1
+    [languages.en.params]
+      affiliation = "Kavli Institute for the Physics and Mathematics of the Universe"
+      description = "Ippo Orii (折井 一歩), a doctoral student at Kavli IPMU working on topological quantum field theory."
+  [languages.ja]
+    label = "日本語"
+    locale = "ja"
+    weight = 2
+    [languages.ja.params]
+      affiliation = "カブリ数物連携宇宙研究機構"
+      description = "折井 一歩（カブリ数物連携宇宙研究機構 博士課程）の研究ページ。位相的場の理論を研究しています。"

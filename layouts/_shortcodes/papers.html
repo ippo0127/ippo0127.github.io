@@ -1,0 +1,25 @@
+{{- /* Paper list from data/papers.yaml. A paper with a comment gets a (Comment) button that opens it. */ -}}
+{{- $lang := .Page.Language.Lang -}}
+<ul class="papers">
+{{- range hugo.Data.papers }}
+  {{- $p := . }}
+  {{- with $p.arxiv }}
+    {{- if ne (printf "%T" .) "string" }}
+      {{- errorf "data/papers.yaml: arXiv ID %v must be quoted, e.g. arxiv: \"2601.09067\"" . }}
+    {{- end }}
+  {{- end }}
+  {{- $comment := partial "field.html" (dict "item" $p "key" "comment" "lang" $lang) }}
+  <li{{ with $p.arxiv }} id="arxiv-{{ . }}"{{ end }}>
+    {{- partial "paper-title.html" (dict "paper" $p "page" $.Page) -}}
+    {{- with $p.arxiv }}, <a href="https://arxiv.org/abs/{{ . }}">arXiv:{{ . }}</a>{{ end -}}
+    {{- with $p.journal }}, {{ with $p.journal_url }}<a href="{{ . }}">{{ $p.journal }}</a>{{ else }}{{ $p.journal }}{{ end }}{{ end -}}
+    {{- with $comment }}
+      {{- $id := printf "comment-%s" $p.arxiv }}
+      {{- $.Page.Store.Set "hasComments" true }} <span class="comment-toggle-wrap">(<button type="button" class="comment-toggle" aria-expanded="false" aria-controls="{{ $id }}">{{ T "comment" }}</button>)</span>
+    <div class="paper-comment" id="{{ $id }}">
+      {{ $.Page.RenderString (dict "display" "block") . }}
+    </div>
+    {{- end }}
+  </li>
+{{- end }}
+</ul>

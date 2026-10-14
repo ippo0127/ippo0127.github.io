@@ -1,0 +1,12 @@
+{{- /*
+  Returns a field of a data item for the current language:
+  "<key>_ja" on Japanese pages when it exists, otherwise "<key>".
+  Usage: partial "field.html" (dict "item" . "key" "event" "lang" $lang)
+*/ -}}
+{{- $value := index .item .key -}}
+{{- if ne .lang "en" -}}
+  {{- with index .item (printf "%s_%s" .key .lang) -}}
+    {{- $value = . -}}
+  {{- end -}}
+{{- end -}}
+{{- return $value -}}

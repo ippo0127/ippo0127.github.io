@@ -1,0 +1,26 @@
+{{- /*
+  Renders a plain-text string (e.g. a title from data/*.yaml) in which $...$ parts are
+  LaTeX math, rendered with KaTeX at build time. Marks the page so that the KaTeX style
+  sheet is loaded (see head.html).
+  Usage: partial "math-text.html" (dict "text" .title "page" $page)
+*/ -}}
+{{- $parts := split (string .text) "$" -}}
+{{- if modBool (len $parts) 2 -}}
+  {{- errorf "data/*.yaml: unbalanced $ in %q (shown on %s)" .text .page.File.Path -}}
+{{- end -}}
+{{- $out := "" -}}
+{{- range $i, $part := $parts -}}
+  {{- if modBool $i 2 -}}
+    {{- $out = printf "%s%s" $out (htmlEscape $part) -}}
+  {{- else -}}
+    {{- with try (transform.ToMath $part (dict "output" "htmlAndMathml")) -}}
+      {{- with .Err -}}
+        {{- errorf "data/*.yaml: KaTeX could not render $%s$ (shown on %s): %s" $part $.page.File.Path . -}}
+      {{- else -}}
+        {{- $out = printf "%s%s" $out .Value -}}
+      {{- end -}}
+    {{- end -}}
+    {{- $.page.Store.Set "hasMath" true -}}
+  {{- end -}}
+{{- end -}}
+{{- return ($out | safeHTML) -}}
