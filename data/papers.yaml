@@ -11,6 +11,8 @@
 - title: Parafermionizing the Monster
   coauthors: [Yamato Honda, Justin Kaidi]
   arxiv: "2605.10902"
+  journal: JHEP
+  journal_url: https://link.springer.com/article/10.1007/JHEP08%282026%29204
   comment: |
     At a conference in Kyoto, I was chatting with Justin and mentioned that I had recently written a paper on dualities in two-dimensional theories. He then recalled a problem related to the Monster CFT that he had wanted to work on a few years ago, and invited me to collaborate on it. The Monster group is the largest sporadic finite simple group, with order roughly $8\times 10^{53}$. The Monster CFT is a CFT on which this group acts as automorphisms. It was known that one of the $\mathbb{Z}_2$ subgroups of the Monster group is self-dual under gauging, which implies the existence of Ising-type non-invertible symmetries. More generally, it was known that for primes $p$, there are also $\mathbb{Z}_p$ subgroups that are self-dual under gauging. This suggested that many more non-invertible symmetries should exist. In this paper, we investigated this expectation. This was also my first time using Mathematica. As someone who is not exactly good with computers, I think it will still take me a little while to get used to it.
   comment_ja: |
