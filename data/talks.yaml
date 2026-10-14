@@ -29,13 +29,6 @@ selected:
     title: Web of dualities on non-orientable surfaces
     slides: /files/2026-05-osaka-slides.pdf
 
-  - event: Interfaces & Symmetry
-    event_url: https://indico.yukawa.kyoto-u.ac.jp/event/57/
-    place: Kyoto
-    date: 2026-05
-    title: Insights from the crosscap state toward a rigorous formulation of non-orientable TQFTs
-    slides: /files/2026-05-interfaces-symmetry-slides.pdf
-
   - event: Seminar at the Mathematical Institute, University of Oxford
     place: Oxford
     date: 2026-04
@@ -49,6 +42,13 @@ selected:
     title: Insights from the crosscap state toward non-orientable TQFTs
     slides: /files/2026-04-oxford-lims-slides.pdf
     video: https://www.youtube.com/watch?v=0RvrMSHJn24
+
+  - event: Interfaces & Symmetry
+    event_url: https://indico.yukawa.kyoto-u.ac.jp/event/57/
+    place: Kyoto
+    date: 2026-03
+    title: Insights from the crosscap state toward a rigorous formulation of non-orientable TQFTs
+    slides: /files/2026-03-interfaces-symmetry-slides.pdf
 
   - event: Colloquium of Theoretical Physics at Rikkyo University
     event_ja: 立教大学理論物理学コロキウム
