@@ -58,19 +58,24 @@
   --emph: #d42222;        /* 強調（ポスターの赤） */
   --font: "Latin Modern Roman", "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", serif;
   --display: "Latin Modern Roman Display", "Latin Modern Roman", "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", serif;
-  --max: 920px;
+  --max: 960px;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 
 html { -webkit-text-size-adjust: 100%; }
 
+/* PC（幅 900px 以上）では文字の基準を 25% 大きくする。サイズは rem / em で書いてあるので全体が一緒に大きくなる */
+@media (min-width: 900px) {
+  html { font-size: 125%; }
+}
+
 body {
   margin: 0;
   background: #fff;
   color: var(--text);
   font-family: var(--font);
-  font-size: 18px;
+  font-size: 1.125rem;   /* スマホ 18px / PC 約 22px */
   line-height: 1.65;
   overflow-wrap: break-word;
 }
@@ -165,7 +170,7 @@ a:hover { color: var(--emph); }
   padding: .3rem .85rem;
   background: var(--ink);
   color: #fff;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 700;
   line-height: 1.35;
 }
@@ -179,7 +184,7 @@ a:hover { color: var(--emph); }
   padding: .2rem 1rem;
   background: var(--shade);
   color: var(--ink);
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   font-weight: 700;
   line-height: 1.4;
 }
@@ -279,14 +284,14 @@ a:hover { color: var(--emph); }
 }
 /* Profile と写真は上下の幅を揃える（写真の枠が Profile の高さに合わせて伸び、写真は枠いっぱいに表示） */
 .profile.has-photo {
-  grid-template-columns: minmax(0, 1fr) 240px;
+  grid-template-columns: minmax(0, 1fr) 14rem;
   align-items: stretch;
 }
 .profile .block { margin: 0; }
 .profile .block-body p { margin: .4rem 0; }
 .profile-photo {
   position: relative;
-  min-height: 260px;
+  min-height: 15rem;
   margin: 0;
   padding: 6px;
   border: 1.5px solid var(--ink);
