@@ -60,6 +60,7 @@
 2. `hugo server` → http://localhost:1313/（日本語版は /ja/）で、変更したページを英語・日本語の両方で見る。
 3. `main` ブランチに push すると GitHub Actions（`.github/workflows/hugo.yml`）がビルドして公開する（1〜2分）。ユーザーに頼まれた変更は、確認を待たずに commit・push して公開まで済ませてよい（2026-10-15 にユーザーが了承）。AI が書いた訳文などは、公開後の報告で中身を示して確認してもらう。
 
+- `static/googlecdaa93c59737885b.html` は Google Search Console の所有権確認用（2026-10-27 に大学の Google アカウント ippo0127@g.ecc.u-tokyo.ac.jp で登録）。消すと確認が外れるので残す。卒業前に個人のアカウントもオーナーに加える必要がある。
 - Hugo を更新したら、`.github/workflows/hugo.yml` の `HUGO_VERSION` を手元の `hugo version` に揃える。
 - Claude デスクトップアプリのプレビュー（`.claude/launch.json` の `hugo`）が起動しないときは、macOS が hugo の「書類」フォルダへのアクセスを止めている。システム設定で hugo にアクセスを許可してもらうか、`hugo -d <一時フォルダ>` でビルドしたものを確認する。
 
