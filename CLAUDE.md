@@ -16,6 +16,7 @@
 | 学位論文・Research ページの見出し | `content/research.en.md`, `content/research.ja.md` |
 | 経歴（CV） | `content/cv.en.md`, `content/cv.ja.md` |
 | スライドなどの PDF | `static/files/`（`static/files/a.pdf` → `/files/a.pdf` で公開される） |
+| 論文の証明動画（HTML） | `static/movies/`（論文の `movies:` に載せる。元のファイルは `~/Documents/論文/<論文>/movies/site/`） |
 | 写真 | `static/images/profile.jpg` |
 | メールアドレス・写真のパス | `hugo.toml` の `[params]` |
 | 色・フォント・レイアウト | `assets/css/style.css`, `layouts/` |

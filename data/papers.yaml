@@ -5,12 +5,21 @@
 #                arXiv に出る前の論文は arxiv も journal も省略する。表示に "(in preparation)" / "(準備中)" が付く
 #   journal:     掲載誌の略称（未掲載なら省略）
 #   journal_url: 掲載誌の論文ページ
+#   movies:      証明の動画などのリスト。各項目に label（英語ページの表示）、label_ja（日本語ページの表示）、url。
+#                ファイルは static/movies/ に置いて /movies/<ファイル名> と書く。論文の行の (Comment) の前に出る
 #   comment:     論文コメント（Markdown、数式 $...$ も可）。Research の論文一覧で (Comment) を押すと開く。
 #                書くときは comment: | の次の行から4字下げで書く。段落は空行で区切る
 #   comment_ja:  日本語ページ用の論文コメント（無ければ英語のコメントが出る）
 
 - title: Möbius Fusion Algebra
   coauthors: [Yuji Tachikawa]
+  movies:
+    - label: "Proof movie: Prop. 4.24"
+      label_ja: 証明動画：命題4.24
+      url: /movies/mobius_prop4_24.html
+    - label: "Proof movie: Prop. 5.6"
+      label_ja: 証明動画：命題5.6
+      url: /movies/mobius_prop5_6.html
   comment: |
     In [my first paper](https://arxiv.org/abs/2502.13532), I studied an integrality problem: proving the non-orientable Verlinde formula. At the time, I managed to prove it in the abelian case, but the non-abelian case was so difficult that it was left untouched for a long time. Then, around October of my second year of the master's program, just as I was about to start writing my master's thesis, Tachikawa excitedly told me that he had come up with a strategy for the proof. There is a manifold called the solid Klein bottle, whose boundary is the Klein bottle. His idea was to construct a new algebra formed by the anyons that can be inserted into it (the analogue of the fusion algebra for the solid torus); if this could be done, the numbers we wanted would appear as the dimensions of irreducible representations of this algebra, and their integrality would follow. At the time, it truly felt like a revelation from above (no wonder he was so excited). I finished my thesis quickly and started working on it, and it took about a year to complete. Also from the autumn of my second master's year, I had been working in parallel with Suzuki, a low-dimensional topologist, on constructing a non-orientable version of the Reshetikhin–Turaev invariant, and I realized that this algebra could be used directly there as well. I was very happy that the two big problems I had been carrying were solved at once.
   comment_ja: |
