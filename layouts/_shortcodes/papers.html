@@ -15,7 +15,7 @@
     {{- with $p.journal }}, {{ with $p.journal_url }}<a href="{{ . }}">{{ $p.journal }}</a>{{ else }}{{ $p.journal }}{{ end }}{{ end -}}
     {{- if not (or $p.arxiv $p.journal) }} {{ T "in_preparation" }}{{ end -}}
     {{- with $comment }}
-      {{- $id := printf "comment-%s" $p.arxiv }}
+      {{- $id := printf "comment-%s" (or $p.arxiv (urlize $p.title)) }}
       {{- $.Page.Store.Set "hasComments" true }} <span class="comment-toggle-wrap">(<button type="button" class="comment-toggle" aria-expanded="false" aria-controls="{{ $id }}">{{ T "comment" }}</button>)</span>
     <div class="paper-comment" id="{{ $id }}">
       {{ $.Page.RenderString (dict "display" "block") . }}
