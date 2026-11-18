@@ -2,11 +2,15 @@
 #   title:       論文タイトル。数式は $...$ で書ける（そのときはタイトル全体を '...' で囲む）
 #   coauthors:   共著者のリスト（単著なら省略）。表示は "with A and B"
 #   arxiv:       arXiv 番号。必ず引用符で囲む（囲まないと数値扱いで末尾の 0 が消えるため、ビルドがエラーで止まる）
+#                arXiv に出る前の論文は arxiv も journal も省略する。表示に "(in preparation)" / "(準備中)" が付く
 #   journal:     掲載誌の略称（未掲載なら省略）
 #   journal_url: 掲載誌の論文ページ
 #   comment:     論文コメント（Markdown、数式 $...$ も可）。Research の論文一覧で (Comment) を押すと開く。
 #                書くときは comment: | の次の行から4字下げで書く。段落は空行で区切る
 #   comment_ja:  日本語ページ用の論文コメント（無ければ英語のコメントが出る）
+
+- title: Mobius Fusion Algebra
+  coauthors: [Yuji Tachikawa]
 
 - title: Parafermionizing the Monster
   coauthors: [Yamato Honda, Justin Kaidi]
