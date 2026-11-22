@@ -1,0 +1,1054 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proposition 4.24 proof movie</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<script>
+window.MathJax={
+  tex:{macros:{sP:'\\mathsf{P}',Cas:'\\Xi',Fix:'\\operatorname{Fix}',Irr:'\\mathrm{Irr}',cC:'\\mathcal{C}',fX:'\\mathfrak{M}',
+    id:'\\mathit{id}',ev:'\\operatorname{ev}',coev:'\\operatorname{coev}',Tr:'\\operatorname{Tr}',tr:'\\operatorname{tr}',
+    Hom:'\\operatorname{Hom}',End:'\\operatorname{End}',one:'\\mathbf{1}',Ubox:['\\langle #1\\rangle_{\\mathsf{P}}',1]}},
+  svg:{fontCache:'none'},
+  startup:{typeset:false}
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"></script>
+<style>
+/* Layout: the master equation on top, one stage for the Moebius diagrams, a transport bar,
+   the caption of the current step and the list of steps grouped by act. */
+:root{
+  --bg:#eceee9;          /* page */
+  --paper:#fafbf8;       /* drawing sheet; also the halo of strands passing in front */
+  --fg:#1b1e22;          /* ink */
+  --muted:#5d6570;
+  --rule:#d0d5cd;
+  --accent:#2c4c8c;      /* fountain-pen blue: the Omega-loop, the current link of the equation */
+  --accent-soft:#dde4f1;
+  --shade:#dcdfd8;       /* shaded coupons: ends of a canonical element */
+  --font-text:"Noto Serif",Georgia,"Times New Roman",serif;
+  --font-ui:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#141619; --paper:#1d2024; --fg:#e4e7ea; --muted:#9aa3ad; --rule:#343941;
+    --accent:#90aeea; --accent-soft:#25304a; --shade:#3b4047; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141619; --paper:#1d2024; --fg:#e4e7ea; --muted:#9aa3ad; --rule:#343941;
+  --accent:#90aeea; --accent-soft:#25304a; --shade:#3b4047; color-scheme:dark;
+}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-ui);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:18px 28px;display:flex;flex-direction:column;align-items:center;gap:14px;box-sizing:border-box}
+.wrap{width:min(100%,960px);display:flex;flex-direction:column;gap:14px}
+header{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 18px}
+header h1{font:600 21px/1.3 var(--font-text);margin:0;text-wrap:balance}
+header p{margin:0;color:var(--muted);font-size:13px;line-height:1.5}
+.master{display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;background:var(--paper);
+  border:1px solid var(--rule);border-radius:6px;padding:10px 12px;overflow-x:auto}
+.master .mt{white-space:nowrap;font-size:15px}
+.master .eq{font:500 15px var(--font-ui);color:var(--fg);background:transparent;border:1px solid transparent;
+  border-radius:5px;padding:2px 6px;cursor:pointer;display:inline-flex;flex-direction:column;align-items:center;line-height:1.05}
+.master .eq small{font-size:10.5px;color:var(--muted);letter-spacing:.02em;white-space:nowrap}
+.master .eq:hover{border-color:var(--rule)}
+.master .eq.on{background:var(--accent-soft);border-color:var(--accent)}
+.master .eq.on small{color:var(--accent)}
+.stage{background:var(--paper);border:1px solid var(--rule);border-radius:6px;overflow:hidden;aspect-ratio:16/10;max-width:100%}
+.stage svg{display:block;width:100%;height:100%;color:var(--fg)}
+.ink{stroke:var(--fg);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ink.leg{stroke:var(--accent);stroke-width:2.1}
+.ink.hl{stroke:var(--accent);stroke-width:2.1}
+.gbox{fill:var(--accent-soft);fill-opacity:.7;stroke:none}
+.halo{stroke:var(--paper);fill:none;stroke-width:8;stroke-linecap:butt;stroke-linejoin:round}
+.bar{stroke:var(--fg);stroke-width:2.6;stroke-linecap:butt}
+.edge{stroke:var(--muted);stroke-width:1.1;stroke-dasharray:1.5 3.2;fill:none}
+.cpn{fill:var(--paper);stroke:var(--fg);stroke-width:1.3}
+.cpn.sh{fill:var(--shade)}
+.dbox{fill:none;stroke:var(--fg);stroke-width:1;stroke-dasharray:3.2 2.6}
+.dot{fill:var(--accent)}
+svg text{fill:var(--fg);font-family:var(--font-text);font-size:14px}
+.transport{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px}
+.transport button{font:500 13px var(--font-ui);color:var(--fg);background:var(--paper);border:1px solid var(--rule);
+  border-radius:5px;padding:6px 10px;cursor:pointer;min-width:38px}
+.transport button:hover{border-color:var(--accent)}
+.transport button:focus-visible,.steps button:focus-visible,.master .eq:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.transport button.primary{background:var(--accent);border-color:var(--accent);color:var(--paper);min-width:80px}
+.transport input[type=range]{flex:1 1 180px;min-width:0;accent-color:var(--accent)}
+.transport select{font:13px var(--font-ui);color:var(--fg);background:var(--paper);border:1px solid var(--rule);border-radius:5px;padding:5px 6px}
+.time{font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px;min-width:7ch;text-align:right}
+.caption{display:grid;grid-template-columns:minmax(0,9em) minmax(0,1fr);gap:4px 16px;align-items:baseline;min-height:5.6em}
+.caption .step{font:600 12px var(--font-ui);letter-spacing:.06em;color:var(--accent)}
+.caption .text{font:400 15.5px/1.75 var(--font-text);max-width:68ch;min-width:0}
+.steps{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--rule);padding-top:12px}
+.steps .act{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.steps .act h2{font:600 12px var(--font-ui);letter-spacing:.06em;color:var(--muted);margin:0 6px 0 0;min-width:8.5em}
+.steps button{font:12px var(--font-ui);color:var(--fg);background:transparent;border:1px solid var(--rule);border-radius:999px;padding:4px 10px;cursor:pointer}
+.steps button[aria-current="true"]{background:var(--accent-soft);border-color:var(--accent)}
+.note{color:var(--muted);font-size:12.5px;line-height:1.6;max-width:80ch;margin:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.grid figure{margin:0;background:var(--paper);border:1px solid var(--rule);border-radius:6px;cursor:pointer;overflow:hidden}
+.grid figure:hover{border-color:var(--accent)}
+.grid figure:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.grid figcaption{font:500 12px var(--font-ui);color:var(--muted);padding:4px 8px;border-top:1px solid var(--rule)}
+.grid figcaption b{color:var(--accent);font-weight:600;margin-right:6px}
+.grid figure>svg{display:block;width:100%;height:auto;aspect-ratio:16/10;color:var(--fg)}
+@media (max-width:560px){.caption{grid-template-columns:1fr}.caption .text{font-size:14.5px}.steps .act h2{min-width:0;width:100%}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header>
+  <h1>Proposition 4.24 — proof movie</h1>
+  <p>Proposition 4.24 of Orii–Tachikawa, <i>Möbius fusion algebra</i>: for \(X\in\Fix(\sP)\), \(\Cas(\mathrm{M}(X))=\sum_{Y\in\Irr(\cC)}\varepsilon\bigl(\mathrm{M}(X)\,\mathrm{L}(Y^\vee)\bigr)\,\mathrm{L}(Y)\). The movie follows the paper's proof in three acts, one for each step. Step 1 writes \(\Cas(\mathrm{M}(X))\) as a sum of single Möbius diagrams in which an \(\Omega\)-loop encircles two strands. Step 2 expands this loop, moves part of the picture once around the core and cuts the loop open, so that each term becomes a closed picture times \(\mathrm{L}(Y)\). Step 3 identifies the closed picture with \(\Tr(R_{\xi,b_Y})=\varepsilon\bigl(\mathrm{M}(X)\,\mathrm{L}(Y^\vee)\bigr)\). Numbering follows the version of the paper of 18 November 2026.</p>
+</header>
+
+<div class="master" id="master" aria-label="Master equation">
+  <span class="mt">\(\Cas(\mathrm{M}(X))\)</span>
+  <button class="eq" data-act="1" type="button">=<small>Step 1</small></button>
+  <span class="mt">\(\sum_{V\in\Irr(\cC)}\frac{d_V}{D^2}\,\bigl(\text{diagram with an }\Omega\text{-loop}\bigr)\)</span>
+  <button class="eq" data-act="2" type="button">=<small>Step 2</small></button>
+  <span class="mt">\(\sum_{Y\in\Irr(\cC)}\tr\bigl((\beta_Y\otimes\id)^{-1}\Ubox{e}\,\xi\,e\bigr)\,\mathrm{L}(Y)\)</span>
+  <button class="eq" data-act="3" type="button">=<small>Step 3</small></button>
+  <span class="mt">\(\sum_{Y\in\Irr(\cC)}\varepsilon\bigl(\mathrm{M}(X)\,\mathrm{L}(Y^\vee)\bigr)\,\mathrm{L}(Y)\)</span>
+</div>
+
+<div class="stage" id="stage"><svg id="svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Animated pictures of the proof"></svg></div>
+<div class="grid" id="grid" hidden></div>
+
+<div class="transport">
+  <button id="first" type="button" title="First (Home)" aria-label="First">⏮</button>
+  <button id="prev" type="button" title="Previous step (←)" aria-label="Previous step">◀</button>
+  <button id="play" type="button" class="primary" title="Play / pause (space)">Play</button>
+  <button id="next" type="button" title="Next step (→)" aria-label="Next step">▶</button>
+  <button id="last" type="button" title="Last (End)" aria-label="Last">⏭</button>
+  <input id="scrub" type="range" min="0" max="1000" value="0" step="1" aria-label="Position in the movie">
+  <span class="time" id="time">0.0 s</span>
+  <button id="overview" type="button" title="Show the pictures of all steps" aria-pressed="false">Overview</button>
+  <select id="speed" aria-label="Speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option></select>
+</div>
+
+<div class="caption"><div class="step" id="stepname"></div><div class="text" id="captext"></div></div>
+<div class="steps" id="steps"></div>
+<p class="note">“Overview” lays out the pictures of all steps; click a picture to jump to that scene. The pictures are Möbius diagrams (Definition 3.5): the bottom and top bars stand for the two arrows, along which the top boundary is glued back to the bottom one through \(\sP\). Shaded coupons are the two ends of a canonical element (Definition 2.1), and blue strands are \(\Omega\)-loops. Continuous motion shows isotopies and the move of a morphism once around the core (Lemma 3.7), in which it leaves through the bottom bar and comes back below the top bar inside a dashed \(\sP\)-box; cross-fades show algebraic identities (Lemma 4.5, Lemma 3.26(b), Definition 4.3, Remark 4.4, (E3), (E4), (B1)–(B6), Schur's lemma). Numbering follows the version of the paper of 18 November 2026.</p>
+</div>
+
+<script>
+(() => {
+'use strict';
+// ====================================================================================
+//  Paths: P(x,y).v(y1) vertical, .l(x,y) line, .s(x,y) S-curve, .c(...) cubic.  y points up.
+// ====================================================================================
+function P(x,y){ const s=[['M',x,y]]; let X=x,Y=y;
+  const o={segs:s,
+    v(y1){ s.push(['L',X,y1]); Y=y1; return o; },
+    l(x1,y1){ s.push(['L',x1,y1]); X=x1; Y=y1; return o; },
+    s(x1,y1){ const m=(Y+y1)/2; s.push(['C',X,m,x1,m,x1,y1]); X=x1; Y=y1; return o; },
+    c(a,b,c,d,x1,y1){ s.push(['C',a,b,c,d,x1,y1]); X=x1; Y=y1; return o; } };
+  return o; }
+const segsOf=p=>p.segs||p;
+function revSegs(p){ const segs=segsOf(p); const list=[]; let cur=null;
+  for(const s of segs){ if(s[0]==='M'){cur=[s[1],s[2]];continue;}
+    if(s[0]==='L'){ list.push({t:'L',a:cur}); cur=[s[1],s[2]]; }
+    else { list.push({t:'C',a:cur,c1:[s[1],s[2]],c2:[s[3],s[4]]}); cur=[s[5],s[6]]; } }
+  const r=[['M',cur[0],cur[1]]];
+  for(let i=list.length-1;i>=0;i--){ const q=list[i]; if(q.t==='L') r.push(['L',q.a[0],q.a[1]]); else r.push(['C',q.c2[0],q.c2[1],q.c1[0],q.c1[1],q.a[0],q.a[1]]); }
+  return r; }
+function cat(...ps){ const out=[]; ps.forEach((p,i)=>segsOf(p).forEach(s=>{ if(s[0]==='M'&&i>0) return; out.push(s.slice()); })); return out; }
+function arc(cx,cy,rx,ry,a0,a1){ const n=Math.max(1,Math.ceil(Math.abs(a1-a0)/90)), d=(a1-a0)/n, R=Math.PI/180;
+  const Pt=a=>[cx+rx*Math.cos(a*R),cy+ry*Math.sin(a*R)], D=a=>[-rx*Math.sin(a*R),ry*Math.cos(a*R)], k=4/3*Math.tan(d*R/4);
+  const s=[['M',...Pt(a0)]];
+  for(let i=0;i<n;i++){ const a=a0+i*d,b=a+d,p0=Pt(a),p1=Pt(b),d0=D(a),d1=D(b);
+    s.push(['C',p0[0]+k*d0[0],p0[1]+k*d0[1],p1[0]-k*d1[0],p1[1]-k*d1[1],p1[0],p1[1]]); }
+  return s; }
+
+// elements
+const St=(p,z,o={})=>({type:'strand',segs:segsOf(p),z,wrap:!!o.wrap,cls:o.cls||''});
+const Cp=(x,y,tex,z,o={})=>({type:'coupon',x,y,tex,z,w:o.w||0.62,h:o.h||0.5,wrap:!!o.wrap,boxes:o.boxes||0,sh:!!o.sh});
+const Lb=(x,y,tex,an='c',o={})=>({type:'label',x,y,tex,an,wrap:!!o.wrap,cls:o.cls||'',z:100});
+const Dot=(x,y,o={})=>({type:'dot',x,y,wrap:!!o.wrap,z:90});
+const Bx=(x1,y1,x2,y2)=>({type:'dbox',x1,y1,x2,y2,z:50});
+const clone=o=>JSON.parse(JSON.stringify(o));
+function derive(base,fn){ const s=clone(base); fn(s.els,s); return s; }
+const setP=(e,id,p)=>{ e[id].segs=segsOf(p); };
+
+const Gb=(x1,y1,x2,y2)=>({type:'gbox',x1,y1,x2,y2,z:-1});
+
+// ====================================================================================
+//  Proposition 4.24 (Orii-Tachikawa, Moebius fusion algebra).  Every scene is written in the coordinates of the
+//  corresponding TikZ picture of the paper (\picI ... \picIXb) and scaled by SC(scene,K), where
+//  K = [x unit, y unit] of that picture in mm; one drawing unit of the engine is 8.5 mm x 7 mm,
+//  the default unit of the paper's pictures.  Coupons are 4.2 mm high, as in the paper.
+//  Strands passing through the bars (wrap:1) are stored in unfolded coordinates: a point at
+//  height y in [-H,0) is drawn at height y+H, mirrored in x = xc.
+// ====================================================================================
+const K1=[8.5,7], K2=[8.5,5.4], K3=[6.6,5.4], K4=[6.5,7];
+function SC(sc,K){ const kx=K[0]/8.5, ky=K[1]/7, s=clone(sc);
+  const tx=x=>x*kx, ty=y=>y*ky;
+  for(const e of Object.values(s.els)){
+    if(e.type==='strand') e.segs=e.segs.map(g=>g[0]==='C'?['C',tx(g[1]),ty(g[2]),tx(g[3]),ty(g[4]),tx(g[5]),ty(g[6])]:[g[0],tx(g[1]),ty(g[2])]);
+    else if(e.type==='dbox'||e.type==='gbox'){ e.x1=tx(e.x1); e.x2=tx(e.x2); e.y1=ty(e.y1); e.y2=ty(e.y2); }
+    else { e.x=tx(e.x); e.y=ty(e.y); } }
+  const f=s.fr; s.fr={H:f.H?ty(f.H):null,bars:f.bars?f.bars.map(tx):null,edges:null,xc:tx(f.xc)};
+  if(s.fm){ s.fm.x=tx(s.fm.x); s.fm.y=ty(s.fm.y); }
+  return s; }
+// camera: expand a box (drawing units) to the 16:10 stage
+function fit(x0,x1,y0,y1){ const w=(x1-x0)*56,h=(y1-y0)*44,r=1.6;
+  if(w/h<r){ const d=(h*r/56-(x1-x0))/2; x0-=d; x1+=d; } else { const d=(w/r/44-(y1-y0))/2; y0-=d; y1+=d; }
+  return {x0,x1,y0,y1}; }
+const FR=(H,b0,b1,xc)=>({H,bars:[b0,b1],edges:null,xc});
+const F0={H:null,bars:null,edges:null,xc:0};
+const VT={x0:-6.2,x1:6.2,y0:0,y1:6};
+const CP=(x,y,t,z,o={})=>Cp(x,y,t,z,Object.assign({h:0.6},o));
+const CS=(x,y,t,z,o={})=>CP(x,y,t,z,Object.assign({sh:1},o));   // shaded coupon: an end of a canonical element (Definition 2.1)
+const LB=(x,t)=>Lb(x,0,t,'n'), LT=(x,H,t)=>Lb(x,H,t,'s');
+const HL={cls:'hl'};
+const recls=(e,ids,c)=>ids.forEach(k=>{ e[k].cls=c; });
+
+// ====================================================================================
+//  Formulas.  The coefficient in front of each picture is cut into pieces, each its own label
+//  with its own id, so that a piece which is the same in two consecutive scenes stays on screen
+//  and moves; only the pieces that change cross-fade.  s.fm={x,y,items}: x = right end and
+//  y = centre line, in the coordinates of the picture (scaled by SC).  Items:
+//    ['t',id,tex]                  a plain piece
+//    ['sum',id,range,reserve]      a sum sign (id) and its range (id+'r'); the slot is as wide as the
+//                                  widest of the range and the reserve ranges
+//    ['frac',[[id,tex],...],[id,tex],barId]   a fraction: numerator factors, denominator, bar
+//    ['prod',[[id,tex],...]]       factors on the base line
+//  The pieces are laid out once MathJax is ready, from its own measurements: every piece carries
+//  the same \vphantom, so all pieces share one base line.
+// ====================================================================================
+const FS=17, DS='\\displaystyle ', PH='\\vphantom{\\sum_{V\\in\\Irr(\\cC)}\\frac{d_Ad_Bd_V}{D^2}}';
+const FL=['t','fL','\\Cas([X,\\xi])='];
+const FIX='V\\in\\Fix(\\sP)', IRR='V\\in\\Irr(\\cC)', YIRR='Y\\in\\Irr(\\cC)';
+const SV=r=>['sum','fSV',r,[FIX,IRR]], SA=r=>['sum','fSA',r,[]];
+const nA=['nA','d_A'], nB=['nB','d_B'], nV=['nV','d_V'];
+const FRAC=(...num)=>['frac',num,['fDen','D^2'],'fBar'];
+const FM=(x,y,...items)=>({x,y,items});
+function layoutFormula(s){ const fm=s.fm; if(!fm) return;
+  const mj=!!(window.MathJax&&MathJax.tex2svg), ph=mj?PH:'';
+  const W=t=>mj? frag(DS+t).w : 520*plainTex(t).length;        // width in 1/1000 em
+  const kx=FS/1000/56, ky=FS/1000/44;                             // 1/1000 em -> drawing units
+  const fracM=(num,den)=>{ if(!mj) return {w:W(num)+240,nx:120,ny:676,dx:120+(W(num)-W(den))/2,dy:-720};
+    const sv=MathJax.tex2svg(DS+'\\frac{'+num+'}{'+den+'}',{display:false}).querySelector('svg'), fr=sv.querySelector('[data-mml-node="mfrac"]');
+    const tr=g=>((g.getAttribute('transform')||'translate(0,0)').match(/-?[\d.]+/g)||[0,0]).map(Number);
+    const a=tr(fr.children[0]), b=tr(fr.children[1]);
+    return {w:+sv.getAttribute('viewBox').split(/\s+/)[2], nx:a[0], ny:a[1], dx:b[0], dy:b[1]}; };
+  const slots=fm.items.map(it=>{
+    if(it[0]==='t') return {w:W(it[2]), put:x0=>[[it[1],it[2],x0+W(it[2])/2,0]]};
+    if(it[0]==='sum'){ const w=Math.max(W('\\sum'),...[it[2]].concat(it[3]).map(r=>W('\\sum_{'+r+'}')));
+      return {w, put:x0=>[[it[1],'\\sum',x0+w/2,0],[it[1]+'r','\\mathop{\\phantom{\\sum}}_{'+it[2]+'}',x0+w/2,0]]}; }
+    if(it[0]==='frac'){ const num=it[1].map(f=>f[1]).join(''), den=it[2][1], m=fracM(num,den);
+      return {w:m.w, put:x0=>{ const out=[]; let x=x0+m.nx;
+        it[1].forEach(f=>{ const fw=W(f[1]); out.push([f[0],f[1],x+fw/2,m.ny]); x+=fw; });
+        out.push([it[2][0],den,x0+m.dx+W(den)/2,m.dy]);
+        out.push([it[3],'\\frac{\\phantom{'+num+'}}{\\phantom{'+den+'}}',x0+m.w/2,0]); return out; }}; }
+    const ws=it[1].map(f=>W(f[1]));
+    return {w:ws.reduce((a,b)=>a+b,0), put:x0=>{ let x=x0; return it[1].map((f,j)=>{ const p=[f[0],f[1],x+ws[j]/2,0]; x+=ws[j]; return p; }); }};
+  });
+  const gaps=fm.items.map((it,i)=>i===0?0:fm.items[i-1][0]==='t'?278:167);
+  let x=-slots.reduce((a,sl,i)=>a+sl.w+gaps[i],0);
+  slots.forEach((sl,i)=>{ x+=gaps[i]; sl.put(x).forEach(([id,t,cx,dy])=>{ s.els[id]=Lb(fm.x+cx*kx,fm.y+dy*ky,DS+ph+t,'c',{cls:'pref'}); }); x+=sl.w; });
+}
+
+// ====================================================================================
+//  Step 1
+// ====================================================================================
+const VA1=fit(-3.7,3.0,-0.9,3.35), VA=fit(-4.15,3.75,-0.9,4.65);
+// \picI: M(V)^* [X,xi] M(V): three core loops and the positive half twist tau
+const A1={fr:FR(2.5,-0.5,2.6,1.05),vw:VA1,fm:FM(-0.75,1.25,FL,SV(FIX)),els:{
+  vd:St(P(0,0).v(0.9),2), xs:St(P(1.05,0).v(0.9),6), vs:St(P(2.1,0).v(0.9),2),
+  tV:St(P(2.1,0.9).l(0,2.5),1),
+  tX:St(P(1.05,0.9).c(1.05,1.45,0.6,1.35,0.65,1.7).c(0.7,2.05,1.05,1.95,1.05,2.5),6),
+  tD:St(P(0,0.9).l(2.1,2.5),8),
+  cVn:CP(0,0.45,'\\xi_V^\\natural',9,{w:0.72}), cX:CP(1.05,0.45,'\\xi',9), cV:CP(2.1,0.45,'\\xi_V',5,{w:0.72}),
+  b1:LB(0,'V^\\vee'), b2:LB(1.05,'X'), b3:LB(2.1,'V'),
+  t1:LT(0,2.5,'\\sP V'), t2:LT(1.05,2.5,'\\sP X'), t3:LT(2.1,2.5,'\\sP(V^\\vee)'),
+}};
+// \picIb: below the coupons V is bent to the left behind X (two crossings that cancel)
+const A2={fr:FR(5.3,-0.5,2.6,1.05),vw:VA,fm:FM(-0.75,2.65,FL,SV(FIX)),els:{
+  vd:St(P(0,0).v(0.73).c(0,1.12,0.15,1.3,0.35,1.3).c(0.5,1.3,0.5,2.1,0.35,2.1).c(0.15,2.1,0,2.28,0,2.68).v(3.8),2),
+  xs:St(P(1.2,0).v(3.8),6),
+  vs:St(P(2.1,0).v(0.73).c(2.1,1.12,1.8,1.3,1.3,1.3).l(0.85,1.3).c(0.7,1.3,0.7,2.1,0.85,2.1).l(1.3,2.1).c(1.8,2.1,2.1,2.28,2.1,2.68).v(3.8),2),
+  tV:St(P(2.1,3.8).l(0,5.3),1),
+  tX:St(P(1.2,3.8).c(1.2,4.3,0.75,4.2,0.8,4.55).c(0.85,4.9,1.2,4.8,1.2,5.3),6),
+  tD:St(P(0,3.8).l(2.1,5.3),8),
+  cVn:CP(0,3.4,'\\xi_V^\\natural',9,{w:0.72}), cX:CP(1.2,3.4,'\\xi',9), cV:CP(2.1,3.4,'\\xi_V',5,{w:0.72}),
+  b1:LB(0,'V^\\vee'), b2:LB(1.2,'X'), b3:LB(2.1,'V'),
+  t1:LT(0,5.3,'\\sP V'), t2:LT(1.2,5.3,'\\sP X'), t3:LT(2.1,5.3,'\\sP(V^\\vee)'),
+}};
+// \picII: an Omega-loop around the two horizontal pieces (Lemma 4.5): cap and cup.
+//   The loop is drawn in pieces: left side behind (z 0), right side in front (z 5).
+const A3=derive(A2,(e,s)=>{ delete e.vd; delete e.vs;
+  e.lpLs=St(P(0.45,0.5).v(3.0),0,HL);
+  e.lpBot=St(P(0.75,1.7).v(0.5).c(0.75,0.15,0.45,0.15,0.45,0.5),5,HL);
+  e.lpTop=St(P(0.45,3.0).c(0.45,3.35,0.75,3.35,0.75,3.0).v(1.7),5,HL);
+  e.cap=St(P(2.1,0).v(0.73).c(2.1,1.12,1.65,1.3,1.05,1.3).c(0.45,1.3,0,1.12,0,0.73).v(0),3);
+  e.cup=St(P(0,3.8).v(2.68).c(0,2.28,0.45,2.1,1.05,2.1).c(1.65,2.1,2.1,2.28,2.1,2.68).v(3.8),3);
+  e.lOm=Lb(0.45,1.7,'\\Omega','e');
+  s.fm=FM(-0.75,2.65,FL,SV(FIX),FRAC(nV));
+});
+// \picIIIa: Reidemeister II; the cup with xi_V moves to the left of X, behind it
+const A4={fr:FR(5.3,-0.6,3.45,1.5),vw:VA,fm:FM(-0.85,2.65,FL,SV(FIX),FRAC(nV)),els:{
+  lpLs:St(P(0.45,0.5).v(2.45),0,HL),
+  lpBot:St(P(0.75,1.7).v(0.5).c(0.75,0.15,0.45,0.15,0.45,0.5),5,HL),
+  lpTop:St(P(0.45,2.45).c(0.45,2.8,0.75,2.8,0.75,2.45).v(1.7),5,HL),
+  cap:St(P(3,0).v(0.73).c(3,1.12,2.4,1.3,1.5,1.3).c(0.6,1.3,0,1.12,0,0.73).v(0),3),
+  cup:St(P(0,3.6).v(2.6).c(0,2.2,0.1,2.1,0.5,2.1).c(0.9,2.1,1.0,2.2,1.0,2.6).v(3.6),3),
+  xs:St(P(2.05,0).v(3.6),6), tX:St(P(2.05,3.6).v(5.3),6),
+  tV:St(P(1.0,3.6).c(1.0,4.0,0,3.9,0,4.3).v(5.3),1),
+  tD:St(P(0,3.6).c(0,4.0,1.0,3.9,1.0,4.3).c(1.0,4.8,3,4.8,3,5.3),8),
+  cVn:CP(0,3.2,'\\xi_V^\\natural',9,{w:0.72}), cV:CP(1.0,3.2,'\\xi_V',5,{w:0.72}), cX:CP(2.05,3.2,'\\xi',9),
+  lOm:Lb(0.42,1.75,'\\Omega','e'),
+  b1:LB(0,'V^\\vee'), b2:LB(2.05,'X'), b3:LB(3,'V'),
+  t1:LT(0,5.3,'\\sP V'), t2:LT(2.05,5.3,'\\sP X'), t3:LT(3,5.3,'\\sP(V^\\vee)'),
+}};
+// zero-time cut: the same picture, with the strands V and V^vee of the half twist cut where they
+//   leave the block (cup, xi_V^natural (x) xi_V, crossing), and the loop cut into the pieces used
+//   below: the ring around the cap (lqB behind, lqF in front), two tracks ltA, ltB (empty here),
+//   and the ring around the strand of the cup (lrF in front of it, lrB behind it).
+const A4s=derive(A4,e=>{ ['tV','tD','lpLs','lpBot','lpTop'].forEach(k=>delete e[k]);
+  e.tVlow=St(P(1.0,3.6).c(1.0,4.0,0,3.9,0,4.3),1); e.tVup=St(P(0,4.3).v(5.3),1);
+  e.tDlow=St(P(0,3.6).c(0,4.0,1.0,3.9,1.0,4.3),8); e.tDup=St(P(1.0,4.3).c(1.0,4.8,3,4.8,3,5.3),8);
+  e.lqB=St(P(0.45,1.6).v(0.5),0,HL);
+  e.lqF=St(P(0.45,0.5).c(0.45,0.15,0.75,0.15,0.75,0.5).v(1.6),5,HL);
+  e.ltA=St(P(0.75,1.6).v(1.95),5,HL);
+  e.lrF=St(P(0.75,1.95).v(2.45).c(0.75,2.625,0.675,2.7125,0.6,2.7125),5,HL);
+  e.lrB=St(P(0.6,2.7125).c(0.525,2.7125,0.45,2.625,0.45,2.45).v(1.95),0,HL);
+  e.ltB=St(P(0.45,1.95).v(1.6),0,HL);
+});
+
+// ---- step 5 in a stretched layout ---------------------------------------------------------------
+// 5a: the part above the coupons is stretched: the crossing of V and V^vee (3.6 .. 4.3 in \picIIIa)
+//     becomes 3.6 .. 5.8, and everything above it moves up by SH=1.5 (top bar at 6.8).  P(V^vee) is drawn
+//     in front of the coupon xi from here on (it passes in front of xi when the picture is redrawn in 5e).
+const SH=1.5, HS=5.3+SH, YC=4.3+SH;
+const TVL=[1.0,3.6,1.0,(3.6+YC)/2,0,(3.6+YC)/2,0,YC], TDL=[0,3.6,0,(3.6+YC)/2,1.0,(3.6+YC)/2,1.0,YC], TDU=[1.0,YC,1.0,YC+0.5,3,YC+0.5,3,HS];
+const CAPL=[1.5,1.3,0.6,1.3,0,1.12,0,0.73];   // the left half of the cap, from its top to the leg V^vee
+const pc=p=>P(p[0],p[1]).c(p[2],p[3],p[4],p[5],p[6],p[7]);
+// point and direction (degrees) of a cubic p=[x0,y0,...,x3,y3] at parameter t
+function bz(p,t){ const u=1-t, a=u*u*u, b=3*u*u*t, c=3*u*t*t, d=t*t*t;
+  const dx=3*(u*u*(p[2]-p[0])+2*u*t*(p[4]-p[2])+t*t*(p[6]-p[4])), dy=3*(u*u*(p[3]-p[1])+2*u*t*(p[5]-p[3])+t*t*(p[7]-p[5]));
+  return {x:a*p[0]+b*p[2]+c*p[4]+d*p[6], y:a*p[1]+b*p[3]+c*p[5]+d*p[7], phi:Math.atan2(dy,dx)*180/Math.PI}; }
+const VS=fit(-4.15,3.75,-0.9,4.65+SH*5.4/7);
+const Q5S=derive(A4s,(e,s)=>{ s.fr=FR(HS,-0.6,3.45,1.5); s.vw=VS;
+  setP(e,'tVlow',pc(TVL)); setP(e,'tVup',P(0,YC).v(HS)); setP(e,'tDlow',pc(TDL)); setP(e,'tDup',pc(TDU)); e.tDup.z=9.4;
+  setP(e,'tX',P(2.05,3.6).v(HS)); e.t1.y=HS; e.t2.y=HS; e.t3.y=HS; });
+
+// A ring of the loop around a strand: centre (cx,cy) on the strand, phi = direction of the strand
+// (oriented from P(V^vee) through the block to P V for the upper ring, from V^vee up the cap for the ring
+// around the cap); semi-axes rN across the strand and rT along it.  Ellipse angle th: 0 = across, on the
+// right of the strand; 90 = forward, where the ring passes in front of the strand; 270 = where it passes
+// behind.  The band is attached at angle tj and leaves along od (degrees; default: straight out), through
+// a short smooth neck: F runs from the band track A over th = tj+90 to the far side, B from there over
+// th = tj+270 back to the track Bp.
+function kring(cx,cy,phi,rN,rT,tj0,o={}){ const R=Math.PI/180, g=o.g??50, s=o.s??0.04, w=o.w??Math.max(0.07,0.95*rT*Math.sin(g*R));
+  // o.al: the ellipse is turned so that its long axis points to the junction (then the junction is at
+  //   th = 0 of the turned ellipse, and th = 90 / 270 are no longer exactly the crossings with the strand)
+  const a=o.al?tj0*R:0, tj=o.al?0:tj0, t0=[Math.cos(phi*R),Math.sin(phi*R)], n0=[t0[1],-t0[0]];
+  const n=[Math.cos(a)*n0[0]+Math.sin(a)*t0[0],Math.cos(a)*n0[1]+Math.sin(a)*t0[1]], t=[-Math.sin(a)*n0[0]+Math.cos(a)*t0[0],-Math.sin(a)*n0[1]+Math.cos(a)*t0[1]];
+  const map=(u,v)=>[cx+u*n[0]+v*t[0], cy+u*n[1]+v*t[1]];
+  const E=th=>map(rN*Math.cos(th*R),rT*Math.sin(th*R));
+  const Tg=th=>{ const d=[-rN*Math.sin(th*R)*n[0]+rT*Math.cos(th*R)*t[0], -rN*Math.sin(th*R)*n[1]+rT*Math.cos(th*R)*t[1]], l=Math.hypot(d[0],d[1]); return [d[0]/l,d[1]/l]; };
+  const E0=E(tj), Dr=o.od==null? (()=>{ const d=[E0[0]-cx,E0[1]-cy], l=Math.hypot(d[0],d[1]); return [d[0]/l,d[1]/l]; })() : [Math.cos(o.od*R),Math.sin(o.od*R)];
+  const J=[E0[0]+s*Dr[0],E0[1]+s*Dr[1]], Pp=[-Dr[1],Dr[0]], A=[J[0]+w*Pp[0],J[1]+w*Pp[1]], Bp=[J[0]-w*Pp[0],J[1]-w*Pp[1]];
+  const ar=(a0,a1)=>arc(0,0,rN,rT,a0,a1).map(q=>q[0]==='M'?['M',...map(q[1],q[2])]:['C',...map(q[1],q[2]),...map(q[3],q[4]),...map(q[5],q[6])]);
+  const Ea=E(tj+g), Eb=E(tj-g), Ta=Tg(tj+g), Tb=Tg(tj-g);
+  const ka=Math.hypot(Ea[0]-A[0],Ea[1]-A[1]), kb=Math.hypot(Eb[0]-Bp[0],Eb[1]-Bp[1]);
+  const F=[['M',...A],['C',A[0]-0.5*ka*Dr[0],A[1]-0.5*ka*Dr[1],Ea[0]-0.4*ka*Ta[0],Ea[1]-0.4*ka*Ta[1],...Ea],...ar(tj+g,tj+180).slice(1)];
+  const B=[...ar(tj+180,tj+360-g),['C',Eb[0]+0.4*kb*Tb[0],Eb[1]+0.4*kb*Tb[1],Bp[0]-0.5*kb*Dr[0],Bp[1]-0.5*kb*Dr[1],...Bp]];
+  return {F,B,A,Bp,ao:d=>[A[0]+d*Dr[0],A[1]+d*Dr[1]],bo:d=>[Bp[0]+d*Dr[0],Bp[1]+d*Dr[1]]}; }
+const kOn=(p,t,rN,rT,tj,o={})=>{ const q=bz(p,t); return kring(q.x,q.y,q.phi+180,rN,rT,tj,o); };
+// the upper ring (lrF, lrB) and the ring around the cap (lqB behind the cap, lqF in front of it)
+const ringTo=(e,K,zF,zB)=>{ setP(e,'lrF',K.F); setP(e,'lrB',K.B); e.lrF.z=zF; e.lrB.z=zB; };
+const capTo=(e,K)=>{ setP(e,'lqB',K.F); setP(e,'lqF',K.B); e.lqB.z=0; e.lqF.z=5; };
+const capRing=(e,xl,xr,yt,yb,dp)=>{ setP(e,'lqB',P(xl,yt).v(yb)); setP(e,'lqF',P(xl,yb).c(xl,yb-dp,xr,yb-dp,xr,yb).v(yt)); e.lqB.z=0; e.lqF.z=5; };
+// the band between the two rings: a short direct band, or two columns on the left of the picture
+//   (inner track ltA at x=xa, outer track ltB at x=xa-0.13)
+const bandD=(e,Kc,Kt,dc,dt)=>{ setP(e,'ltA',P(...Kc.Bp).c(...Kc.bo(dc),...Kt.ao(dt),...Kt.A)); setP(e,'ltB',P(...Kt.Bp).c(...Kt.bo(dt),...Kc.ao(dc),...Kc.A)); };
+//   The outer track's inner control points come from the inner track's by a Tiller-Hanson offset, so that
+//   the two tracks stay a band's width apart (as drawn) also where the band turns towards the ring.
+const MX=56, MY=44*5.4/7, BW=7.3;
+function tho(p0,p1,p2,p3,q0,q3){ const S=p=>[p[0]*MX,p[1]*MY], U=p=>[p[0]/MX,p[1]/MY];
+  const [a0,a1,a2,a3,b0,b3]=[p0,p1,p2,p3,q0,q3].map(S);
+  const side=Math.sign((a1[0]-a0[0])*(b0[1]-a0[1])-(a1[1]-a0[1])*(b0[0]-a0[0]));
+  const d=[a2[0]-a1[0],a2[1]-a1[1]], l=Math.hypot(d[0],d[1])||1; let nr=[-d[1]/l,d[0]/l]; if(side<0) nr=[-nr[0],-nr[1]];
+  const o=[a1[0]+BW*nr[0],a1[1]+BW*nr[1]];
+  const X=(p,u,q,v)=>{ const den=u[0]*v[1]-u[1]*v[0]; if(Math.abs(den)<1e-9) return null; const t=((q[0]-p[0])*v[1]-(q[1]-p[1])*v[0])/den; return [p[0]+t*u[0],p[1]+t*u[1]]; };
+  let c1=X(b0,[a1[0]-a0[0],a1[1]-a0[1]],o,d), c2=X(o,d,b3,[a3[0]-a2[0],a3[1]-a2[1]]);
+  const ok=(c,a)=>c&&Math.hypot(c[0]-a[0],c[1]-a[1])<3*BW;
+  if(!ok(c1,a1)) c1=[a1[0]+b0[0]-a0[0],a1[1]+b0[1]-a0[1]];
+  if(!ok(c2,a2)) c2=[a2[0]+b3[0]-a3[0],a2[1]+b3[1]-a3[1]];
+  return [U(c1),U(c2)]; }
+const bandC=(e,Kc,Kt,y,h,d,xa=-0.5)=>{ const xb=xa-0.13, [q1,q2]=tho([xa,y],[xa,y+h],Kt.ao(d),Kt.A,[xb,y],Kt.Bp);
+  setP(e,'ltA',P(...Kc.Bp).c(...Kc.bo(0.1),xa,Kc.Bp[1]+0.02,xa,Kc.Bp[1]+0.15).v(y).c(xa,y+h,...Kt.ao(d),...Kt.A));
+  setP(e,'ltB',P(...Kt.Bp).c(...q2,...q1,xb,y).v(Kc.A[1]+0.15).c(xb,Kc.A[1]+0.02,...Kc.ao(0.1),...Kc.A)); };
+// the band from below the upper ring: up the columns, to the right just above the crossing, then up
+const bandR=(e,Kc,Kt,yA,yB,xa=-0.5)=>{ const xb=xa-0.13, a1=Kt.ao(0.2), a2=Kt.ao(0.4), b1=Kt.bo(0.2), b2=Kt.bo(0.4);
+  setP(e,'ltA',P(...Kc.Bp).c(...Kc.bo(0.1),xa,Kc.Bp[1]+0.02,xa,Kc.Bp[1]+0.15).v(yA-0.25).c(xa,yA-0.08,xa+0.1,yA,xa+0.3,yA)
+    .l(a1[0]-0.3,yA).c(a1[0]-0.1,yA,...a2,...a1).l(...Kt.A));
+  setP(e,'ltB',P(...Kt.Bp).l(...b1).c(...b2,b1[0]-0.1,yB,b1[0]-0.3,yB).l(xb+0.3,yB).c(xb+0.1,yB,xb,yB-0.08,xb,yB-0.25)
+    .v(Kc.A[1]+0.15).c(xb,Kc.A[1]+0.02,...Kc.ao(0.1),...Kc.A)); };
+// the band hanging straight down to the ring around the cap at x = 1.43 .. 1.65
+const bandDA=(K,y,h,d)=>P(1.65,2.0).v(y).c(1.65,y+h,...K.ao(d),...K.A);
+const bandDB=(K,y,h,d)=>P(...K.Bp).c(...K.bo(d),1.43,y+h,1.43,y).v(2.0);
+const omAt=(e,x,y)=>{ e.lOm.x=x; e.lOm.y=y; e.lOm.an='e'; };
+
+// 5b, pass-through: the loop slides to the left along the cup and along the cap
+const Q5M0=derive(Q5S,e=>{
+  setP(e,'lqB',P(0.2,1.35).v(0.85)); setP(e,'lqF',P(0.2,0.85).c(0.2,0.65,0.5,0.65,0.5,0.85).v(1.35));
+  setP(e,'ltA',P(0.5,1.35).v(1.95)); setP(e,'ltB',P(0.2,1.95).v(1.35));
+  setP(e,'lrF',P(0.5,1.95).v(2.3).c(0.5,2.4,0.425,2.45,0.35,2.45));
+  setP(e,'lrB',P(0.35,2.45).c(0.275,2.45,0.2,2.4,0.2,2.3).v(1.95)); e.ltB.z=5; omAt(e,1.0,1.75); });
+// the upper part of the loop turns into the left-hand bend of the cup, the lower one into the left-hand
+//   bend of the cap; the band between them bows to the left
+const Q5M1=derive(Q5M0,e=>{ const Kt=kring(0.1,2.2,315,0.34,0.18,0), Kc=kOn(CAPL,0.8,0.32,0.17,180);
+  ringTo(e,Kt,9.5,0); capTo(e,Kc); bandD(e,Kc,Kt,0.35,0.35); e.ltB.z=5; });
+// both rings on the left-hand legs (V^vee of the cup, V^vee of the cap); the band runs up on the left
+const KC0=kring(0,0.42,90,0.3,0.18,180);
+const Q5M2=derive(Q5M1,e=>{ const Kt=kring(0,2.66,270,0.3,0.16,0); ringTo(e,Kt,9.5,0); capTo(e,KC0);
+  bandC(e,KC0,Kt,2.4,0.15,0.1); });
+// the ring is lifted round xi_V^natural: its back passes behind the coupon, then its front in front of it
+const Q5M3=derive(Q5M2,e=>{ const Kt=kring(0,3.2,270,0.42,0.8,0,{g:18,s:0.05,w:0.2}); ringTo(e,Kt,9.5,0);
+  bandC(e,KC0,Kt,2.7,0.3,0.1,-0.56); });
+const Q5M4=derive(Q5M3,e=>{ const Kt=kring(0,3.82,270,0.3,0.16,0); ringTo(e,Kt,9.5,0);
+  bandC(e,KC0,Kt,3.5,0.25,0.12); });
+// on V^vee before the crossing, at the crossing (in front of V, behind V^vee), and past it
+const Q5M5=derive(Q5M4,e=>{ const Kt=kOn(TDL,0.22,0.34,0.2,0); ringTo(e,Kt,9.5,5);
+  bandC(e,KC0,Kt,Kt.A[1]-0.3,0.3,0.15); });
+const Q5M6=derive(Q5M5,e=>{ const Kt=kOn(TDL,0.5,0.4,0.22,-30,{al:1,g:45}); ringTo(e,Kt,9.5,5);
+  bandC(e,KC0,Kt,Kt.A[1]-0.1,0.9,0.6); });
+const Q5M7=derive(Q5M6,e=>{ const Kt=kOn(TDL,0.78,0.38,0.2,-30,{al:1,g:45}); ringTo(e,Kt,9.5,5);
+  bandC(e,KC0,Kt,Kt.A[1]-0.1,0.9,0.45); });
+// onto P(V^vee); the band crosses P V in front of it
+const Q5M8=derive(Q5M7,e=>{ const Kt=kOn(TDU,0.08,0.38,0.2,-20,{al:1,g:45}); ringTo(e,Kt,9.5,5);
+  bandC(e,KC0,Kt,Kt.A[1]-0.4,0.8,0.35); });
+// the ring turns in its own plane while it slides along P(V^vee): the band, now in front of everything,
+//   moves round the front of P(V^vee) until it meets the ring from below.  From here on the two necks of
+//   the ring are drawn with the band, in front (nb), and the ring is widened while the junction passes
+//   the front of the strand, so that each half of the ring changes sides only while it is clear of the
+//   strand: F goes behind at 66-74 degrees, B comes to the front at 106-114 degrees.
+const nb=(e,K)=>{ const Ea=K.F[1].slice(-2), Eb=K.B[K.B.length-2].slice(-2);
+  e.ltA.segs.push(K.F[1].slice()); setP(e,'lrF',[['M',...Ea],...K.F.slice(2)]);
+  e.ltB.segs=[['M',...Eb],K.B[K.B.length-1].slice(),...e.ltB.segs.slice(1)]; setP(e,'lrB',K.B.slice(0,-1)); };
+const Q5M9=derive(Q5M8,e=>{ const Kt=kOn(TDU,0.2,0.45,0.2,50,{od:110,g:50}); ringTo(e,Kt,9.5,5);
+  bandC(e,KC0,Kt,Kt.A[1]-0.65,0.95,0.4); nb(e,Kt); e.ltA.z=9.6; e.ltB.z=9.6; });
+const Q5M9a=derive(Q5M9,e=>{ const Kt=kOn(TDU,0.22,0.45,0.2,66,{od:130,g:50}); ringTo(e,Kt,9.5,5);
+  bandC(e,KC0,Kt,Kt.A[1]-0.7,0.85,0.4); nb(e,Kt); });
+const Q5M9b=derive(Q5M9a,e=>{ const Kt=kOn(TDU,0.235,0.45,0.2,74,{od:150,g:50}); ringTo(e,Kt,5,5);
+  bandC(e,KC0,Kt,Kt.A[1]-0.7,0.85,0.4); nb(e,Kt); });
+const Q5M9c=derive(Q5M9b,e=>{ const Kt=kOn(TDU,0.255,0.45,0.2,106,{od:215,g:50}); ringTo(e,Kt,5,5);
+  bandR(e,KC0,Kt,YC-0.5,YC-0.3); nb(e,Kt); });
+const Q5M9d=derive(Q5M9c,e=>{ const Kt=kOn(TDU,0.265,0.45,0.2,114,{od:230,g:50}); ringTo(e,Kt,5,10);
+  bandR(e,KC0,Kt,YC-0.5,YC-0.3); nb(e,Kt); });
+const Q5M10=derive(Q5M9d,e=>{ const Kt=kOn(TDU,0.28,0.3,0.16,140,{od:270}); ringTo(e,Kt,5,10);
+  bandR(e,KC0,Kt,YC-0.5,YC-0.3); nb(e,Kt); });
+// the band is pulled straight in front of the block, and the ring around the cap slides along the cap
+const Q5M10b=derive(Q5M10,e=>{ const Kt=kOn(TDU,0.3,0.3,0.16,160,{od:270}), Kc=kOn(CAPL,0.8,0.3,0.18,180); ringTo(e,Kt,5,10); capTo(e,Kc);
+  bandR(e,Kc,Kt,YC-0.55,YC-0.35,-0.35); nb(e,Kt); });
+const Q5M10c=derive(Q5M10b,e=>{ const Kt=kOn(TDU,0.32,0.3,0.15,180,{od:265}), Kc=kOn(CAPL,0.14,0.28,0.18,180); ringTo(e,Kt,5,10); capTo(e,Kc);
+  bandD(e,Kc,Kt,1.4,2.2); nb(e,Kt); });
+const Q5M11=derive(Q5M10c,e=>{ const Kt=kOn(TDU,0.33,0.3,0.16,190,{g:45}); ringTo(e,Kt,5,10);
+  capRing(e,1.43,1.65,2.0,1.1,0.25);
+  setP(e,'ltA',bandDA(Kt,2.6,2.2,1.1)); setP(e,'ltB',bandDB(Kt,2.6,2.2,1.1)); nb(e,Kt); omAt(e,1.38,1.75); });
+// 5b: the loop encircles the cap and the leg P(V^vee) (stretched form of the 5a stop of version 6)
+const Q5T=derive(Q5M11,e=>{
+  capRing(e,1.43,1.65,2.0,1.1,0.25);
+  setP(e,'ltA',P(1.65,2.0).v(4.1+SH)); setP(e,'ltB',P(1.43,4.1+SH).v(2.0)); e.ltA.z=5; e.ltB.z=0;
+  setP(e,'lrF',P(1.65,4.1+SH).v(4.85+SH).c(1.65,4.95+SH,1.595,5.0+SH,1.54,5.0+SH)); e.lrF.z=5;
+  setP(e,'lrB',P(1.54,5.0+SH).c(1.485,5.0+SH,1.43,4.95+SH,1.43,4.85+SH).v(4.1+SH)); e.lrB.z=10;
+});
+// 5c: Lemma 3.26(b) -- the block becomes the cup of P V
+const Q5X=derive(Q5T,e=>{ ['cup','cVn','cV','tVlow','tDlow'].forEach(k=>delete e[k]);
+  e.cupN=St(P(0,YC).v(2.6).c(0,2.2,0.1,2.1,0.5,2.1).c(0.9,2.1,1.0,2.2,1.0,2.6).v(YC),7);
+});
+// 5d, pass-through: the loop slides back down P(V^vee), down the right-hand leg of the new cup and round
+//   its bend; the ring around the cap slides back along the cap
+const Q5D1=derive(Q5X,e=>{ const K=kOn(TDU,0.2,0.3,0.15,180); ringTo(e,K,5,10);
+  setP(e,'ltA',bandDA(K,4.0,1.3,0.4)); setP(e,'ltB',bandDB(K,4.0,1.3,0.4)); });
+const Q5D2=derive(Q5D1,e=>{ const K=kring(1.0,4.3,270,0.3,0.14,180); ringTo(e,K,5,10);
+  setP(e,'ltA',bandDA(K,4.0,0.3,0.2)); setP(e,'ltB',bandDB(K,3.95,0.25,0.15)); });
+// the upper part of the loop turns round the right-hand bend of the cup; the lower part slides along the cap
+const Q5D2b=derive(Q5D2,e=>{ const Kt=kring(0.9,2.2,225,0.3,0.16,180,{od:270}); ringTo(e,Kt,5,10);
+  const xa=Kt.A[0], xb=Kt.Bp[0]; capRing(e,xb,xa,1.6,0.95,0.25);
+  setP(e,'ltA',P(xa,1.6).c(xa,1.7,...Kt.ao(0.1),...Kt.A)); setP(e,'ltB',P(...Kt.Bp).c(...Kt.bo(0.1),xb,1.7,xb,1.6));
+  e.ltA.z=5; e.ltB.z=0; omAt(e,1.0,1.75); });
+// the upper part of the loop turns round the right-hand bend of the cup onto its bottom, the lower part
+//   slides back along the cap: the loop is a narrow U again, which then widens (5d stop)
+const Q5D3=derive(Q5D2b,e=>{
+  setP(e,'lqB',P(0.62,1.35).v(0.85)); setP(e,'lqF',P(0.62,0.85).c(0.62,0.65,0.92,0.65,0.92,0.85).v(1.35)); e.lqB.z=0; e.lqF.z=5;
+  setP(e,'ltA',P(0.92,1.35).v(1.95)); setP(e,'ltB',P(0.62,1.95).v(1.35));
+  setP(e,'lrF',P(0.92,1.95).v(2.4).c(0.92,2.5,0.845,2.55,0.77,2.55)); e.lrF.z=5;
+  setP(e,'lrB',P(0.77,2.55).c(0.695,2.55,0.62,2.5,0.62,2.4).v(1.95)); e.lrB.z=10;
+  omAt(e,0.57,1.75); });
+// 5d: the loop encircles the cap and the bottom of the cup of P V
+const Q5D4=derive(Q5D3,e=>{
+  capRing(e,0.45,0.75,1.6,0.5,0.35);
+  setP(e,'ltA',P(0.75,1.6).v(1.75)); setP(e,'ltB',P(0.45,1.75).v(1.6)); e.ltA.z=5; e.ltB.z=0;
+  setP(e,'lrF',P(0.75,1.75).v(2.45).c(0.75,2.625,0.675,2.7125,0.6,2.7125)); e.lrF.z=5;
+  setP(e,'lrB',P(0.6,2.7125).c(0.525,2.7125,0.45,2.625,0.45,2.45).v(1.75)); e.lrB.z=10;
+  omAt(e,0.42,1.75);
+});
+
+// \picIII (5e): the picture as drawn in the paper (P(V^vee) in front of xi, as in 5a-5d)
+const A5={fr:FR(4.25,-0.6,3.45,1.5),vw:VA,fm:FM(-0.85,2.1,FL,SV(FIX),FRAC(nV)),els:{
+  lqB:St(P(0.7,2.0).v(0.6),0,HL),
+  lqF:St(P(0.7,0.6).c(0.7,0.25,1.0,0.25,1.0,0.6).v(2.0),5,HL),
+  ltA:St(P(1.0,2.0).v(2.2),5,HL),
+  lrF:St(P(1.0,2.2).v(2.9).c(1.0,3.075,0.925,3.1625,0.85,3.1625),5,HL),
+  lrB:St(P(0.85,3.1625).c(0.775,3.1625,0.7,3.075,0.7,2.9).v(2.2),10,HL),
+  ltB:St(P(0.7,2.2).v(2.0),0,HL),
+  cap:St(P(3,0).v(1.0).c(3,1.42,2.4,1.6,1.5,1.6).c(0.6,1.6,0,1.42,0,1.0).v(0),3),
+  xs:St(P(1.75,0).v(3.65),6), tX:St(P(1.75,3.65).v(4.25),6),
+  tVup:St(P(0,3.1).v(4.25),1),
+  // the piece of the strand through the loop belongs to cupN, as in 5d, so that the strand stays inside
+  //   the loop while the picture shrinks back (5e); the drawing is the same as with the cut at x = 0.595
+  cupN:St(P(0,3.1).c(0,2.86,0.216,2.71,0.595,2.628).c(0.828,2.574,1.14,2.55,1.5,2.55),7),
+  tDup:St(P(1.5,2.55).c(2.4,2.55,3,2.7,3,3.1).v(4.25),9.4),
+  cX:CP(1.75,3.65,'\\xi',9),
+  lOm:Lb(0.65,2.08,'\\Omega','e'),
+  b1:LB(0,'V^\\vee'), b2:LB(1.75,'X'), b3:LB(3,'V'),
+  t1:LT(0,4.25,'\\sP V'), t2:LT(1.75,4.25,'\\sP X'), t3:LT(3,4.25,'\\sP(V^\\vee)'),
+}};
+// 6: only the range of the sum changes
+const A5b=derive(A5,(e,s)=>{ s.fm=FM(-0.85,2.1,FL,SV(IRR),FRAC(nV)); });
+// zero-time cut: the same picture with the loop and the cup of P V as single pieces again
+const A5c=derive(A5b,e=>{ ['lqB','lqF','ltA','lrF','lrB','ltB','lLo','tVup','cupN','tDup'].forEach(k=>delete e[k]);
+  e.aLow=St(P(0.7,0.6).v(2.08),0,HL); e.aUp=St(P(0.7,2.08).v(2.9),10,HL);
+  e.lpBot=St(P(1.0,2.08).v(0.6).c(1.0,0.25,0.7,0.25,0.7,0.6),5,HL);
+  e.lpTop=St(P(0.7,2.9).c(0.7,3.25,1.0,3.25,1.0,2.9).v(2.08),5,HL);
+  e.cupP=St(P(0,4.25).v(3.1).c(0,2.7,0.6,2.55,1.5,2.55).c(2.4,2.55,3,2.7,3,3.1).v(4.25),7);
+});
+
+// ====================================================================================
+//  Step 2
+// ====================================================================================
+const VB=fit(-5.05,3.35,-0.9,5.65);
+const FMB=(y,...it)=>FM(-0.85,y,FL,SV(IRR),...it);
+// \picIV: Definition 4.3, the A-loop (A behind the cap, A^vee in front of it)
+const B1=derive(A5c,(e,s)=>{ s.vw=VB; recls(e,['aLow','aUp','lpBot','lpTop'],'');
+  e.lOm.tex='A'; e.lAv=Lb(1.05,2.08,'A^\\vee','w');
+  e.lpMid=St(P(1.0,2.08).v(2.08),5); e.xMid=St(P(1.75,3.65).v(3.65),6);   // zero length; they open up in the next scene
+  s.fm=FMB(2.1,SA('A'),FRAC(nA,nV));
+});
+// isotopy: widen the gap between the cap and the leg P(V^vee)
+const B1g={fr:FR(5.05,-0.6,3.6,1.5),vw:VB,fm:FMB(2.5,SA('A'),FRAC(nA,nV)),els:{
+  aLow:St(P(0.92,0.45).v(2.3),0), aUp:St(P(0.92,2.3).v(4.0),10),
+  lpBot:St(P(1.22,1.6).v(0.45).c(1.22,0.15,0.92,0.15,0.92,0.45),5),
+  lpMid:St(P(1.22,1.6).v(3.0),5),
+  lpTop:St(P(0.92,4.0).c(0.92,4.3,1.22,4.3,1.22,4.0).v(3.0),5),
+  cap:St(P(3,0).v(0.55).c(3,0.85,2.4,1.0,1.5,1.0).c(0.6,1.0,0,0.85,0,0.55).v(0),3),
+  cupP:St(P(0,5.05).v(4.0).c(0,3.75,0.6,3.6,1.5,3.6).c(2.4,3.6,3,3.75,3,4.0).v(5.05),7),
+  xs:St(P(1.77,0).v(1.6),6), xMid:St(P(1.77,1.6).v(3.0),6), tX:St(P(1.77,3.0).v(5.05),6),
+  cX:CP(1.77,4.45,'\\xi',9),
+  lOm:Lb(0.87,2.3,'A','e'),
+  b1:LB(0,'V^\\vee'), b2:LB(1.77,'X'), b3:LB(3,'V'),
+  t1:LT(0,5.05,'\\sP V'), t2:LT(1.77,5.05,'\\sP X'), t3:LT(3,5.05,'\\sP(V^\\vee)'),
+}};
+// (E3): id_{A^vee (x) X} = sum_B d_B e' e'
+const B2=derive(B1g,(e,s)=>{ delete e.lpMid; delete e.xMid;
+  e.ep1=CS(1.5,1.6,"e'",9,{w:0.72,boxes:-1}); e.ep2=CS(1.5,3.0,"e'",6.5,{w:0.72});
+  e.bLow=St(P(1.5,1.6).v(2.3),5); e.bUp=St(P(1.5,2.3).v(3.0),5); e.lB=Lb(1.55,2.3,'B','w');
+  s.fm=FMB(2.5,SA('A,B'),FRAC(nA,nB,nV));
+});
+const FMB2=FMB(2.5,SA('A,B'),FRAC(nA,nB,nV));
+// \picIVb: the lower e' slides down through the cap, the upper e' up through the leg
+const B3={fr:FR(5.05,-0.6,3.6,1.5),vw:VB,fm:FMB2,els:{
+  aLow:St(P(0.92,1.2).v(2.08),0), aUp:St(P(0.92,2.08).v(3.0),10),
+  lpBot:St(P(1.22,0.75).v(0.45).c(1.22,0.15,0.92,0.15,0.92,0.45).v(1.2),5),
+  lpTop:St(P(0.92,3.0).v(4.0).c(0.92,4.3,1.22,4.3,1.22,4.0).v(3.55),5),
+  cap:St(P(3,0).v(1.0).c(3,1.42,2.4,1.6,1.5,1.6).c(0.6,1.6,0,1.42,0,1.0).v(0),3),
+  cupP:St(P(0,5.05).v(3.1).c(0,2.7,0.6,2.55,1.5,2.55).c(2.4,2.55,3,2.7,3,3.1).v(5.05),7),
+  ep1:CS(1.5,0.75,"e'",9,{w:0.72,boxes:-1}), ep2:CS(1.5,3.55,"e'",6.5,{w:0.72}),
+  bLow:St(P(1.5,0.75).v(2.08),5), bUp:St(P(1.5,2.08).v(3.55),5),
+  xs:St(P(1.77,0).v(0.75),6), tX:St(P(1.77,3.55).v(5.05),6), cX:CP(1.77,4.45,'\\xi',9),
+  lOm:Lb(0.87,2.08,'A','e'), lB:Lb(1.55,2.08,'B','w'),
+  b1:LB(0,'V^\\vee'), b2:LB(1.77,'X'), b3:LB(3,'V'),
+  t1:LT(0,5.05,'\\sP V'), t2:LT(1.77,5.05,'\\sP X'), t3:LT(3,5.05,'\\sP(V^\\vee)'),
+}};
+// \picV: (E4) the cup coev_A with the lower e', and the upper e' with the cap ev'_A, are the ends of e.
+//   A and B are cut between the cap and the leg (aLow/aUp, bLow/bUp) for the next move.
+const B4={fr:FR(5.05,-0.6,3.6,1.5),vw:VB,fm:FMB2,els:{
+  cap:St(P(3,0).v(1.0).c(3,1.42,2.4,1.6,1.5,1.6).c(0.6,1.6,0,1.42,0,1.0).v(0),3),
+  cupP:St(P(0,5.05).v(3.1).c(0,2.7,0.6,2.55,1.5,2.55).c(2.4,2.55,3,2.7,3,3.1).v(5.05),7),
+  ep1:CS(1.5,0.6,'e',9,{boxes:-1}), ep2:CS(1.5,3.55,'e',6.5),
+  xs:St(P(1.5,0).v(0.6),6), tX:St(P(1.5,3.55).v(5.05),6), cX:CP(1.5,4.45,'\\xi',9),
+  aLow:St(P(1.25,0.99).c(1.25,1.1,1.1,1.08,1.1,1.2).v(2.08),2),
+  aUp:St(P(1.1,2.08).v(2.9).c(1.1,3.06,1.25,3.0,1.25,3.16),10),
+  bLow:St(P(1.75,0.99).c(1.75,1.1,1.9,1.08,1.9,1.2).v(2.08),5),
+  bUp:St(P(1.9,2.08).v(2.9).c(1.9,3.06,1.75,3.0,1.75,3.16),5),
+  lOm:Lb(1.1,2.08,'A','e'), lB:Lb(1.9,2.08,'B','w'),
+  b1:LB(0,'V^\\vee'), b2:LB(1.5,'X'), b3:LB(3,'V'),
+  t1:LT(0,5.05,'\\sP V'), t2:LT(1.5,5.05,'\\sP X'), t3:LT(3,5.05,'\\sP(V^\\vee)'),
+  box:Object.assign(Bx(-0.4,5.05,3.4,5.05),{z:8.8}),
+}};
+// \picVI: Lemma 3.7 -- the cap with the lower e goes once around the core and returns in a P-box.
+//   Elements of the moving part are wrapped (unfolded coordinates: y-6.45, mirrored in x=1.5).
+const B5w={fr:FR(6.45,-0.6,3.6,1.5),vw:VB,fm:FMB2,els:{
+  cap:St(P(3,-3.25).v(-1.8).c(3,-1.4,2.25,-1.2,1.5,-1.2).c(0.75,-1.2,0,-1.4,0,-1.8).v(-3.25),3,{wrap:1}),
+  ep1:CS(1.5,-2.65,'e',9,{wrap:1,boxes:-1}),
+  xs:St(P(1.5,-3.25).v(-2.65),6,{wrap:1}),
+  aLow:St(P(1.25,-2.26).c(1.0,-2.1,1.0,-2.1,1.0,-1.95).v(0),2,{wrap:1}),
+  bLow:St(P(1.75,-2.26).c(2.0,-2.1,2.0,-2.1,2.0,-1.95).v(0),5,{wrap:1}),
+  cupP:St(P(0,3.2).v(1.3).c(0,0.95,0.6,0.8,1.5,0.8).c(2.4,0.8,3,0.95,3,1.3).v(3.2),7),
+  ep2:CS(1.5,1.95,'e',6.5), tX:St(P(1.5,1.95).v(3.2),6), cX:CP(1.5,2.85,'\\xi',9),
+  aUp:St(P(1.0,0).v(1.2).c(1.0,1.38,1.25,1.36,1.25,1.555),10),
+  bUp:St(P(2.0,0).v(1.2).c(2.0,1.38,1.75,1.36,1.75,1.555),5),
+  lOm:Lb(1.0,-1.8,'A','e',{wrap:1}), lB:Lb(2.0,-1.8,'B','w',{wrap:1}),
+  b1:Lb(0,-2.6,'V^\\vee','w',{wrap:1}), b3:Lb(3,-2.6,'V','e',{wrap:1}),
+  bA:LB(1.0,'A'), bB:LB(2.0,'B'), t1:LT(1.0,6.45,'\\sP B'), t3:LT(2.0,6.45,'\\sP A'),
+  box:Object.assign(Bx(-0.4,3.2,3.4,5.55),{z:8.8}),
+}};
+// the same picture in drawn coordinates (zero-time cut)
+const B5=derive(B5w,e=>{
+  e.cap=St(P(0,3.2).v(4.65).c(0,5.05,0.75,5.25,1.5,5.25).c(2.25,5.25,3,5.05,3,4.65).v(3.2),3);
+  e.ep1=CS(1.5,3.8,'e',9,{boxes:-1}); e.xs=St(P(1.5,3.2).v(3.8),6);
+  e.aLow=St(P(1.75,4.19).c(2.0,4.35,2.0,4.35,2.0,4.5).v(6.45),2);
+  e.bLow=St(P(1.25,4.19).c(1.0,4.35,1.0,4.35,1.0,4.5).v(6.45),5);
+  e.lOm=Lb(2.0,4.65,'A','w'); e.lB=Lb(1.0,4.65,'B','e');
+  e.b1=Lb(3,3.85,'V^\\vee','e'); e.b3=Lb(0,3.85,'V','w');
+});
+// \picVIb: (B1),(B2),(B4),(B6) -- the box shrinks to the box of e; the cap ev'_{PV} joins the cup
+const B6=derive(B5,e=>{ ['lOm','lB','b1','b3'].forEach(k=>delete e[k]);
+  e.box=Object.assign(Bx(0.75,3.3,2.25,4.3),{z:8.8}); e.lPV=Lb(0,2.85,'\\sP V','e');
+});
+
+// ====================================================================================
+//  Step 2, continued: the Omega-loop again
+// ====================================================================================
+const VC=fit(-4.45,2.95,-0.9,4.15), VC7=fit(-3.55,3.85,-2.3,4.0);
+const ELL=(a0,a1)=>arc(0.5,1.72,1.6,1.62,a0,a1);
+// \picVII: Remark 4.4, the sum over V with weights d_V turns the P V-loop into an Omega-loop
+const C1={fr:FR(3.5,-1.35,2.6,0.5),vw:VC,fm:FM(-1.5,1.75,FL,SA('A,B'),FRAC(nA,nB)),els:{
+  cupP:St(cat(P(-1.1,1.72).v(1.72),ELL(180,360),P(2.1,1.72).v(1.72)),7,HL),
+  cap:St(cat(P(-1.1,1.72).v(1.72),ELL(180,0),P(2.1,1.72).v(1.72)),3,HL),
+  ep2:CS(0.5,0.6,'e',9), cX:CP(0.5,1.35,'\\xi',9), ep1:CS(0.5,2.25,'e',9,{boxes:-1}),
+  box:Object.assign(Bx(-0.3,1.75,1.3,2.75),{z:8.8}),
+  tX:St(P(0.5,0.6).v(1.75),6), xs:St(P(0.5,1.75).v(2.25),6),
+  aUp:St(P(0,0).v(0.04).c(0,0.2,0.3,0.12,0.3,0.3),10),
+  bUp:St(P(1,0).v(0.04).c(1,0.2,0.7,0.12,0.7,0.3),5),
+  aLow:St(P(0.7,2.4).c(0.85,2.6,0.85,2.6,1,2.85).v(3.5),2),
+  bLow:St(P(0.3,2.4).c(0.15,2.6,0.15,2.6,0,2.85).v(3.5),5),
+  bA:LB(0,'A'), bB:LB(1,'B'), t1:LT(0,3.5,'\\sP B'), t3:LT(1,3.5,'\\sP A'),
+  lPV:Lb(2.15,1.75,'\\Omega','w'),
+}};
+// zero-time cut: the same loop as a left half (behind everything) and a right half (in front)
+const C1b=derive(C1,e=>{ delete e.cupP; delete e.cap;
+  e.lpL=St(ELL(90,270),1,HL); e.lpR=St(ELL(-90,90),12,HL); });
+// \picVIIa: isotopy -- the loop shrinks to a small loop around the right legs B and P A
+const C2=derive(C1b,(e,s)=>{ s.fr=FR(3.5,-1.0,3.2,1.35);
+  setP(e,'lpL',arc(1.85,1.55,0.22,1.4,90,270)); setP(e,'lpR',arc(1.85,1.55,0.22,1.4,-90,90));
+  setP(e,'aLow',P(0.7,2.4).c(0.7,3.0,2.7,2.45,2.7,3.4).v(3.5));
+  setP(e,'bUp',P(2.7,0).v(0.1).c(2.7,0.9,0.7,0.05,0.7,0.3));
+  e.bB.x=2.7; e.t3.x=2.7; e.lPV.x=2.07; e.lPV.y=1.55;
+});
+// \picVIIb: Lemma 4.5 (second picture) and (E4) -- the loop cuts the two legs; canonical element e''
+const C3=derive(C2,(e,s)=>{ ['lpL','lpR','aLow','bUp','lPV'].forEach(k=>delete e[k]);
+  e.curl=St(P(0.7,2.4).c(0.85,2.65,1.45,2.75,1.65,2.4).v(0.6).c(1.65,0.25,0.7,0.05,0.7,0.3),5);
+  e.rS=St(P(2.7,0).v(3.5),5);
+  e.epp1=CS(1.65,1.35,"e''",9); e.epp2=CS(2.7,1.75,"e''",9);
+  e.lPAc=Lb(1.65,2.25,'\\sP A','w'); e.lBc=Lb(1.65,0.55,'B','w');
+  s.fm=FM(-1.5,1.75,FL,SA('A,B'),['prod',[nA,nB]]);
+});
+// B = P Y, Y := A
+const C4=derive(C3,(e,s)=>{ e.bA.tex='Y'; e.bB.tex='\\sP Y'; e.t1.tex='\\sP^2Y'; e.t3.tex='\\sP Y';
+  e.lPAc.tex='\\sP Y'; e.lBc.tex='\\sP Y'; s.fm=FM(-1.5,1.75,FL,SA(YIRR),['prod',[['nY','d_Y^2']]]); });
+// \picVIIc: (i) e'' = d_Y^{-1} id (x) id
+const C5=derive(C4,(e,s)=>{ delete e.epp1; delete e.epp2; delete e.lBc;
+  e.lPAc.y=1.35; s.fm=FM(-1.5,1.75,FL,SA(YIRR),['prod',[['nY','d_Y']]]); });
+// (ii) the column with its right leg closed is phi: Y -> P^2 Y
+const C6=derive(C5,e=>{ e.gph=Gb(-0.42,0.1,1.95,2.88); e.lphi=Lb(1.2,3.05,'\\varphi','c'); });
+// \picIXa \picIXb: the closed picture times L(Y)
+const C7={fr:FR(2.2,2.5,4.55,3.525),vw:VC7,fm:FM(-1.25,1.1,FL,SA(YIRR)),els:{
+  ep2:CS(0.5,-0.1,'e',9), cX:CP(0.5,0.65,'\\xi',9), ep1:CS(0.5,1.55,'e',9,{boxes:-1}),
+  box:Object.assign(Bx(-0.3,1.05,1.3,2.05),{z:8.8}),
+  tX:St(P(0.5,-0.1).v(1.05),6), xs:St(P(0.5,1.05).v(1.55),6),
+  aUp:St(P(0,-1.0).v(-0.75).c(0,-0.55,0.3,-0.6,0.3,-0.4),10),
+  bLow:St(P(0.3,1.7).c(0.15,1.9,0.15,1.9,0,2.15).v(3.2),5),
+  curl:St(P(0.7,1.7).c(0.85,1.9,0.85,1.9,1,2.15).v(3.2).c(1,3.7,1.9,3.7,1.9,3.2).v(-1.0).c(1.9,-1.5,1,-1.5,1,-1.0).v(-0.75).c(1,-0.55,0.7,-0.6,0.7,-0.4),5),
+  lcl:St(P(0,3.2).c(0,3.7,-0.9,3.7,-0.9,3.2).v(-1.0).c(-0.9,-1.5,0,-1.5,0,-1.0),5),
+  bInv:CP(0,2.8,'\\beta_Y^{-1}',9,{w:0.8}),
+  lYc:Lb(0,-0.85,'Y','e'), lPYc:Lb(1,-0.85,'\\sP Y','w'),
+  yS:St(P(3.0,0).v(2.2),5), rS:St(P(4.05,0).v(2.2),5), bY:CP(3.0,1.1,'\\beta_Y',9,{w:0.72}),
+  bA:LB(3.0,'Y'), bB:LB(4.05,'\\sP Y'), t1:LT(3.0,2.2,'\\sP^2Y'), t3:LT(4.05,2.2,'\\sP Y'),
+}};
+
+// ====================================================================================
+//  Step 3
+// ====================================================================================
+const D1=derive(C7,(e,s)=>{ e.gT=Gb(-1.15,-1.6,2.15,3.75);
+  e.lTr=Lb(0.5,-1.6,'\\Tr(R_{\\xi,b_Y})','n',{cls:'pref'}); e.lLY=Lb(3.525,-0.62,'\\mathrm{L}(Y)','n',{cls:'pref'});
+  s.fm=FM(-1.25,1.1,FL,SA(YIRR)); });
+
+// ====================================================================================
+//  script: [scene, step title | null, caption | VIA | null, transition seconds, act]
+// ====================================================================================
+const VIA='\u2192via', GAP='\u2192gap';
+const SCRIPT=[
+ [SC(A1,K1),'1 One diagram','By Definition 4.22 and Proposition 3.34(c), \\(\\Cas([X,\\xi])=\\sum_{V\\in\\Fix(\\sP)}[V^\\vee,\\xi_V^\\natural]\\,[X,\\xi]\\,[V,\\xi_V]\\). By Proposition 3.14 and Lemma 3.13 each product is \\([V^\\vee\\otimes X\\otimes V,\\;\\xi_V^\\natural\\cdot\\xi\\cdot\\xi_V]\\): three core loops carrying \\(\\xi_V^\\natural\\), \\(\\xi\\), \\(\\xi_V\\), followed by the positive half twist \\(\\tau\\), in which every strand passes in front of the strands to its right (the factor \\(U\\) is omitted from the picture).',1.6,1],
+ [SC(A2,K2),'2 Bend \\(V\\)','Below \\(\\xi_V^\\natural\\), \\(\\xi\\) and \\(\\xi_V\\), the strand \\(V\\) is bent to the left so that it crosses \\(X\\) twice from behind; these two crossings cancel, so the element is unchanged (isotopy). The strand \\(V^\\vee\\) bulges slightly towards the tip of the bend.',2.4,1],
+ [SC(A3,K2),'3 Lemma 4.5','Put an \\(\\Omega\\)-loop around the two horizontal pieces. By Lemma 4.5, applied to the two strands passing through the loop (turn the picture by a right angle), the loop cuts them and leaves \\(D^2\\) times the canonical element of \\(\\Hom(\\one,Z)\\otimes\\Hom(Z,\\one)\\), where \\(Z\\) is the object carried by the two strands. As \\(V\\) is simple, this element is a cup and a cap divided by \\(d_V\\), which rejoin the cut ends as in the previous picture. So the previous picture is \\(d_V/D^2\\) times this one.',2.2,1],
+ [SC(A4,K2),'4 Reidemeister II','The strand \\(V\\) of the cup passes behind \\(X\\) twice, once in the cup and once in the half twist, and these crossings cancel (Reidemeister II): the cup, with \\(\\xi_V\\) on its leg, now sits to the left of \\(X\\), and its leg \\(V^\\vee\\), after \\(\\xi_V^\\natural\\), crosses \\(X\\) in front.',2.6,1],
+ [SC(A4s,K2),null,null,0,1],
+ [SC(Q5S,K2),'5a Isotopy (stretch)','Isotopy. To make room for the next move, the part of the picture above the coupons is drawn taller: the crossing of \\(V\\) and \\(V^\\vee\\) is stretched upwards, and the legs \\(\\sP V\\), \\(\\sP X\\) and \\(\\sP(V^\\vee)\\) above it move up with it. Only strands move; the \\(\\Omega\\)-loop stays where it is.',2.4,1],
+ [SC(Q5M0,K2),null,VIA,1.2,1],
+ [SC(Q5M2,K2),null,VIA,1.2,1],
+ [SC(Q5M3,K2),null,VIA,1.2,1],
+ [SC(Q5M4,K2),null,VIA,1.2,1],
+ [SC(Q5M5,K2),null,VIA,1.0,1],
+ [SC(Q5M6,K2),null,VIA,1.0,1],
+ [SC(Q5M7,K2),null,VIA,1.0,1],
+ [SC(Q5M8,K2),null,VIA,1.0,1],
+ [SC(Q5M9,K2),null,VIA,1.0,1],
+ [SC(Q5M9a,K2),null,VIA,0.6,1],
+ [SC(Q5M9b,K2),null,VIA,0.4,1],
+ [SC(Q5M9c,K2),null,VIA,0.8,1],
+ [SC(Q5M9d,K2),null,VIA,0.4,1],
+ [SC(Q5M10,K2),null,VIA,0.8,1],
+ [SC(Q5M10b,K2),null,VIA,1.2,1],
+ [SC(Q5M10c,K2),null,VIA,1.2,1],
+ [SC(Q5M11,K2),null,VIA,1.4,1],
+ [SC(Q5T,K2),'5b Isotopy','Isotopy. Before Lemma 3.26(b) can be applied, the \\(\\Omega\\)-loop is slid off the part of the picture that the lemma replaces: the cup, \\(\\xi_V^\\natural\\otimes\\xi_V\\) and the crossing above them. The part of the loop around the cup slides along the strand, up the leg \\(V^\\vee\\), past \\(\\xi_V^\\natural\\) and through the crossing, onto the leg \\(\\sP(V^\\vee)\\); the part around the cap slides along the cap. No strand moves. The loop now encircles the cap and the leg \\(\\sP(V^\\vee)\\). Its left side passes in front of \\(\\sP(V^\\vee)\\), whereas it passed behind the cup before; this only looks like a change. On its way from the bottom of the cup to \\(\\sP(V^\\vee)\\) the strand turns back, and the loop, carried along it, turns with it, so it encircles the strands exactly as before.',1.6,1],
+ [SC(Q5X,K2),'5c Lemma 3.26(b)','By Lemma 3.26(b), the cup, followed by \\(\\xi_V^\\natural\\otimes\\xi_V\\) and by the crossing in which the leg \\(V^\\vee\\) passes in front of the leg \\(V\\), is the cup of \\(\\sP V\\). Only this part of the picture changes; the loop and the other strands stay where they are.',2.0,1],
+ [SC(Q5D1,K2),null,VIA,1.4,1],
+ [SC(Q5D2,K2),null,VIA,1.4,1],
+ [SC(Q5D2b,K2),null,VIA,1.0,1],
+ [SC(Q5D3,K2),null,VIA,1.2,1],
+ [SC(Q5D4,K2),'5d Isotopy','Isotopy. The \\(\\Omega\\)-loop is slid back down along the leg \\(\\sP(V^\\vee)\\) and the right-hand leg of the new cup to the bottom of the cup, and the part around the cap slides back along the cap. No strand moves. The loop encircles the cap and the bottom of the cup of \\(\\sP V\\): the cap passes in front of its left side, the cup behind it.',1.4,1],
+ [SC(A5,K3),'5e Isotopy (un-stretch)','Isotopy. The picture is drawn as in the paper: the stretched part is shrunk back, and the leg \\(\\sP(V^\\vee)\\) moves down in front of \\(\\xi\\). The loop still encircles the cap and the bottom of the cup of \\(\\sP V\\) in the same way.',2.6,1],
+ [SC(A5b,K3),'6 Sum over \\(\\Irr(\\cC)\\)','The sum is extended from \\(\\Fix(\\sP)\\) to \\(\\Irr(\\cC)\\), because for \\(V\\notin\\Fix(\\sP)\\) the picture vanishes: the two strands passing through the \\(\\Omega\\)-loop are the strand \\(V\\) of the cap and the leg \\(\\sP(V^\\vee)\\cong(\\sP V)^\\vee\\) of the cup, and the loop cuts them to zero by Lemma 4.5, because \\(\\Hom(\\one,V^\\vee\\otimes\\sP V)\\cong\\Hom(V,\\sP V)=0\\).',1.2,1],
+ [SC(A5c,K3),null,null,0,1],
+ [SC(B1,K3),'7 Definition 4.3','Step 2. By Definition 4.3 the \\(\\Omega\\)-loop is the sum over \\(A\\in\\Irr(\\cC)\\), with weights \\(d_A\\), of \\(A\\)-loops. Label the side of the loop which passes behind the cap by \\(A\\), and the side which passes in front of it by \\(A^\\vee\\) (the orientation does not matter). The side \\(A\\) passes in front of the leg \\(\\sP(V^\\vee)\\), the side \\(A^\\vee\\) behind it.',1.6,2],
+ [SC(B1g,K3),null,VIA,2.0,2],
+ [SC(B2,K3),'8 (E3)','For \\(B\\in\\Irr(\\cC)\\) let \\(e\'\\) be the canonical element of \\(\\Hom(A^\\vee\\otimes X,B)\\otimes\\Hom(B,A^\\vee\\otimes X)\\). After widening the gap between the cap and the leg \\(\\sP(V^\\vee)\\) (isotopy), insert, by (E3), \\(\\id_{A^\\vee\\otimes X}=\\sum_{B}d_B\\,(e\'\\text{ followed by }e\')\\) on the strands \\(A^\\vee\\) and \\(X\\), where both pass in front of the cap and behind the leg.',2.0,2],
+ [SC(B3,K3),'9 Naturality','Slide the lower \\(e\'\\) down along the strand \\(B\\) through the cap, and the upper \\(e\'\\) up through the leg \\(\\sP(V^\\vee)\\) (naturality of the braiding). The strand \\(B\\) now passes in front of the cap and behind the leg.',2.6,2],
+ [SC(B4,K3),'10 (E4)','By (E4), the cup \\(\\coev_A\\) with the lower \\(e\'\\), and the upper \\(e\'\\) with the cap \\(\\ev\'_A\\), form the two ends of the canonical element \\(e\\) of \\(\\Hom(X,A\\otimes B)\\otimes\\Hom(A\\otimes B,X)\\). Now the cap passes in front of \\(A\\) and behind \\(B\\), and the leg \\(\\sP(V^\\vee)\\) passes behind \\(A\\) and in front of \\(B\\).',2.2,2],
+ [SC(B5w,K3),'11 Lemma 3.7','Move the lower part of the picture, the cap with the lower \\(e\\), which is a morphism \\(V^\\vee\\otimes X\\otimes V\\to A\\otimes B\\), once around the core (Lemma 3.7): it leaves through the bottom arrow and returns below the top arrow as its \\(\\sP\\)-box (Remark 3.8). Inside the box, read in the mirror, this \\(e\\) has \\(B\\) on the left and \\(A\\) on the right, and the cap of \\(V\\) passes behind \\(B\\) and in front of \\(A\\). The bottom arrow now carries \\(A\\otimes B\\).',3.6,2],
+ [SC(B5,K3),null,null,0,2],
+ [SC(B6,K3),'12 Box rules','By (B1), (B2), (B4) and (B6), the box is the box of \\(e\\), with the two outer strands \\(\\sP V\\) and \\(\\sP(V^\\vee)\\) as spectators, followed by the cap of \\(V\\), which leaves the box as the cap \\(\\ev\'_{\\sP V}\\) by (B6); its crossings pass through the wall by (B4), so its leg \\(\\sP(V^\\vee)\\) passes in front of \\(\\sP A\\) and behind \\(\\sP B\\). The strand joining cap and cup is a \\(\\sP V\\)-loop around \\(\\Ubox{e}\\,\\xi\\,e\\); it passes behind \\(A\\) and \\(\\sP B\\) and in front of \\(B\\) and \\(\\sP A\\).',2.0,2],
+ [SC(C1,K4),'13 Remark 4.4','The summand now depends on \\(V\\) only through \\(\\sP V\\), and \\(V\\mapsto\\sP V\\) permutes the isomorphism classes of simple objects, with \\(d_{\\sP V}=d_V\\) (Corollary 2.6). So the sum over \\(V\\) with weights \\(d_V\\) turns the \\(\\sP V\\)-loop into an \\(\\Omega\\)-loop (Remark 4.4), drawn as it is: behind \\(A\\) and \\(\\sP B\\), in front of \\(B\\) and \\(\\sP A\\).',2.6,2],
+ [SC(C1b,K4),null,null,0,2],
+ [SC(C2,K4),'14 Isotopy','Push the column \\(e\\), \\(\\xi\\), \\(\\Ubox{e}\\), with its left legs \\(A\\) and \\(\\sP B\\), in front of the plane of the \\(\\Omega\\)-loop; then only the right legs \\(B\\) and \\(\\sP A\\), which pass behind the loop, pierce the disc it bounds. Shrink the loop to a small loop around these two legs, bent to the right: \\(\\sP A\\) leaves the box to the right and goes up to the top arrow, \\(B\\) comes up from the bottom arrow, runs left and enters the lower \\(e\\). The left arc of the loop passes behind both legs, the right arc in front.',3.2,2],
+ [SC(C3,K4),'15 Lemma 4.5','The second picture of Lemma 4.5, for the object \\(\\sP A\\otimes B^\\vee\\) (the leg \\(B\\) passes through the loop from right to left), cuts the two legs and replaces the loop by \\(D^2\\). By (E4) the resulting canonical element becomes the canonical element \\(e\'\'\\) of \\(\\Hom(B,\\sP A)\\otimes\\Hom(\\sP A,B)\\): its end \\(\\sP A\\to B\\) joins the output \\(\\sP A\\) of the box to the input \\(B\\) of the lower \\(e\\), and its end \\(B\\to\\sP A\\) is a strand from the bottom arrow to the top arrow. No crossings remain.',2.2,2],
+ [SC(C4,K4),'16 \\(B=\\sP Y\\)','The right strand is a morphism \\(B\\to\\sP A\\), so the term of \\((A,B)\\) vanishes unless \\(B\\cong\\sP A\\). For such a pair put \\(Y:=A\\). The term does not change if \\(B\\) is replaced by an isomorphic object and \\(e\\) is transported along the isomorphism (Lemma 3.7, and the naturality of the braiding and of \\(U\\)), so we may take \\(B=\\sP Y\\). Then \\(d_Ad_B=d_Y^2\\).',1.6,2],
+ [SC(C5,K4),'17 (i)','(i) \\(\\End(\\sP Y)\\) is spanned by \\(\\id_{\\sP Y}\\), and \\(\\tr(\\id_{\\sP Y})=d_{\\sP Y}=d_Y\\) (Corollary 2.6); so \\(e\'\'=d_Y^{-1}\\,\\id_{\\sP Y}\\otimes\\id_{\\sP Y}\\) (Definition 2.1), and the two coupons \\(e\'\'\\) disappear with a factor \\(d_Y^{-1}\\).',1.8,2],
+ [SC(C6,K4),'18 (ii) Schur','(ii) The column \\(e\\), \\(\\xi\\), \\(\\Ubox{e}\\), with the output \\(\\sP Y\\) of the box joined to the input \\(\\sP Y\\) of the lower \\(e\\) (shaded), is a morphism \\(\\varphi\\colon Y\\to\\sP^2Y\\). As \\(Y\\) is simple, \\(\\varphi=z\\,\\beta_Y\\) for a scalar \\(z\\).',1.4,2],
+ [SC(C7,K4),null,'Composing with \\(\\beta_Y^{-1}\\) and closing gives \\(z\\,d_Y\\), which is the closed picture \\(\\tr\\bigl((\\beta_Y\\otimes\\id)^{-1}\\Ubox{e}\\,\\xi\\,e\\bigr)\\); and the Möbius diagram of the previous scene is \\([Y\\otimes\\sP Y,\\,U_{Y,\\sP Y}(\\varphi\\otimes\\id_{\\sP Y})]=z\\,\\mathrm{L}(Y)\\) (Definition 3.36). So \\(d_Y\\) times it is \\(z\\,d_Y\\,\\mathrm{L}(Y)\\), the closed picture times \\(\\mathrm{L}(Y)\\). Hence the sum in Step 2 is the sum over \\(Y\\in\\Irr(\\cC)\\) of this product.',3.0,2],
+ [SC(D1,K4),'19 (E2)','Step 3. Fix \\(Y\\in\\Irr(\\cC)\\). As \\(b_Y^{-1}=(\\beta_Y\\otimes\\id)^{-1}U^{-1}_{Y,\\sP Y}\\) (Definition 3.36), the map \\(R_{\\xi,b_Y}\\) of Lemma 4.14(b) is \\(R_{\\xi,b_Y}(\\chi)=(\\beta_Y\\otimes\\id)^{-1}\\Ubox{\\chi}\\,\\xi\\) for \\(\\chi\\in\\Hom(X,Y\\otimes\\sP Y)\\). The closed picture is \\(R_{\\xi,b_Y}\\) applied to the end of \\(e\\) in \\(\\Hom(X,Y\\otimes\\sP Y)\\), followed by the other end and closed, so it is \\(\\Tr(R_{\\xi,b_Y})\\) by (E2); the Möbius diagram is \\(\\mathrm{L}(Y)\\) (Definition 3.36). Finally \\(\\Tr(R_{\\xi,b_Y})=\\overline{\\varepsilon(\\mathrm{M}(X)^\\star\\mathrm{L}(Y))}=\\varepsilon(\\mathrm{M}(X)\\,\\mathrm{L}(Y^\\vee))\\): the coefficient \\(\\varepsilon(\\mathrm{M}(X)^\\star\\mathrm{L}(Y))\\) of \\(\\mathrm{M}(X)\\) in \\(\\mathrm{L}(Y)\\) (Proposition 3.34(d)) is \\(\\Tr(R_{\\xi,b_Y}^{-1})=\\overline{\\Tr(R_{\\xi,b_Y})}\\) by Lemma 4.14(c), (b); and \\(\\varepsilon(u^\\star v)\\) is Hermitian (Proposition 3.34(d)), and \\(\\mathrm{L}(Y)^\\star=\\mathrm{L}(Y^\\vee)\\) is central (Lemma 4.18, Proposition 3.37). This proves Proposition 4.24.',1.4,3],
+];
+// lay out the formulas once MathJax can measure them (registered before the engine's start)
+{ const layoutAll=()=>SCRIPT.forEach(r=>layoutFormula(r[0]));
+  if(window.MathJax&&MathJax.startup&&MathJax.startup.promise) MathJax.startup.promise.then(layoutAll,layoutAll); else setTimeout(layoutAll,0); }
+const ACTS={1:'Step 1',2:'Step 2',3:'Step 3'};
+
+// ====================================================================================
+//  timeline
+// ====================================================================================
+const scenes=SCRIPT.map(r=>r[0]);
+const plainLen=s=>s? s.replace(/\\\(|\\\)/g,'').replace(/\\[a-zA-Z]+/g,'x').replace(/[{}_^]/g,'').length : 0;
+function holdFor(i){ const c=SCRIPT[i][2]; if(c===VIA||c===GAP) return 0; if(c===null) return SCRIPT[i][1]===null && SCRIPT[i][3]===0 ? 0 : 0.5; return Math.min(10,Math.max(2.6,0.085*plainLen(c))); }
+const segs=[]; let T=0;
+function pushSeg(o){ if(o.dur>0){ o.t0=T; segs.push(o); T+=o.dur; } }
+pushSeg({type:'hold',scene:0,dur:holdFor(0),cap:0});
+for(let i=1;i<scenes.length;i++){
+  pushSeg({type:'trans',from:i-1,to:i,dur:SCRIPT[i][3],cap:i});
+  if(SCRIPT[i][2]===VIA) pushSeg({type:'pause',scene:i,dur:SCRIPT[i][5]||0,cap:i});   // pass-through keyframe: no pause unless the row asks for one
+  else if(SCRIPT[i][2]===GAP) pushSeg({type:'pause',scene:i,dur:3.5,cap:i});
+  else pushSeg({type:'hold',scene:i,dur:(i===scenes.length-1?5:holdFor(i)),cap:i});
+}
+// A chain of transitions through pass-through keyframes (VIA rows without a pause) plays as ONE
+// motion: ease-in on its first segment, linear in the middle, ease-out on its last, and segment
+// durations proportional to how far the strands move in each segment (mean displacement of the
+// sampled points of the moving strands), so that the speed is uniform and continuous across the
+// keyframes.  The total duration of the chain is the sum of the authored durations.  A segment in
+// which no strand moves (a pure cross-fade) breaks the chain and keeps its authored duration.
+// Ordinary transitions are unchanged (smoothstep, authored duration).
+(function(){
+  const moveOf=sg=>{ const A=scenes[sg.from].els,B=scenes[sg.to].els; let sum=0,n=0;
+    for(const id in A){ const a=A[id],b=B[id]; if(!b||a.type!=='strand'||b.type!=='strand') continue;
+      const pa=samplePath(a.segs,40),pb=samplePath(b.segs,40); let d=0;
+      pa.forEach((q,k)=>{ d+=Math.hypot(q[0]-pb[k][0],q[1]-pb[k][1]); }); d/=pa.length;
+      if(d>1e-3){ sum+=d; n++; } }
+    return n? sum/n : 0; };
+  const chains=[]; let cur=[];
+  segs.forEach((sg,k)=>{ const prev=segs[k-1];
+    const joins=sg.type==='trans'&&prev&&prev.type==='trans'&&prev.to===sg.from&&SCRIPT[sg.from][2]===VIA;
+    if(!joins){ if(cur.length) chains.push(cur); cur=sg.type==='trans'?[sg]:[]; } else cur.push(sg); });
+  if(cur.length) chains.push(cur);
+  chains.forEach(ch=>{ let run=[];
+    const flush=()=>{ if(run.length>1){ const D=run.reduce((a,sg)=>a+sg.dur,0);
+        const w=run.map((sg,k)=>(k===0||k===run.length-1?2:1)*sg.move), v=w.reduce((a,b)=>a+b,0)/D;
+        run.forEach((sg,k)=>{ sg.dur=w[k]/v; sg.ease=k===0?'in':k===run.length-1?'out':'lin'; }); }
+      run=[]; };
+    ch.forEach(sg=>{ sg.move=moveOf(sg); if(sg.move<0.02){ flush(); } else run.push(sg); }); flush(); });
+  T=0; segs.forEach(sg=>{ sg.t0=T; T+=sg.dur; });
+})();
+const TOTAL=T;
+
+// ====================================================================================
+//  interpolation
+// ====================================================================================
+function samplePath(segs,N=80){ const raw=[]; let cur=null;
+  for(const s of segs){ if(s[0]==='M'){cur=[s[1],s[2]];raw.push(cur);}
+    else if(s[0]==='L'){cur=[s[1],s[2]];raw.push(cur);}
+    else { const p0=cur; for(let i=1;i<=24;i++){const t=i/24,u=1-t; raw.push([u*u*u*p0[0]+3*u*u*t*s[1]+3*u*t*t*s[3]+t*t*t*s[5], u*u*u*p0[1]+3*u*u*t*s[2]+3*u*t*t*s[4]+t*t*t*s[6]]);} cur=[s[5],s[6]]; } }
+  const L=[0]; for(let i=1;i<raw.length;i++) L.push(L[i-1]+Math.hypot(raw[i][0]-raw[i-1][0],raw[i][1]-raw[i-1][1]));
+  const tot=L[L.length-1]; const out=[]; let j=0;
+  for(let i=0;i<N;i++){ const d=tot*i/(N-1); while(j<L.length-2&&L[j+1]<d) j++; const sg=L[j+1]-L[j]; const t=sg>0?(d-L[j])/sg:0;
+    out.push([raw[j][0]+(raw[j+1][0]-raw[j][0])*t, raw[j][1]+(raw[j+1][1]-raw[j][1])*t]); }
+  return out; }
+function samplePathSeg(segs,PER=18){ const out=[]; let cur=null;
+  for(const s of segs){ if(s[0]==='M'){cur=[s[1],s[2]];continue;}
+    const raw=[cur];
+    if(s[0]==='L') raw.push([s[1],s[2]]);
+    else { const p0=cur; for(let i=1;i<=32;i++){const t=i/32,u=1-t; raw.push([u*u*u*p0[0]+3*u*u*t*s[1]+3*u*t*t*s[3]+t*t*t*s[5], u*u*u*p0[1]+3*u*u*t*s[2]+3*u*t*t*s[4]+t*t*t*s[6]]);} }
+    const L=[0]; for(let i=1;i<raw.length;i++) L.push(L[i-1]+Math.hypot(raw[i][0]-raw[i-1][0],raw[i][1]-raw[i-1][1]));
+    const tot=L[L.length-1]; let j=0;
+    for(let i=0;i<=PER;i++){ const d=tot*i/PER; while(j<L.length-2&&L[j+1]<d) j++; const sg=L[j+1]-L[j]; const t=sg>0?(d-L[j])/sg:0;
+      out.push([raw[j][0]+(raw[j+1][0]-raw[j][0])*t, raw[j][1]+(raw[j+1][1]-raw[j][1])*t]); }
+    cur=raw[raw.length-1]; }
+  return out; }
+const nseg=s=>s.filter(x=>x[0]!=='M').length;
+const lerp=(a,b,t)=>a+(b-a)*t;
+const ease=t=>t<0?0:t>1?1:t*t*(3-2*t);
+const xf=t=>ease((t-0.25)/0.5);   // cross-fade weight: 0 before t=0.25, 1 after t=0.75
+// easing of a transition: smoothstep, or ease-in / linear / ease-out inside a chain of pass-through keyframes
+const EASES={in:u=>u*u, lin:u=>u, out:u=>1-(1-u)*(1-u)};
+const easeOf=sg=>{ const f=EASES[sg.ease]; return f? (u=>f(u<0?0:u>1?1:u)) : ease; };
+const cache=new Map();
+function pts(segs,perSeg){ const k=(perSeg?'S':'G')+JSON.stringify(segs); let p=cache.get(k); if(!p){ p=perSeg?samplePathSeg(segs):samplePath(segs); cache.set(k,p);} return p; }
+
+function lerpFr(a,b,t){
+  const both=(x,y)=>x&&y;
+  return { H: (a.H&&b.H)? lerp(a.H,b.H,t) : (t<0.5?a.H:b.H),
+    bars: both(a.bars,b.bars)? [lerp(a.bars[0],b.bars[0],t),lerp(a.bars[1],b.bars[1],t)] : (t<0.5?a.bars:b.bars),
+    barsOp: both(a.bars,b.bars)?1:(a.bars? Math.max(0,1-2*t) : Math.max(0,2*t-1)),
+    edges: both(a.edges,b.edges)? [lerp(a.edges[0],b.edges[0],t),lerp(a.edges[1],b.edges[1],t)] : (t<0.5?a.edges:b.edges),
+    edgesOp: both(a.edges,b.edges)?1:(a.edges? Math.max(0,1-2*t) : Math.max(0,2*t-1)),
+    xc: lerp(a.xc,b.xc,t) };
+}
+function frameAt(time){
+  let seg=segs.find(s=>time>=s.t0&&time<s.t0+s.dur)||segs[segs.length-1];
+  if(seg.type==='hold'||seg.type==='pause'){ const sc=scenes[seg.scene]; return {fr:Object.assign({barsOp:1,edgesOp:1},sc.fr),vw:sc.vw,items:Object.entries(sc.els).map(([id,e])=>mk(id,e,e,0,1)),cap:seg.cap}; }
+  const A=scenes[seg.from],B=scenes[seg.to]; const t=easeOf(seg)((time-seg.t0)/seg.dur);
+  const ids=new Set([...Object.keys(A.els),...Object.keys(B.els)]); const items=[];
+  for(const id of ids){ const a=A.els[id],b=B.els[id];
+    if(a&&b&&a.type===b.type) items.push(mk(id,a,b,t,1));
+    else { if(a) items.push(mk(id,a,a,0,1-xf(t))); if(b) items.push(mk(id,b,b,0,xf(t))); } }
+  const vw={x0:lerp(A.vw.x0,B.vw.x0,t),x1:lerp(A.vw.x1,B.vw.x1,t),y0:lerp(A.vw.y0,B.vw.y0,t),y1:lerp(A.vw.y1,B.vw.y1,t)};
+  return {fr:lerpFr(A.fr,B.fr,t),vw,items,cap:seg.cap};
+}
+function mk(id,a,b,t,op){
+  const z=t<0.5?a.z:b.z;
+  if(a.type==='strand'){ const same=nseg(a.segs)===nseg(b.segs); const pa=pts(a.segs,same),pb=pts(b.segs,same);
+    return {id,type:'strand',p:pa.map((q,i)=>[lerp(q[0],pb[i][0],t),lerp(q[1],pb[i][1],t)]),z,wrap:a.wrap||b.wrap,cls:b.cls||a.cls,op}; }
+  if(a.type==='coupon') return {id,type:'coupon',x:lerp(a.x,b.x,t),y:lerp(a.y,b.y,t),w:lerp(a.w,b.w,t),h:lerp(a.h,b.h,t),ta:a.tex,tb:b.tex,t,z,wrap:a.wrap||b.wrap,ba:a.boxes,bb:b.boxes,sh:t<0.5?a.sh:b.sh,op};
+  if(a.type==='dbox'||a.type==='gbox') return {id,type:a.type,x1:lerp(a.x1,b.x1,t),y1:lerp(a.y1,b.y1,t),x2:lerp(a.x2,b.x2,t),y2:lerp(a.y2,b.y2,t),z:a.z,op};
+  if(a.type==='dot') return {id,type:'dot',x:lerp(a.x,b.x,t),y:lerp(a.y,b.y,t),z:90,wrap:a.wrap||b.wrap,op};
+  return {id,type:'label',x:lerp(a.x,b.x,t),y:lerp(a.y,b.y,t),ta:a.tex,tb:b.tex,t,an:b.an,cls:b.cls,z:100,wrap:a.wrap||b.wrap,op};
+}
+
+// ====================================================================================
+//  rendering
+// ====================================================================================
+const WX0=-8,WY1=14,SX=56,SY=44;
+const px=x=>(x-WX0)*SX, py=y=>(WY1-y)*SY, f1=n=>n.toFixed(1);
+const haveMJ=()=>!!(window.MathJax&&MathJax.tex2svg);
+const fragCache=new Map();
+function frag(tex){ let f=fragCache.get(tex); if(f) return f;
+  const sv=MathJax.tex2svg(tex,{display:false}).querySelector('svg'); const vb=sv.getAttribute('viewBox').split(/\s+/).map(Number);
+  f={vb:vb.join(' '),x:vb[0],y:vb[1],w:vb[2],h:vb[3],inner:sv.innerHTML}; fragCache.set(tex,f); return f; }
+function plainTex(tex){ return tex.replace(/\\sP\s?/g,'P').replace(/\\Cas/g,'Ξ').replace(/\\P\s?/g,'P').replace(/\\mathsf\{P\}/g,'P').replace(/\\(beta|theta|alpha|lambda|sigma|varepsilon|pi|iota|Omega)/g,(m,g)=>({beta:'β',theta:'θ',alpha:'α',lambda:'λ',sigma:'σ',varepsilon:'ε',pi:'π',iota:'ι',Omega:'Ω'}[g]))
+  .replace(/\\check\{\\jmath\}|\\check\s?q/g,m=>m.includes('jmath')?'ǰ':'q̌').replace(/\\sum/g,'Σ').replace(/\\vee/g,'∨').replace(/\\frac\{([^}]*)\}\{([^}]*)\}/g,'($1/$2)').replace(/\\[a-zA-Z]+/g,'').replace(/[{}]/g,''); }
+function fragSVG(tex,fs,X,Y,an,op){ const pad=5; const o=op<0.995?` opacity="${op.toFixed(3)}"`:'';
+  if(!haveMJ()){ const ta=an==='e'?'end':an==='w'?'start':'middle'; const dy=an==='n'?fs+pad:an==='s'?-pad:fs*0.35;
+    return `<text x="${f1(X+(an==='e'?-pad:an==='w'?pad:0))}" y="${f1(Y+dy)}" text-anchor="${ta}" font-size="${fs}"${o}>${plainTex(tex).replace(/</g,'&lt;')}</text>`; }
+  const f=frag(tex),sc=fs/1000,w=f.w*sc,h=f.h*sc;
+  const left=an==='e'?X-pad-w:an==='w'?X+pad:X-w/2;
+  const top=an==='n'?Y+pad:an==='s'?Y-pad-h:Y-h/2;
+  return `<svg${o} x="${f1(left)}" y="${f1(top)}" width="${f1(w)}" height="${f1(h)}" viewBox="${f.vb}" style="overflow:visible">${f.inner}</svg>`; }
+function fold(p,n,H,xc){ return [(((n%2)+2)%2)?2*xc-p[0]:p[0], p[1]-n*H]; }
+function pieces(p,wrap,H,xc){ if(!wrap||!H) return [p]; const out=[]; let cur=[],pn=null;
+  for(let i=0;i<p.length;i++){ const q=p[i]; const n=Math.floor(q[1]/H+1e-9);
+    if(pn!==null&&n!==pn){ const yb=Math.max(n,pn)*H, pr=p[i-1]; const tt=(yb-pr[1])/(q[1]-pr[1]); const m=[lerp(pr[0],q[0],tt),yb];
+      cur.push(fold(m,pn,H,xc)); out.push(cur); cur=[fold(m,n,H,xc)]; }
+    cur.push(fold(q,n,H,xc)); pn=n; }
+  out.push(cur); return out; }
+const poly=pc=>pc.map(q=>`${f1(px(q[0]))},${f1(py(q[1]))}`).join(' ');
+function plen(pc){ let L=0; for(let i=1;i<pc.length;i++) L+=Math.hypot(px(pc[i][0])-px(pc[i-1][0]),py(pc[i][1])-py(pc[i-1][1])); return L; }
+// the halo of a drawn piece, cut back by c0 at its start and c1 at its end
+function trimmed(sp,c0,c1){ const L=[0]; for(let i=1;i<sp.length;i++) L.push(L[i-1]+Math.hypot(sp[i][0]-sp[i-1][0],sp[i][1]-sp[i-1][1]));
+  const tot=L[L.length-1]; if(tot<c0+c1+1) return null;
+  const at=d=>{ let j=0; while(j<L.length-2&&L[j+1]<d) j++; const s=L[j+1]-L[j]; const t=s>0?(d-L[j])/s:0; return [lerp(sp[j][0],sp[j+1][0],t),lerp(sp[j][1],sp[j+1][1],t)]; };
+  const r=[at(c0)]; for(let i=0;i<sp.length;i++) if(L[i]>c0&&L[i]<tot-c1) r.push(sp[i]); r.push(at(tot-c1));
+  return r; }
+const ptStr=r=>r.map(q=>`${f1(q[0])},${f1(q[1])}`).join(' ');
+// The accent strands (the Omega-loop) never pass behind one another, so the halo of an accent strand is
+//   narrowed wherever it would cover an accent strand drawn before it (its own neighbour at a junction, the
+//   other track of the band, the other half of a ring): its half-width there is the distance to that strand
+//   less half the accent ink and a margin, and it is left out where that is too thin to show.  A strand
+//   passing under the accent strand there still gets a (narrower) gap.  HLR = 4 + 1.35.
+const HLR=5.35;
+function clearOf(tr,inks){ if(!inks.length) return [{r:tr,w:8}];
+  const G=new Map(), key=(i,j)=>i+','+j;
+  for(const pl of inks) for(let k=0;k<pl.length-1;k++){ const a=pl[k],b=pl[k+1];
+    for(let i=Math.floor((Math.min(a[0],b[0])-HLR)/HLR);i<=Math.floor((Math.max(a[0],b[0])+HLR)/HLR);i++)
+      for(let j=Math.floor((Math.min(a[1],b[1])-HLR)/HLR);j<=Math.floor((Math.max(a[1],b[1])+HLR)/HLR);j++){ const kk=key(i,j); let c=G.get(kk); if(!c) G.set(kk,c=[]); c.push([a,b]); } }
+  const dist=q=>{ const c=G.get(key(Math.floor(q[0]/HLR),Math.floor(q[1]/HLR))); let m=HLR; if(!c) return m;
+    for(const [a,b] of c){ const vx=b[0]-a[0],vy=b[1]-a[1],L2=vx*vx+vy*vy; let u=L2>0?((q[0]-a[0])*vx+(q[1]-a[1])*vy)/L2:0; u=u<0?0:u>1?1:u;
+      m=Math.min(m,Math.hypot(a[0]+u*vx-q[0],a[1]+u*vy-q[1])); } return m; };
+  // half-width allowed at q, in steps of 0.5; 0 = no halo
+  const hw=q=>{ const h=Math.min(4,Math.floor(2*(dist(q)-1.35))/2); return h>=1.5?h:0; };
+  const out=[]; let cur=[], cw=-1;
+  for(let i=0;i<tr.length-1;i++){ const a=tr[i],b=tr[i+1], n=Math.max(1,Math.ceil(Math.hypot(b[0]-a[0],b[1]-a[1])/1.2));
+    for(let k=i?1:0;k<=n;k++){ const q=[a[0]+(b[0]-a[0])*k/n,a[1]+(b[1]-a[1])*k/n], w=hw(q);
+      if(w!==cw){ if(cw>0){ cur.push(q); if(cur.length>1) out.push({r:cur,w:2*cw}); } cur=w>0?[q]:[]; cw=w; } else if(w>0) cur.push(q); } }
+  if(cw>0&&cur.length>1) out.push({r:cur,w:2*cw}); return out; }
+function boxRects(cx,cy,w,h,k){ let s=''; for(let i=1;i<=k;i++){ const pw=w*SX/2+5*i, ph=h*SY/2+4.5*i; s+=`<rect class="dbox" rx="2.5" x="${f1(cx-pw)}" y="${f1(cy-ph)}" width="${f1(2*pw)}" height="${f1(2*ph)}"/>`; } return s; }
+
+function render(F,svgEl){
+  const {fr,vw,items}=F; let s='';
+  const x0=px(vw.x0),x1=px(vw.x1),y0=py(vw.y1),y1=py(vw.y0);
+  svgEl.setAttribute('viewBox',`${f1(x0)} ${f1(y0)} ${f1(x1-x0)} ${f1(y1-y0)}`);
+  if(fr.edges&&fr.H&&fr.edgesOp>0.01){ const o=fr.edgesOp<0.99?` opacity="${fr.edgesOp.toFixed(3)}"`:'';
+    for(const ex of fr.edges) s+=`<line class="edge"${o} x1="${f1(px(ex))}" y1="${f1(py(0))}" x2="${f1(px(ex))}" y2="${f1(py(fr.H))}"/>`; }
+  if(fr.bars&&fr.H&&fr.barsOp>0.01){ const o=fr.barsOp<0.99?` opacity="${fr.barsOp.toFixed(3)}"`:'';
+    s+=`<line class="bar"${o} x1="${f1(px(fr.bars[0]))}" y1="${f1(py(0))}" x2="${f1(px(fr.bars[1]))}" y2="${f1(py(0))}"/>`;
+    s+=`<line class="bar"${o} x1="${f1(px(fr.bars[0]))}" y1="${f1(py(fr.H))}" x2="${f1(px(fr.bars[1]))}" y2="${f1(py(fr.H))}"/>`; }
+  items.sort((a,b)=>a.z-b.z);
+  const H=fr.H, xc=fr.xc, hlInk=[];
+  // The strands as drawn.  A halo is cut back by 3.2 at the ends of a piece, except where the piece runs
+  //   smoothly on into exactly one other piece of the same colour (one strand drawn in pieces), so that a
+  //   strand passing behind the joint still shows its gap.
+  const PC=new Map(), ends=[], dr=(a,b)=>{ const dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy)||1; return [dx/l,dy/l]; };
+  for(const it of items){ if(it.type!=='strand'||it.op<=0.005) continue; const L=[], hl=it.cls==='hl';
+    for(const pc of pieces(it.p,it.wrap,H,xc)){ if(plen(pc)<2.5) continue; const sp=pc.map(q=>[px(q[0]),py(q[1])]), n=sp.length, o={pc,sp,cut:[3.2,3.2]}; L.push(o);
+      const nb0=()=>{ let k=1; while(k<n-1&&Math.hypot(sp[k][0]-sp[0][0],sp[k][1]-sp[0][1])<1.5) k++; return sp[k]; },
+            nb1=()=>{ let k=n-2; while(k>0&&Math.hypot(sp[k][0]-sp[n-1][0],sp[k][1]-sp[n-1][1])<1.5) k--; return sp[k]; };
+      ends.push({o,k:0,hl,q:sp[0],d:dr(sp[0],nb0())},{o,k:1,hl,q:sp[n-1],d:dr(sp[n-1],nb1())}); }
+    PC.set(it,L); }
+  for(const a of ends){ const m=ends.filter(b=>b.o!==a.o&&b.hl===a.hl&&Math.abs(b.q[0]-a.q[0])<0.6&&Math.abs(b.q[1]-a.q[1])<0.6);
+    if(m.length===1&&a.d[0]*m[0].d[0]+a.d[1]*m[0].d[1]<-0.8) a.o.cut[a.k]=0; }
+  for(const it of items){ if(it.op<=0.005) continue; const og=it.op<0.995?` opacity="${it.op.toFixed(3)}"`:'';
+    if(it.type==='strand'){ const cls=it.cls?' '+it.cls:'', hl=it.cls==='hl';
+      for(const {pc,sp,cut} of PC.get(it)){ const tr=it.op>0.98?trimmed(sp,cut[0],cut[1]):null;
+        const hs=tr? (hl? clearOf(tr,hlInk) : [{r:tr,w:8}]).map(h=>`<polyline class="halo"${h.w<8?` style="stroke-width:${h.w}"`:''} points="${ptStr(h.r)}"/>`).join('') : '';
+        s+=`<g${og}>`+hs+`<polyline class="ink${cls}" points="${poly(pc)}"/></g>`;
+        if(hl) hlInk.push(sp); } }
+    else if(it.type==='coupon'){ let x=it.x,y=it.y,o=it.op,n=0;
+      if(it.wrap&&H){ n=Math.floor(y/H+1e-9); const d=Math.min(y-n*H,(n+1)*H-y); o*=Math.min(1,Math.max(0.12,d/0.3)); [x,y]=fold([x,y],n,H,xc); }
+      const w=it.w*SX,h=it.h*SY,cx=px(x),cy=py(y);
+      const ka=it.ba+Math.abs(n), kb=it.bb+Math.abs(n), kmin=Math.min(ka,kb), kmax=Math.max(ka,kb);
+      s+=`<g opacity="${o.toFixed(3)}">`;
+      if(kmin>0) s+=boxRects(cx,cy,it.w,it.h,kmin);
+      if(kmax>kmin){ const oo=ka>kb?1-xf(it.t):xf(it.t); s+=`<g opacity="${oo.toFixed(3)}">`; for(let k=kmin+1;k<=kmax;k++){ const pw=w/2+5*k, ph=h/2+4.5*k; s+=`<rect class="dbox" rx="2.5" x="${f1(cx-pw)}" y="${f1(cy-ph)}" width="${f1(2*pw)}" height="${f1(2*ph)}"/>`; } s+='</g>'; }
+      s+=`<rect class="cpn${it.sh?' sh':''}" x="${f1(cx-w/2)}" y="${f1(cy-h/2)}" width="${f1(w)}" height="${f1(h)}"/>`;
+      if(it.ta===it.tb) s+=fragSVG(it.ta,13,cx,cy,'c',1);
+      else s+=fragSVG(it.ta,13,cx,cy,'c',Math.max(0,1-2*it.t))+fragSVG(it.tb,13,cx,cy,'c',Math.max(0,2*it.t-1));
+      s+='</g>'; }
+    else if(it.type==='gbox'){ s+=`<rect class="gbox"${og} rx="7" x="${f1(px(it.x1))}" y="${f1(py(it.y2))}" width="${f1(px(it.x2)-px(it.x1))}" height="${f1(py(it.y1)-py(it.y2))}"/>`; }
+    else if(it.type==='dbox'){ s+=`<rect class="dbox"${og} rx="3" x="${f1(px(it.x1))}" y="${f1(py(it.y2))}" width="${f1(px(it.x2)-px(it.x1))}" height="${f1(py(it.y1)-py(it.y2))}"/>`; }
+    else if(it.type==='dot'){ let x=it.x,y=it.y; if(it.wrap&&H){ const n=Math.floor(y/H+1e-9); [x,y]=fold([x,y],n,H,xc); }
+      s+=`<circle class="dot"${og} cx="${f1(px(x))}" cy="${f1(py(y))}" r="3.6"/>`; }
+    else if(it.type==='label'){ let x=it.x,y=it.y,an=it.an,o=it.op;
+      if(it.wrap&&H){ const n=Math.floor(y/H+1e-9); const d=Math.min(y-n*H,(n+1)*H-y); o*=Math.min(1,Math.max(0.15,d/0.3)); [x,y]=fold([x,y],n,H,xc); if(((n%2)+2)%2) an=an==='e'?'w':an==='w'?'e':an; }
+      const fs=it.cls==='big'?20:it.cls==='pref'?17:14.5;
+      if(it.ta===it.tb) s+=fragSVG(it.ta,fs,px(x),py(y),an,o);
+      else s+=fragSVG(it.ta,fs,px(x),py(y),an,Math.max(0,1-2*it.t)*o)+fragSVG(it.tb,fs,px(x),py(y),an,Math.max(0,2*it.t-1)*o); }
+  }
+  svgEl.innerHTML=s;
+}
+
+// ====================================================================================
+//  transport, captions, master equation
+// ====================================================================================
+const svg=document.getElementById('svg'), scrub=document.getElementById('scrub'), timeEl=document.getElementById('time'), playBtn=document.getElementById('play');
+const stepName=document.getElementById('stepname'), capText=document.getElementById('captext'), stepsEl=document.getElementById('steps');
+const eqBtns=[...document.querySelectorAll('#master .eq')];
+let time=0, playing=false, speed=1, last=null, capShown=-1;
+const isZero=j=>SCRIPT[j][1]===null&&SCRIPT[j][2]===null&&SCRIPT[j][3]===0;
+const stopOf=ci=>{ let j=ci; while(j<SCRIPT.length-1&&(SCRIPT[j][2]===VIA||isZero(j))) j++; return j; };
+function captionIndex(ci){ let j=stopOf(ci); while(j>0&&SCRIPT[j][2]===null) j--; return j; }
+function nameIndex(ci){ let j=stopOf(ci); while(j>0&&SCRIPT[j][1]===null) j--; return j; }
+const groups=[]; SCRIPT.forEach((r,i)=>{ if(r[1]!==null&&r[2]!==GAP) groups.push({name:r[1],i,act:r[4]}); });
+const typeset=el=>{ if(haveMJ()&&MathJax.typesetPromise) MathJax.typesetPromise([el]).catch(()=>{}); };
+const untypeset=el=>{ if(haveMJ()&&MathJax.typesetClear) MathJax.typesetClear([el]); };
+function buildSteps(){
+  for(const a of [...new Set(groups.map(g=>g.act))]){ if(!groups.some(g=>g.act===a)) continue; const row=document.createElement('div'); row.className='act'; const h=document.createElement('h2'); h.textContent=ACTS[a]; row.appendChild(h);
+    groups.filter(g=>g.act===a).forEach(g=>{ const b=document.createElement('button'); b.type='button'; b.innerHTML=g.name.replace(/\\\(/g,'\\(');
+      const ph=segs.filter(s=>s.type==='hold'&&s.scene<g.i).pop(); g.t0=ph?ph.t0+ph.dur:0;   // the step starts where the previous stop ends
+      b.addEventListener('click',()=>{ setPlaying(false); show(g.t0+0.001); }); row.appendChild(b); g.btn=b; });
+    stepsEl.appendChild(row); }
+  typeset(stepsEl);
+}
+function show(t){ time=Math.max(0,Math.min(TOTAL-0.001,t)); const F=frameAt(time); render(F,svg);
+  const ci=captionIndex(F.cap), ni=nameIndex(F.cap);
+  if(ci!==capShown){ capShown=ci; untypeset(stepName); untypeset(capText); stepName.innerHTML=SCRIPT[ni][1]||''; capText.innerHTML=SCRIPT[ci][2]===GAP?'':(SCRIPT[ci][2]||''); typeset(stepName); typeset(capText);
+    groups.forEach(g=>g.btn&&g.btn.setAttribute('aria-current',g.i===ni?'true':'false'));
+    const act=SCRIPT[ci][4]; eqBtns.forEach(b=>b.classList.toggle('on',+b.dataset.act===act)); }
+  scrub.value=Math.round(1000*time/TOTAL); timeEl.textContent=`${time.toFixed(1)} s`; }
+// Stepping with the prev/next buttons animates to the neighbouring stop: transitions and
+// pass-through keyframes are played (backwards for prev), the static holds are skipped.
+let target=null;
+function segAt(t,dir){ const u=dir<0?t-1e-6:t; return segs.find(s=>u>=s.t0&&u<s.t0+s.dur)||segs[segs.length-1]; }
+function tick(now){ if(!playing) return; const dt=last!==null?(now-last)/1000*speed:0; last=now;
+  if(target!==null){ const dir=Math.sign(target-time);
+    if(dir===0){ show(target); target=null; playing=false; return; }
+    const sg=segAt(time,dir);
+    if(sg.type==='hold') time=dir>0?Math.min(target,sg.t0+sg.dur):Math.max(target,sg.t0);
+    else time+=dir*dt;
+    if((dir>0&&time>=target)||(dir<0&&time<=target)){ show(target); target=null; playing=false; return; }
+    show(time); requestAnimationFrame(tick); return; }
+  time+=dt;
+  if(time>=TOTAL-0.001){ show(TOTAL-0.001); setPlaying(false); return; } show(time); requestAnimationFrame(tick); }
+function setPlaying(p){ target=null; playing=p; playBtn.textContent=p?'Pause':'Play'; last=null; if(p){ if(time>=TOTAL-0.01) time=0; requestAnimationFrame(tick); } }
+function animateTo(t){ t=Math.max(0,Math.min(TOTAL-0.001,t)); const wasStepping=target!==null; target=t; playBtn.textContent='Play';
+  if(!playing||!wasStepping){ playing=true; last=null; requestAnimationFrame(tick); } }
+playBtn.addEventListener('click',()=>setPlaying(!playing));
+scrub.addEventListener('input',()=>{ setPlaying(false); show(TOTAL*scrub.value/1000); });
+document.getElementById('speed').addEventListener('change',e=>{ speed=parseFloat(e.target.value); });
+const holdStarts=segs.filter(s=>s.type==='hold').map(s=>s.t0);
+document.getElementById('next').addEventListener('click',()=>{ const base=target!==null?target:time; const n=holdStarts.find(x=>x>base+0.05); animateTo(n!==undefined?n:TOTAL-0.001); });
+document.getElementById('prev').addEventListener('click',()=>{ const base=target!==null?target:time; const p=[...holdStarts].reverse().find(x=>x<base-0.05); animateTo(p!==undefined?p:0); });
+document.getElementById('first').addEventListener('click',()=>{ setPlaying(false); show(0); });
+document.getElementById('last').addEventListener('click',()=>{ setPlaying(false); show(TOTAL-0.001); });
+eqBtns.forEach(b=>b.addEventListener('click',()=>{ const a=+b.dataset.act; const g=groups.find(x=>x.act===a); if(g){ setPlaying(false); show(g.t0+0.001); } }));
+document.addEventListener('keydown',e=>{ if(e.target.tagName==='SELECT'||e.target.tagName==='INPUT'||e.target.tagName==='BUTTON'&&e.code==='Space') return;
+  if(e.code==='Space'){ e.preventDefault(); setPlaying(!playing); }
+  else if(e.key==='ArrowRight') document.getElementById('next').click();
+  else if(e.key==='ArrowLeft') document.getElementById('prev').click();
+  else if(e.key==='Home'){ setPlaying(false); show(0); } else if(e.key==='End'){ setPlaying(false); show(TOTAL-0.001); } });
+
+const Q=new URLSearchParams(location.search);
+const gridEl=document.getElementById('grid'), ovBtn=document.getElementById('overview'); let gridBuilt=false;
+function buildGrid(){ let k=0;
+  segs.filter(g=>g.type==='hold').forEach(h=>{ const i=h.scene; k++;
+    const fig=document.createElement('figure'); fig.tabIndex=0;
+    const sv=document.createElementNS('http://www.w3.org/2000/svg','svg'); sv.setAttribute('preserveAspectRatio','xMidYMid meet'); sv.setAttribute('role','img');
+    fig.appendChild(sv); const fc=document.createElement('figcaption'); const ni=nameIndex(i);
+    fc.innerHTML=`<b>${k}</b>${SCRIPT[ni][1]||''}${ni!==i?' …':''}`; fig.appendChild(fc); gridEl.appendChild(fig);
+    const sc=scenes[i]; render({fr:Object.assign({barsOp:1,edgesOp:1},sc.fr),vw:sc.vw,items:Object.entries(sc.els).map(([id,e])=>mk(id,e,e,0,1))},sv);
+    const go=()=>{ setOverview(false); setPlaying(false); show(h.t0+0.01); };
+    fig.addEventListener('click',go); fig.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); go(); } }); });
+  typeset(gridEl); gridBuilt=true; }
+function setOverview(on){ if(on&&!gridBuilt) buildGrid(); gridEl.hidden=!on; document.getElementById('stage').hidden=on;
+  document.querySelector('.caption').hidden=on; ovBtn.setAttribute('aria-pressed',on?'true':'false'); ovBtn.textContent=on?'Back to movie':'Overview'; if(on) setPlaying(false); }
+ovBtn.addEventListener('click',()=>setOverview(gridEl.hidden));
+function start(){
+  buildSteps();
+  if(haveMJ()){ typeset(document.querySelector('header')); typeset(document.getElementById('master')); typeset(document.querySelector('.note')); }
+  if(Q.has('overview')) setOverview(true);
+  let t0=Q.get('t')!==null?parseFloat(Q.get('t')):0;
+  if(Q.has('scene')){ const i=+Q.get('scene'); const h=segs.find(sg=>sg.type==='hold'&&sg.scene===i); const tr=segs.find(sg=>sg.type==='trans'&&sg.to===i);
+    if(Q.has('frac')&&tr) t0=tr.t0+tr.dur*parseFloat(Q.get('frac')); else if(h) t0=h.t0+0.01; else if(tr) t0=tr.t0+tr.dur-0.01; }
+  show(t0);
+  window.__seek=t=>{ setPlaying(false); show(t); }; window.__total=TOTAL;
+}
+if(window.MathJax&&MathJax.startup&&MathJax.startup.promise) MathJax.startup.promise.then(start,start); else start();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+/public/
+/resources/_gen/
+.hugo_build.lock
+.DS_Store
+
+# 調査メモなど，公開しないもの（~/Documents/自分の情報/ に置く）
+/research_notes/
+/reports/

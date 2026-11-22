@@ -1,0 +1,15 @@
+# 受賞リスト。上から順に表示されるので、新しいものは先頭に追加する。
+#   award:     賞の名前（英語ページ用）
+#   award_ja:  日本語ページ用の賞の名前（英語と同じなら省略）
+#   award_url: 賞のページ
+# 残りのキーは data/talks.yaml と同じ（event, event_ja, event_url, place, date, title）。
+
+- award: Outstanding Performance Award
+  award_ja: 優秀賞
+  award_url: https://sites.google.com/view/pncstuseminar2025/%E5%8F%97%E8%B3%9E%E8%80%85
+  event: Seminar for students in the fields of theoretical physics
+  event_ja: 理論物理学生セミナー
+  event_url: https://sites.google.com/view/pncstuseminar2025
+  place: Online
+  date: 2025-02
+  title: On dimensions of (2+1)D abelian bosonic topological systems on unoriented manifolds

@@ -1,0 +1,16 @@
+{{ define "main" }}
+{{- $photo := "" }}
+{{- with site.Params.photo }}{{ if fileExists (path.Join "static" .) }}{{ $photo = . }}{{ end }}{{ end }}
+{{- /* 名前と所属はヘッダーの中（_partials/header.html）に出す */}}
+<div class="profile{{ with $photo }} has-photo{{ end }}">
+  <section class="block">
+    <h2>{{ T "profile" }}</h2>
+    <div class="block-body">
+      {{ .Content }}
+    </div>
+  </section>
+  {{- with $photo }}
+  <figure class="profile-photo"><img src="{{ . | relURL }}" alt="{{ site.Title }}"></figure>
+  {{- end }}
+</div>
+{{ end }}

@@ -1,0 +1,7 @@
+{{- /* Poster list from data/posters.yaml */ -}}
+{{- $lang := .Page.Language.Lang -}}
+<ul class="posters">
+{{- range hugo.Data.posters }}
+  <li>{{ partial "event-item.html" (dict "item" . "lang" $lang "page" $.Page) }}</li>
+{{- end }}
+</ul>

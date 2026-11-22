@@ -1,0 +1,25 @@
+# ポスター発表リスト。上から順に表示されるので、新しいものは先頭に追加する。
+# キーは data/talks.yaml と同じ（event, event_ja, event_url, place, date, title）。
+#   poster: ポスターの PDF。static/files/ に置いて /files/<ファイル名> と書く
+
+- event: Strings and Fields 2026
+  event_ja: 場の理論と弦理論 2026
+  event_url: https://www2.yukawa.kyoto-u.ac.jp/~qft.web/2026/
+  place: Kyoto
+  date: 2026-08
+  title: Web of dualities on non-orientable surfaces
+  poster: /files/2026-08-strings-and-fields-poster.pdf
+
+- event: Strings and Fields 2025
+  event_ja: 場の理論と弦理論 2025
+  event_url: https://www2.yukawa.kyoto-u.ac.jp/~qft.web/2025/program.html
+  place: Kyoto
+  date: 2025-07
+  title: Proposal for a generalization of the anomaly formula for time-reversal symmetry in (2+1)D abelian topological systems
+  poster: /files/2025-07-strings-and-fields-poster.pdf
+
+- event: FoPM International Symposium
+  event_url: https://indico.ipmu.jp/event/459/
+  place: Tokyo
+  date: 2025-02
+  title: On dimensions of (2+1)D abelian bosonic topological systems on unoriented manifolds

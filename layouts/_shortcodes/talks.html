@@ -1,0 +1,10 @@
+{{- /* Talk list from data/talks.yaml. Usage: {{< talks selected >}} or {{< talks other >}} */ -}}
+{{- $group := .Get 0 -}}
+{{- $lang := .Page.Language.Lang -}}
+{{- $items := index hugo.Data.talks $group -}}
+{{- if not $items }}{{ warnf "%s: no talks under %q in data/talks.yaml" .Page.File.Path $group }}{{ end -}}
+<ul class="talks">
+{{- range $items }}
+  <li>{{ partial "event-item.html" (dict "item" . "lang" $lang "page" $.Page) }}</li>
+{{- end }}
+</ul>
