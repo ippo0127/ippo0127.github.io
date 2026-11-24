@@ -13,10 +13,11 @@
 
 - title: Möbius Fusion Algebra
   coauthors: [Yuji Tachikawa]
+  arxiv: "2611.29234"
   movies:
-    - label: Prop. 4.24
-      label_ja: 命題4.24
-      url: /movies/mobius_prop4_24.html
+    - label: Prop. 4.23
+      label_ja: 命題4.23
+      url: /movies/mobius_prop4_23.html
     - label: Prop. 5.6
       label_ja: 命題5.6
       url: /movies/mobius_prop5_6.html

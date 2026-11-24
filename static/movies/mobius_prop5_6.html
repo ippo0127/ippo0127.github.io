@@ -3,6 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Animated proof of Proposition 5.6 of Orii–Tachikawa, “Möbius fusion algebra”: Σ_E d_E Tr(w ↦ u·w·v) = D² ε(u) ε(v), followed picture by picture.">
+<link rel="canonical" href="https://ippo0127.github.io/movies/mobius_prop5_6.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ippo Orii">
+<meta property="og:title" content="Proposition 5.6 — proof movie">
+<meta property="og:description" content="Animated proof of Proposition 5.6 of Orii–Tachikawa, “Möbius fusion algebra”: Σ_E d_E Tr(w ↦ u·w·v) = D² ε(u) ε(v), followed picture by picture.">
+<meta property="og:url" content="https://ippo0127.github.io/movies/mobius_prop5_6.html">
+<meta property="og:image" content="https://ippo0127.github.io/movies/mobius_prop5_6.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Möbius diagram of M(A)·[Y,t]·M(B), the first picture of the proof of Proposition 5.6">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Proposition 5.6 — proof movie">
+<meta name="twitter:description" content="Animated proof of Proposition 5.6 of Orii–Tachikawa, “Möbius fusion algebra”: Σ_E d_E Tr(w ↦ u·w·v) = D² ε(u) ε(v), followed picture by picture.">
+<meta name="twitter:image" content="https://ippo0127.github.io/movies/mobius_prop5_6.png">
+<meta name="twitter:image:alt" content="Möbius diagram of M(A)·[Y,t]·M(B), the first picture of the proof of Proposition 5.6">
 <title>Proposition 5.6 proof movie</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <script>
@@ -105,7 +122,7 @@ svg text{fill:var(--fg);font-family:var(--font-text);font-size:14px}
 <div class="wrap">
 <header>
   <h1>Proposition 5.6 &#x2014; proof movie</h1>
-  <p>Proposition 5.6 of Orii&#x2013;Tachikawa, <i>M&#xf6;bius fusion algebra</i>, states that \(\sum_{E\in\Irr(\cC)}d_E\Tr_{\cH_E}(w\mapsto u\cdot w\cdot v)=D^2\,\varepsilon(u)\,\varepsilon(v)\) for all \(u,v\in\fX\). The movie follows its proof for the basis elements \(u=\mathrm{M}(A)\), \(v=\mathrm{M}(B)\), one act per step. Step 1 writes the left-hand side as a sum of closed diagrams and removes the sum over \(E\) with (E3). Step 2 turns the sum over \(Y\) into an \(\Omega\)-loop around \(A\), which Lemma 4.5 evaluates. Numbering follows the version of the paper of 18 November 2026.</p>
+  <p>Proposition 5.6 of Orii&#x2013;Tachikawa, <i>M&#xf6;bius fusion algebra</i>, states that \(\sum_{E\in\Irr(\cC)}d_E\Tr_{\cH_E}(w\mapsto u\cdot w\cdot v)=D^2\,\varepsilon(u)\,\varepsilon(v)\) for all \(u,v\in\fX\). The movie follows its proof for the basis elements \(u=\mathrm{M}(A)\), \(v=\mathrm{M}(B)\), one act per step. Step 1 writes the left-hand side as a sum of closed diagrams and removes the sum over \(E\) with (E3). Step 2 bends both ends of \(e\) with (E4), moves the shaded part \(\iota\) to the lower end with (E1), and turns the sum over \(Y\) into an \(\Omega\)-loop around \(A\), which Lemma 4.5 evaluates. Numbering follows the version of the paper of 21 November 2026.</p>
 </header>
 
 <div class="master" id="master" aria-label="Outline of the proof">
@@ -135,7 +152,7 @@ svg text{fill:var(--fg);font-family:var(--font-text);font-size:14px}
 
 <div class="caption"><div class="step" id="stepname"></div><div class="text" id="captext"></div></div>
 <div class="steps" id="steps"></div>
-<p class="note">Overview lays out the picture of every stop; click a picture to jump there. Diagrams are read from bottom to top, and \(c_{X,Y}\) is drawn with the \(X\)-strand in front. Shaded coupons are canonical elements (Definition 2.1): two shaded coupons with the same label stand for the sum over dual bases. A dashed box is a \(\P\)-box (Definition 2.4): it contains the mirror image of a diagram and stands for its image under \(\P\). In the first picture the bars are glued through \(\P\) and the dot is the end of the leg on the boundary of the band. The blue strand is the leg \(E\) in Step 1; in Step 2, blue marks \(\iota\) and the \(\Omega\)-loop. Isotopies and slides are shown as continuous motion; in the algebraic identities ((E1), (E3), (E4), Definition 4.3, Lemma 4.5) the coupons and labels that change cross-fade.</p>
+<p class="note">Overview lays out the picture of every stop; click a picture to jump there. Diagrams are read from bottom to top, and \(c_{X,Y}\) is drawn with the \(X\)-strand in front. Shaded coupons are canonical elements (Definition 2.1): two shaded coupons with the same label stand for the sum over dual bases. A dashed box is a \(\P\)-box (Definition 2.4): it contains the mirror image of a diagram and stands for its image under \(\P\). In the first picture the bars are glued through \(\P\) and the dot is the end of the leg on the boundary of the band. The blue strand is the leg \(E\) in Step 1 and the \(\Omega\)-loop in Step 2; in Step 2, as in the paper, the pale blue shading marks the part \(\iota\). Isotopies and slides are shown as continuous motion; in the algebraic identities ((E1), (E3), (E4), Definition 4.3, Lemma 4.5) the coupons and labels that change cross-fade.</p>
 </div>
 
 <script>
@@ -185,6 +202,7 @@ const Gb=(x1,y1,x2,y2)=>({type:'gbox',x1,y1,x2,y2,z:-1});
 //  y pointing up.  The first picture of Step 1 is drawn there with y = 6 mm; it is rescaled by 6/7.
 //  Shaded coupons (sh) are canonical elements; Bx is a P-box.
 //  z-order: A, PA 6 > PY, iota 4 > leg E 3 > Y, B, PB 2 > closing loop 1; coupons 5-8; lifted arc 9.
+//  Gb is a shading (the part iota in Step 2), drawn behind everything; the halos of the strands cut through it.
 // ====================================================================================
 const C=(x,y,tex,z,o={})=>Cp(x,y,tex,z,Object.assign({h:0.52},o));
 function mapY(sc,fy){ for(const e of Object.values(sc.els)){
@@ -370,7 +388,8 @@ const S4w={fr:F0,vw:{x0:(VS2.x0+VS4.x0)/2,x1:(VS2.x1+VS4.x1)/2,y0:(VS2.y0+VS4.y0
 const S5=derive(S4,e=>{ e.box=Bx(-1.35,3.45,0.75,5.8); e.lPY.tex='Y'; e.lPY.y=5.1; });
 chain(S5,K4,-1.6,2.8);
 
-// ---- Step 2, 2a (E4): both ends of e bent -> e-hat ----
+// ---- Step 2, 2a (E4): both ends of e bent -> e-hat.  The box then contains q-hat iota; the part iota is
+//      shaded as in the paper (the strands B and A and the cup joining Y^vee to Y in front of B, mirrored) ----
 const VT1={x0:-5.6,x1:3.2,y0:-0.7,y1:6.3};
 const T1=derive(S5,e=>{
   e.lowE.x=0.2; e.lowE.tex='\\hat e'; e.lowE.w=1.76;
@@ -380,47 +399,76 @@ const T1=derive(S5,e=>{
   setP(e,'pY',P(-1.0,4.75).v(4.2).c(-1.0,3.75,0,3.75,0,4.2).v(4.75));
   setP(e,'yUp',P(0,4.75).l(-1.0,4.75));
   e.lY.x=1.4; e.lY.y=0.6; e.lPY.y=4.3;
+  e.gI=Gb(-1.2,3.58,0.6,4.42); e.lI=Lb(0.8,4.0,'\\iota','w');
 });
 T1.vw=VT1; chain(T1,K4,-1.6,2.8);
-// ---- 2b: the box contains q-hat iota; iota in blue ----
-const T1b=derive(T1,e=>{ e.pY.cls='hl'; });
 
-// ---- 2c (E1): iota slides to the lower end; the canonical element becomes e' ----
-const VT2={x0:-4.6,x1:3.07,y0:-0.6,y1:5.5};
-const T2={fr:F0,vw:VT2,els:{
+// ---- 2b (E1): iota slides to the lower end, which becomes e'.  It sits directly above the lower e', drawn
+//      as the mirror image of the shaded part of the box: the cup joins the middle position Y to Y^vee on the
+//      right, its arc in front of B.  Above the shading the strand Y turns left behind A, runs down the left
+//      side, under e', up the far right, and closes by a cap onto the leg Y^vee.
+//      The Y-loop is split as before: pY = the cup of iota, yM = the middle position to the left (behind A),
+//      loop = the rest (z 9: it is the arc that is later lifted in front of e'). ----
+// the column above the lower e': f = 0 as in the picture after (E1), f = 1 as in the picture after the isotopy
+function column(e,f){ const L=(a,b)=>a+(b-a)*f, xy=L(3.3,2.2), c0=L(3.65,2.7), c1=L(4.2,3.3), ue=L(4.95,3.9);
+  e.lowE.w=L(1.06,1.18);
+  setP(e,'aS',P(-0.4,0.5).v(xy)); setP(e,'bS',P(0.4,0.5).v(xy)); e.xiA.y=xy; e.xiB.y=xy;
+  setP(e,'pA',P(-0.4,xy).v(c0).s(0.4,c1).v(ue)); setP(e,'pB',P(0.4,xy).v(c0).s(-0.4,c1).v(ue));
+  e.upE.y=ue; e.box=Bx(-0.75,L(4.45,3.45),0.75,L(5.4,4.35)); }
+const VT2a={x0:-5.2,x1:3.6,y0:-0.7,y1:6.3}, VT2={x0:-4.6,x1:3.07,y0:-0.6,y1:5.5};
+const mix=(a,b,f)=>a+(b-a)*f;   // (lerp is defined only further down)
+const lerpVw=(a,b,f)=>({x0:mix(a.x0,b.x0,f),x1:mix(a.x1,b.x1,f),y0:mix(a.y0,b.y0,f),y1:mix(a.y1,b.y1,f)});
+const T2={fr:F0,vw:VT2a,els:{
   lowE:C(0,0.5,"e'",8,{w:1.06,sh:1}),
-  aS:St(P(-0.4,0.5).v(2.3),6), bS:St(P(0.4,0.5).v(2.3),2),
-  yM:St(P(0,1.6).c(0,1.95,-1.0,1.95,-1.0,1.5),2),
-  pY:St(P(0,1.6).s(0.8,1.0).c(0.8,0.6,1.1,0.6,1.1,1.0),4,{cls:'hl'}),   // iota, drawn from the middle position to the cup
-  loop:St(P(-1.0,1.5).v(0.3).c(-1.0,-0.35,1.55,-0.35,1.55,0.3).v(1.0).c(1.55,1.55,1.1,1.55,1.1,1.0),1),
-  xiA:C(-0.4,2.3,'\\xi_A',7), xiB:C(0.4,2.3,'\\xi_B',8),
-  pA:St(P(-0.4,2.3).v(2.65).s(0.4,3.2).v(3.95),6),
-  pB:St(P(0.4,2.3).v(2.65).s(-0.4,3.2).v(3.95),2),
-  upE:C(0,3.95,"e'",8,{w:1.18,sh:1}), box:Bx(-0.75,3.45,0.75,4.4),
-  lY:Lb(1.6,0.6,'Y','w'),
+  aS:St(P(-0.4,0.5).v(3.3),6), bS:St(P(0.4,0.5).v(3.3),2),
+  gI:Gb(-0.6,0.9,1.2,1.74),
+  pY:St(P(0,1.9).v(1.52).c(0,1.07,1.0,1.07,1.0,1.52).v(1.9),4),
+  yM:St(P(0,1.9).v(2.15).c(0,2.6,-1.0,2.6,-1.0,2.15),2),
+  loop:St(P(-1.0,2.15).v(0.3).c(-1.0,-0.35,1.8,-0.35,1.8,0.3).v(2.15).c(1.8,2.6,1.0,2.6,1.0,2.15).v(1.9),9),
+  xiA:C(-0.4,3.3,'\\xi_A',7), xiB:C(0.4,3.3,'\\xi_B',8),
+  pA:St(P(-0.4,3.3).v(3.65).s(0.4,4.2).v(4.95),6),
+  pB:St(P(0.4,3.3).v(3.65).s(-0.4,4.2).v(4.95),2),
+  upE:C(0,4.95,"e'",8,{w:1.18,sh:1}), box:Bx(-0.75,4.45,0.75,5.4),
+  lI:Lb(1.23,1.3,'\\iota','w'), lY:Lb(1.8,0.9,'Y','w'),
 }};
-chain(T2,K4,-1.3,2.3);
-// ---- 2d-2f: the loop as arcs of an ellipse: iota (id pY) 0-90 deg (in front of B), yM 90-180 (behind A),
-//      loop 180-360 (in front of everything once lifted) ----
-function oval(e,cx,cy,rx,ry){
-  setP(e,'pY',arc(cx,cy,rx,ry,90,0)); setP(e,'yM',arc(cx,cy,rx,ry,90,180)); setP(e,'loop',arc(cx,cy,rx,ry,180,360));
+chain(T2,K4,-1.3,2.6);
+// ---- 2c: one isotopy (the paper draws no intermediate picture), played as one continuous motion through
+//      two pass-through keyframes.  The Y-loop is an ellipse, split into pY (from the top to the right, in
+//      front of B), yM (from the top to the left, behind A) and loop (the rest, in front of everything once
+//      lifted).  The split points are chosen so that each piece has the same share of the length of the
+//      whole loop as in 2b: the loop then deforms uniformly along its length, and the zigzag flattens
+//      smoothly.  The shading of iota fades in the first part; the column above the lower e' moves down to
+//      the layout of the paper's picture after the isotopy, at the pace of the loop (F3, F3a: the share of
+//      the motion done at the two keyframes). ----
+const plen2=p=>{ const q=samplePath(segsOf(p),400); let L=0; for(let i=1;i<q.length;i++) L+=Math.hypot(q[i][0]-q[i-1][0],q[i][1]-q[i-1][1]); return L; };
+const LPY=plen2(T2.els.pY.segs), LYM=plen2(T2.els.yM.segs), LLP=plen2(T2.els.loop.segs);
+const FPY=LPY/(LPY+LYM+LLP), FYM=LYM/(LPY+LYM+LLP);
+// the angle (deg) reached from the top of the ellipse after arc length s, going right (dir=-1) or left (dir=+1)
+function angAt(rx,ry,s,dir){ const R=Math.PI/180; let a=90,acc=0;
+  while(acc<s&&Math.abs(a-90)<360){ const b=a+dir*0.05; acc+=Math.hypot(rx*(Math.cos(b*R)-Math.cos(a*R)),ry*(Math.sin(b*R)-Math.sin(a*R))); a=b; }
+  return a; }
+function oval(e,cx,cy,rx,ry){ const per=(()=>{ const R=Math.PI/180; let L=0; for(let a=0;a<360;a+=0.05) L+=Math.hypot(rx*(Math.cos((a+0.05)*R)-Math.cos(a*R)),ry*(Math.sin((a+0.05)*R)-Math.sin(a*R))); return L; })();
+  const ap=angAt(rx,ry,FPY*per,-1), ay=angAt(rx,ry,FYM*per,1);
+  setP(e,'pY',arc(cx,cy,rx,ry,90,ap)); setP(e,'yM',arc(cx,cy,rx,ry,90,ay)); setP(e,'loop',arc(cx,cy,rx,ry,ay,ap+360));
 }
-// 2d: zigzag straightened: an oval around the lower e'
-const T3=derive(T2,e=>{ oval(e,0,0.75,0.95,0.75); e.pY.cls=''; e.loop.z=9; e.lY.x=0.97; e.lY.y=0.75; });
-// 2e: the part below e' is lifted in front of e'
-const T3a=derive(T3,e=>{ oval(e,0,1.22,0.95,0.27); e.lY.y=1.22; });
-// 2f: Reidemeister II with B: a small loop around A
-const T4=derive(T3,e=>{ oval(e,-0.4,1.35,0.32,0.13); e.lY.x=-0.06; e.lY.y=1.35; });
-// 2g: Definition 4.3, the Omega-loop
+const F3=0.49, F3a=0.71;
+const stage2=(sc,f)=>{ sc.vw=lerpVw(VT2a,VT2,f); return chain(sc,K4,-1.3,mix(2.6,2.3,f)); };
+// the zigzag (the leg Y^vee of the cup and the cap over the far right strand) straightened: an oval around e'
+const T3=stage2(derive(T2,e=>{ delete e.gI; delete e.lI; oval(e,0,0.7,1.0,0.85); e.lY.x=1.0; e.lY.y=0.7; column(e,F3); }),F3);
+// the part of the oval below e' (which has no input) moved up in front of e'
+const T3a=stage2(derive(T3,e=>{ oval(e,0,1.22,0.95,0.27); e.lY.x=0.97; e.lY.y=1.22; column(e,F3a); }),F3a);
+// Reidemeister II with B: a small Y-loop around A, behind A at the top and in front of it at the bottom
+const T4=stage2(derive(T3,e=>{ oval(e,-0.4,1.35,0.32,0.13); e.lY.x=-0.06; e.lY.y=1.35; column(e,1); }),1);
+// 2d: Definition 4.3, the Omega-loop
 const T5=derive(T4,e=>{ ['pY','yM','loop'].forEach(k=>{ e[k].cls='hl'; });
   e.lY.tex='\\Omega'; e.lY.x=-0.74; e.lY.an='e'; });
 chain(T5,['eq'],-3.031,2.3);   // '=' stays where it was
-// 2h: Lemma 4.5 cuts A
+// 2e: Lemma 4.5 cuts A
 const T6=derive(T5,e=>{ ['pY','yM','loop','lY'].forEach(k=>delete e[k]); });
 chain(T6,['eq','D2','dA'],-1.973,2.3);   // '=' stays, the new factors are appended
-// 2i: only A = 1 contributes, and then xi_A = xi_1 = U_0
+// 2f: only A = 1 contributes, and then xi_A = xi_1 = U_0
 const T7a=derive(T6,e=>{ e.xiA.tex='U_0'; });
-// 2j: then B = 1 as well, and the picture has the value 1
+// 2g: then B = 1 as well, and the picture has the value 1
 const T7b=derive(T7a,e=>{ ['aS','xiA','pA','bS','xiB','pB','lowE','upE','box'].forEach(k=>delete e[k]);
 });
 chain(T7b,['eq','D2','dA','dB'],-1.427,2.3);   // only delta_{B,1} is new
@@ -437,16 +485,15 @@ const SCRIPT=[
  [S4w,null,VIA,1.8,2],
  [S4,'1h Shrinking',`Isotopy: the two loops shrink. The strand \\(Y\\) runs from the middle output of the lower \\(e\\), behind \\(A\\), back into its input. The strand \\(\\P Y\\) runs from the output of the upper \\(e\\) around the left of the box back into its middle input, passing in front of \\(\\P B\\). This is the picture that follows (E3) in the paper.`,3.0,2],
  [S5,'1i The box',`Widen the \\(\\P\\)-box over this loop: the crossing with \\(\\P B\\) passes through its wall by (B4), the cap and the cup by (B5) and (B6), and the boxes merge by (B1) and (B2). Inside the box the loop is labelled \\(Y\\): the upper end of \\(e\\) has its output joined to its middle input by a strand passing in front of \\(B\\). This is the last picture of Step 1.`,2.0,2],
- [T1,'2a (E4)',`Step 2 starts from the last picture of Step 1. (E4): bend both ends of \\(e\\). The input \\(Y\\) of the lower end is bent up into a fourth output \\(Y^\\vee\\) on the right. The output of the upper end \\(q\\) is bent down, giving \\(\\hat q:=\\ev'_Y(q\\otimes\\id_{Y^\\vee})\\), whose new input lies on the left in the mirror image. Together they form the canonical element \\(\\hat e\\) of \\(\\Hom(\\one,A\\otimes Y\\otimes B\\otimes Y^\\vee)\\otimes\\Hom(A\\otimes Y\\otimes B\\otimes Y^\\vee,\\one)\\).`,2.8,3],
- [T1b,'2b The morphism \\(\\iota\\)',`Put \\(\\iota:=(\\id_A\\otimes c^{-1}_{Y,B}\\otimes\\id_{Y^\\vee})(\\id_{A\\otimes B}\\otimes\\coev_Y)\\colon A\\otimes B\\to A\\otimes Y\\otimes B\\otimes Y^\\vee\\), the cup on the right of \\(B\\) whose strand \\(Y\\) passes in front of \\(B\\) to the middle. Then \\(\\hat q\\,\\iota\\) is \\(q\\) with its output \\(Y\\) joined to its middle input by a strand passing in front of \\(B\\). So the box contains \\(\\hat q\\,\\iota\\), drawn mirrored, with \\(\\iota\\) in blue.`,1.2,3],
- [T2,'2c (E1)',`(E1) for \\(h:=\\iota\\), which also applies inside the box (remark after Proposition 2.5), moves \\(\\iota\\) to the lower end, and the canonical element becomes \\(e'\\), that of \\(\\Hom(\\one,A\\otimes B)\\otimes\\Hom(A\\otimes B,\\one)\\). The box now contains only the upper end of \\(e'\\). At the bottom, \\(\\iota\\) follows the lower end of \\(e'\\), and its strand \\(Y\\) closes through the old loop.`,2.8,3],
- [T3,'2d Zigzag',`Isotopy: the cup of \\(\\iota\\) and the cap on the far right form a zigzag. Straightening it, the loop \\(Y\\) runs from the middle position to the left behind \\(A\\), around under \\(e'\\), up on the right and back in front of \\(B\\): it is an oval around the lower \\(e'\\).`,2.6,3],
- [T3a,'2e Lifting',`Isotopy: the lower \\(e'\\) has no input, so the part of the oval below it can be moved up in front of \\(e'\\). The lifted arc passes in front of \\(A\\) and in front of \\(B\\).`,2.4,3],
- [T4,'2f Reidemeister II',`The loop now crosses \\(B\\) twice, both times in front, and the two crossings cancel (Reidemeister II). What remains is a small loop \\(Y\\) around \\(A\\), behind \\(A\\) at the top and in front of it at the bottom.`,2.6,3],
- [T5,'2g \\(\\Omega\\)-loop',`Definition 4.3: a closed strand labelled \\(Y\\), summed over \\(Y\\in\\Irr(\\cC)\\) with weight \\(d_Y\\), is a closed strand labelled \\(\\Omega\\). The sum \\(\\sum_Y d_Y\\) is absorbed into the \\(\\Omega\\)-loop around \\(A\\).`,1.6,3],
- [T6,'2h Lemma 4.5',`Lemma 4.5: an \\(\\Omega\\)-loop cuts the strand it encircles. Since \\(A\\) is simple, \\(\\ell_{\\Omega,A}=D^2\\delta_{A,\\one}\\,\\id_A\\), so the loop is removed at the cost of the factor \\(D^2\\delta_{A,\\one}\\).`,1.8,3],
- [T7a,'2i \\(A=\\one\\)',`Only \\(A=\\one\\) contributes, so it remains to evaluate the picture for \\(A=\\one\\). There \\(\\xi_A=\\xi_\\one=U_0\\) by Definition 3.20.`,1.6,3],
- [T7b,'2j \\(B=\\one\\)',`For \\(A=\\one\\), \\(e'\\) is the canonical element of \\(\\Hom(\\one,B)\\otimes\\Hom(B,\\one)\\), which is zero unless \\(B=\\one\\), since \\(B\\) is simple. For \\(A=B=\\one\\) we have \\(e'=\\id_\\one\\otimes\\id_\\one\\) and \\(\\xi_\\one\\cdot\\xi_\\one=U_0\\) (Lemma 3.12), so the picture is \\(U_0^{-1}\\,\\P(\\id_\\one)\\,U_0=1\\). So the left-hand side is \\(D^2\\delta_{A,\\one}\\delta_{B,\\one}=D^2\\varepsilon(\\mathrm{M}(A))\\,\\varepsilon(\\mathrm{M}(B))\\), the right-hand side.`,1.8,3],
+ [T1,'2a (E4)',`Step 2 starts from the last picture of Step 1. (E4): bend both ends of \\(e\\). The input \\(Y\\) of the lower end is bent up into a fourth output \\(Y^\\vee\\) on the right. The output of the upper end \\(q\\) is bent down, giving \\(\\hat q:=\\ev'_Y(q\\otimes\\id_{Y^\\vee})\\), whose new input lies on the left in the mirror image. Together they form the canonical element \\(\\hat e\\) of \\(\\Hom(\\one,A\\otimes Y\\otimes B\\otimes Y^\\vee)\\otimes\\Hom(A\\otimes Y\\otimes B\\otimes Y^\\vee,\\one)\\). Put \\(\\iota:=(\\id_A\\otimes c^{-1}_{Y,B}\\otimes\\id_{Y^\\vee})(\\id_{A\\otimes B}\\otimes\\coev_Y)\\colon A\\otimes B\\to A\\otimes Y\\otimes B\\otimes Y^\\vee\\), the cup on the right of \\(B\\) whose strand \\(Y\\) passes in front of \\(B\\) to the middle. Then \\(\\hat q\\,\\iota\\) is \\(q\\) with its output \\(Y\\) joined to its middle input by a strand passing in front of \\(B\\): the upper end of \\(e\\) together with its loop. So the box contains \\(\\hat q\\,\\iota\\), drawn mirrored, and the part \\(\\iota\\) is shaded.`,2.8,3],
+ [T2,'2b (E1)',`(E1) for \\(h:=\\iota\\), which also applies inside the box (remark after Proposition 2.5), moves \\(\\iota\\) to the lower end, which becomes \\(e'\\), the canonical element of \\(\\Hom(\\one,A\\otimes B)\\otimes\\Hom(A\\otimes B,\\one)\\). The box now contains only the upper end of \\(e'\\). The shaded \\(\\iota\\) sits directly above the lower \\(e'\\), drawn as the mirror image of the shaded part of the box: the cup joins the middle position \\(Y\\) to \\(Y^\\vee\\) on the right, its arc passing in front of \\(B\\). Above the shading, the strand \\(Y\\) turns left behind \\(A\\), runs down the left side, under \\(e'\\), up the far right, and closes by a cap onto the leg \\(Y^\\vee\\) of the cup.`,2.8,3],
+ [T3,null,VIA,2.6,3],
+ [T3a,null,VIA,2.0,3],
+ [T4,'2c Isotopy',`Isotopy, two moves in one step. First, the leg \\(Y^\\vee\\) of the cup and the cap over the far right strand form a zigzag; straightening it, the loop runs from the middle position up, left behind \\(A\\), down the left side, around under \\(e'\\), up on the right and back in front of \\(B\\) to the middle: an oval around \\(e'\\). Second, since \\(e'\\) has no input, the part of the oval below \\(e'\\) is moved up in front of it. The loop now passes in front of \\(A\\) and \\(B\\), so its two crossings with \\(B\\) cancel (Reidemeister II), and a small loop \\(Y\\) encircles \\(A\\), behind \\(A\\) at the top and in front of it at the bottom.`,2.0,3],
+ [T5,'2d \\(\\Omega\\)-loop',`Definition 4.3: a closed strand labelled \\(Y\\), summed over \\(Y\\in\\Irr(\\cC)\\) with weight \\(d_Y\\), is a closed strand labelled \\(\\Omega\\). The sum \\(\\sum_Y d_Y\\) is absorbed into the \\(\\Omega\\)-loop around \\(A\\).`,1.6,3],
+ [T6,'2e Lemma 4.5',`Lemma 4.5: an \\(\\Omega\\)-loop cuts the strand it encircles. Since \\(A\\) is simple, \\(\\ell_{\\Omega,A}=D^2\\delta_{A,\\one}\\,\\id_A\\), so the loop is removed at the cost of the factor \\(D^2\\delta_{A,\\one}\\).`,1.8,3],
+ [T7a,'2f \\(A=\\one\\)',`Only \\(A=\\one\\) contributes, so it remains to evaluate the picture for \\(A=\\one\\). There \\(\\xi_A=\\xi_\\one=U_0\\) by Definition 3.20.`,1.6,3],
+ [T7b,'2g \\(B=\\one\\)',`For \\(A=\\one\\), \\(e'\\) is the canonical element of \\(\\Hom(\\one,B)\\otimes\\Hom(B,\\one)\\), which is zero unless \\(B=\\one\\), since \\(B\\) is simple. For \\(A=B=\\one\\) we have \\(e'=\\id_\\one\\otimes\\id_\\one\\) and \\(\\xi_\\one\\cdot\\xi_\\one=U_0\\) (Lemma 3.12), so the picture is \\(U_0^{-1}\\,\\P(\\id_\\one)\\,U_0=1\\). So the left-hand side is \\(D^2\\delta_{A,\\one}\\delta_{B,\\one}=D^2\\varepsilon(\\mathrm{M}(A))\\,\\varepsilon(\\mathrm{M}(B))\\), the right-hand side.`,1.8,3],
 ];
 const ACTS={1:'Setup',2:'Step 1',3:'Step 2'};
 
