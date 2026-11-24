@@ -27,7 +27,7 @@ enableRobotsTXT = true
     weight = 1
     [languages.en.params]
       affiliation = "Kavli Institute for the Physics and Mathematics of the Universe"
-      description = "Ippo Orii (折井 一歩), a doctoral student at Kavli IPMU working on generalized symmetries, TQFT/CFT, time-reversal symmetry and low-dimensional topology."
+      description = "Ippo Orii (折井 一歩), a doctoral student at Kavli IPMU working on generalized symmetries, TQFT/CFT, time-reversal symmetry, and low-dimensional topology."
   [languages.ja]
     label = "日本語"
     locale = "ja"
