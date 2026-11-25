@@ -225,7 +225,15 @@ a:hover { color: var(--emph); }
   box-shadow: .5px .5px 1px rgba(0, 0, 0, .35);
 }
 
-.coauthors { font-size: .8em; }
+/* 論文一覧: 1行目にタイトル、2行目に共著者・arXiv・掲載誌などを少し小さく薄い色で */
+.papers > li { margin: .8rem 0; }
+.paper-title { display: block; }
+.paper-meta {
+  display: block;
+  margin-top: .1rem;
+  color: var(--muted);
+  font-size: .9em;
+}
 
 /* 年月や「(スライド)」などを途中で改行しない */
 .nowrap { white-space: nowrap; }
