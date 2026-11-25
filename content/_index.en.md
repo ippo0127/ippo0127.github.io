@@ -12,7 +12,7 @@ menus:
 
 **Research interests**: Generalized symmetries, TQFT/CFT, Time-reversal symmetry, Low-dimensional topology
 
-**Links**: [INSPIRE](https://inspirehep.net/authors/2969147), [arXiv](https://arxiv.org/search/advanced?advanced=&terms-0-operator=AND&terms-0-term=ippo+orii&terms-0-field=author&classification-physics=y&classification-physics_archives=all&classification-include_cross_list=include&date-filter_by=all_dates&date-year=&date-from_date=&date-to_date=&date-date_type=submitted_date&abstracts=show&size=100&order=-announced_date_first), [Google Scholar](https://scholar.google.com/citations?user=G0vs3HUAAAAJ)
+**Links**: [INSPIRE](https://inspirehep.net/authors/2969147), [arXiv](https://arxiv.org/search/advanced?advanced=&terms-0-operator=AND&terms-0-term=ippo+orii&terms-0-field=author&classification-physics=y&classification-physics_archives=all&classification-include_cross_list=include&date-filter_by=all_dates&date-year=&date-from_date=&date-to_date=&date-date_type=submitted_date&abstracts=show&size=100&order=-announced_date_first), [Google Scholar](https://scholar.google.com/citations?user=G0vs3HUAAAAJ), [YouTube](https://www.youtube.com/@ippoorii)
 
 **Other interests**: Dancing, Ramen Jiro (I run [Jiro Log](https://jirolog.pages.dev/en/). Check it out!)
 
