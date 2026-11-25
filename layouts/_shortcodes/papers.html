@@ -34,7 +34,18 @@
     <span class="paper-meta">
       {{- delimit $parts ", " | safeHTML -}}
       {{- if not (or $p.arxiv $p.journal) }}{{ if $parts }} {{ end }}{{ T "in_preparation" }}{{ end -}}
-      {{- range $p.movies }} <span class="nowrap">(<a href="{{ .url }}">{{ partial "field.html" (dict "item" . "key" "label" "lang" $lang) }}</a>)</span>{{ end -}}
+      {{- range $p.movies }}
+        {{- if or (not .lang) (eq .lang $lang) }}
+          {{- $label := partial "field.html" (dict "item" . "key" "label" "lang" $lang) }}
+          {{- with .links }}
+            {{- /* "(10-min summary: Video, Slides)" / "(10分解説：動画，スライド)" */}}
+            {{- $links := slice }}
+            {{- range . }}{{ $links = $links | append (printf `<a href="%s">%s</a>` .url (partial "field.html" (dict "item" . "key" "label" "lang" $lang) | htmlEscape)) }}{{ end }}
+            {{- if eq $lang "ja" }} ({{ $label }}：{{ delimit $links "，" | safeHTML }}){{ else }} ({{ $label }}: {{ delimit $links ", " | safeHTML }}){{ end }}
+          {{- else }} <span class="nowrap">(<a href="{{ .url }}">{{ $label }}</a>)</span>
+          {{- end }}
+        {{- end }}
+      {{- end -}}
       {{- with $comment }}
         {{- $id := printf "comment-%s" (or $p.arxiv (urlize $p.title)) }}
         {{- $.Page.Store.Set "hasComments" true }} <span class="comment-toggle-wrap">(<button type="button" class="comment-toggle" aria-expanded="false" aria-controls="{{ $id }}">{{ T "comment" }}</button>)</span>

@@ -5,8 +5,10 @@
 #                arXiv に出る前の論文は arxiv も journal も省略する。表示に "(in preparation)" / "(準備中)" が付く
 #   journal:     掲載誌の略称（未掲載なら省略）
 #   journal_url: 掲載誌の論文ページ
-#   movies:      証明の動画などのリスト。各項目に label（英語ページの表示）、label_ja（日本語ページの表示）、url。
+#   movies:      証明の動画などのリンク。各項目に label（英語ページの表示）、label_ja（日本語ページの表示）、url。
 #                ファイルは static/movies/ に置いて /movies/<ファイル名> と書く。論文の行の (Comment) の前に出る
+#                url の代わりに links（label / label_ja / url のリスト）を書くと "(10分解説：動画，スライド)" のようにまとめて出る
+#                lang: ja（または en）を付けると、その言語のページにだけ出る
 #   comment:     論文コメント（Markdown、数式 $...$ も可）。Research の論文一覧で (Comment) を押すと開く。
 #                書くときは comment: | の次の行から4字下げで書く。段落は空行で区切る
 #   comment_ja:  日本語ページ用の論文コメント（無ければ英語のコメントが出る）
@@ -22,8 +24,15 @@
       label_ja: 命題5.6
       url: /movies/mobius_prop5_6.html
     - label: 10-min summary in Japanese
-      label_ja: 10-min summary
-      url: https://youtu.be/ntPDaIm68FE
+      label_ja: 10分解説
+      lang: ja
+      links:
+        - label: Video
+          label_ja: 動画
+          url: https://youtu.be/ntPDaIm68FE
+        - label: Slides
+          label_ja: スライド
+          url: /files/2026-11-mobius-summary-slides.pdf
   comment: |
     In [my first paper](https://arxiv.org/abs/2502.13532), I studied an integrality problem: proving the non-orientable Verlinde formula. At the time, I managed to prove it in the abelian case, but the non-abelian case was so difficult that it was left untouched for a long time. Then, around October of my second year of the master's program, just as I was about to start writing my master's thesis, Yuji Tachikawa excitedly told me that he had come up with a strategy for the proof. There is a manifold called the solid Klein bottle, whose boundary is the Klein bottle. His idea was to construct a new algebra formed by the anyons that can be inserted into it (the analogue of the fusion algebra for the solid torus); if this could be done, the numbers we wanted would appear as the dimensions of irreducible representations of this algebra, and their integrality would follow. It truly felt like a revelation from above (no wonder he was so excited). I finished my thesis quickly and started working on it, and it took about a year to complete. Since that same autumn, I had also been working in parallel with Sakie Suzuki, a low-dimensional topologist, on constructing a non-orientable version of the Reshetikhin–Turaev invariant, and I realized that this algebra could be used directly there as well. I was very happy that the two big problems I had been wrestling with were solved at once.
   comment_ja: |
