@@ -23,6 +23,13 @@
     - label: Prop. 5.6
       label_ja: 命題5.6
       url: /movies/mobius_prop5_6.html
+    - label: 10-min summary
+      lang: en
+      links:
+        - label: Video
+          url: https://youtu.be/YnEijzkIq38
+        - label: Slides
+          url: /files/2026-11-mobius-summary-slides.pdf
     - label: 10-min summary in Japanese
       label_ja: 10分解説
       lang: ja
