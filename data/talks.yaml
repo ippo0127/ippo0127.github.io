@@ -11,8 +11,17 @@
 #   title:       講演タイトル。数式は $...$ で書ける（そのときはタイトル全体を '...' で囲む）
 #   slides / draft / video: 資料・録画のリンク。PDF は static/files/ に置いて /files/<ファイル名> と書く
 #   in_japanese: true にすると英語ページに "(Japanese)" と表示する
+#   upcoming:    true にするとタイトルの後ろに "(Upcoming)"（日本語ページ:「(予定)」）と表示する。講演が終わったら消す
 
 selected:
+  - event: Seminar at Tohoku University
+    event_ja: 東北大学素粒子・宇宙理論グループセミナー
+    event_url: https://web.tohoku.ac.jp/tuhep/
+    place: Sendai
+    date: 2026-12
+    title: "Anyons in the mirror: Foundations of topological quantum field theory on non-orientable spacetime"
+    upcoming: true
+
   - event: Seminar at Shinshu University
     event_ja: 信州大学物質基礎セミナー
     event_url: https://azusa.shinshu-u.ac.jp/~yonupa/seminar/seminar1.html

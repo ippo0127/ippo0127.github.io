@@ -1,7 +1,7 @@
 {{- /*
   One talk / poster / award line:
-  English:  [Event](event_url), Place, Month YYYY, “Title” (Slides) (Draft) (Poster) (Video) (Japanese)
-  Japanese: [会の名前](event_url)，開催地，YYYY年M月，“タイトル” (スライド) (Draft) (ポスター) (録画)
+  English:  [Event](event_url), Place, Month YYYY, “Title” (Upcoming) (Slides) (Draft) (Poster) (Video) (Japanese)
+  Japanese: [会の名前](event_url)，開催地，YYYY年M月，“タイトル” (予定) (スライド) (Draft) (ポスター) (録画)
   The Japanese place name comes from data/places.yaml (or place_ja on the item).
   Usage: partial "event-item.html" (dict "item" . "lang" $lang "page" $.Page)
 */ -}}
@@ -29,6 +29,7 @@
 {{- end -}}
 {{- with $item.date }}{{ $sep }}<span class="nowrap">{{ partial "month.html" (dict "date" . "lang" $lang) }}</span>{{ end -}}
 {{- with $item.title }}{{ $sep }}“{{ partial "math-text.html" (dict "text" . "page" $page) }}”{{ end -}}
+{{- if $item.upcoming }} {{ T "upcoming" }}{{ end -}}
 {{- range $key := slice "slides" "draft" "poster" "video" -}}
   {{- with index $item $key }} <span class="nowrap">(<a href="{{ . }}">{{ T $key }}</a>)</span>{{ end -}}
 {{- end -}}
