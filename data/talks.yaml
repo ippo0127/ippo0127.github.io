@@ -6,7 +6,7 @@
 #   event:       セミナー・研究会の名前（英語ページ用）
 #   event_ja:    日本語ページ用の名前（英語と同じなら省略）
 #   event_url:   セミナー・研究会のページ
-#   place:       開催地。都市名だけ（Kyoto など）、オンラインは Online。日本語ページでは data/places.yaml の日本語名で表示する
+#   place:       開催地。国内は都道府県名（Kyoto, Miyagi など）、海外は都市名（Oxford など）だけ。オンラインは Online。日本語ページでは data/places.yaml の日本語名で表示する
 #   date:        年月 YYYY-MM（表示は英語ページ "July 2026"、日本語ページ「2026年7月」）
 #   title:       講演タイトル。数式は $...$ で書ける（そのときはタイトル全体を '...' で囲む）
 #   slides / draft / video: 資料・録画のリンク。PDF は static/files/ に置いて /files/<ファイル名> と書く
@@ -17,7 +17,7 @@ selected:
   - event: Seminar at Tohoku University
     event_ja: 東北大学素粒子・宇宙理論グループセミナー
     event_url: https://web.tohoku.ac.jp/tuhep/
-    place: Sendai
+    place: Miyagi
     date: 2026-12
     title: "Anyons in the mirror: Foundations of topological quantum field theory on non-orientable spacetime"
     upcoming: true
